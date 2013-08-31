@@ -9,7 +9,8 @@ LineFinder::LineFinder() : deltaRho(1),
     deltaTheta(3.14f/180), 
     minVote(10), 
     minLength(0.f), 
-    maxGap(0.f) 
+    maxGap(0.f),
+    img()
 {
     // empty
 }
@@ -149,12 +150,12 @@ cv::Mat LineFinder::createSkeleton(cv::Mat& image, int threshold)
 }
 
 
-int LineFinder::saveToDisk(cv::Mat image)
+int LineFinder::saveToDisk(cv::Mat image, std::string fileName)
 {   
-    std::ofstream file("../level.txt");
+    std::ofstream file(fileName);
     
     uint divisorRows = 10;
-    uint rowSize;
+    uint rowSize = 0;
     for (uint i = 1; rowSize > 200; ++i)
     {
         rowSize = image.rows;

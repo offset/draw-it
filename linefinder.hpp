@@ -68,6 +68,6 @@ public:
      *
      * @return error/success code
      */
-    int saveToDisk(cv::Mat image);
+    int saveToDisk(cv::Mat image, std::string fileName = "../level.txt");
 };
 #endif // LINEFINDER_H
