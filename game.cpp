@@ -1,6 +1,8 @@
 #include "game.hpp"
 #include <iostream>
+#include <fstream>
 #include <vector>
+#include <string>
 
 Game* Game::singleton = 0;
 
@@ -61,11 +63,31 @@ std::string Game::detect(std::string fileNameImage,
     cv::imwrite("contours.jpg", contours);
     
     std::vector<cv::Vec4i> lines = finder.findLines(contours);
-    cv::Mat drawImage2(image.rows,image.cols, CV_8UC3,cv::Scalar(255,255,255));
-    finder.drawDetectedLines(drawImage2, cv::Scalar(0,0,0));
-    cv::imwrite("lines.jpg", drawImage2);
+    finder.drawDetectedLines(image, cv::Scalar(0,0,0));
+    
+//    cv::Mat drawImage2(image.rows,image.cols, CV_8UC3,cv::Scalar(255,255,255));
+//    finder.drawDetectedLines(drawImage2, cv::Scalar(0,0,0));
+//    cv::imwrite("lines.jpg", drawImage2);
     
     finder.saveToDisk(image, fileNameLevel);
     
     return fileNameLevel;
+}
+
+int Game::play(std::string fileNameLevel)
+{
+    std::ifstream level(fileNameLevel);
+    if (!level.is_open())
+    {
+        std::cout << "Could not read level file." << std::endl
+                  << "Now exiting." << std::endl;
+        return READ_ERROR;
+    }
+    std::string line;
+    while(std::getline(level, line))
+    {
+        // build level here
+    }
+    
+    return SUCCESS;
 }

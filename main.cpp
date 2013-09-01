@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <linefinder.hpp>
 #include "game.hpp"
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -12,5 +13,5 @@ int main()
 {   
     std::string fileNameLevel = Game::getInstance()->detect();
     Game::getInstance()->destroy();
-    std::ifstream level(fileNameLevel);
+    Game::getInstance()->play(fileNameLevel);
 }

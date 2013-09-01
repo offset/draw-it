@@ -154,39 +154,34 @@ int LineFinder::saveToDisk(cv::Mat image, std::string fileName)
 {   
     std::ofstream file(fileName);
     
-    uint divisorRows = 10;
-    uint rowSize = 0;
-    for (uint i = 1; rowSize > 200; ++i)
-    {
-        rowSize = image.rows;
-        rowSize /= i;
-        divisorRows = i;
-    }
-    uint divisorCols = 10;
-    uint colSize;
-    for (uint i = 1; rowSize > 200; ++i)
-    {
-        colSize = image.cols;
-        colSize /= i;
-        divisorCols = i;
-    }
+    // will be implemented later
+    //cv::resize(image, image, cv::Size());
     
-    cv::Mat level(image.rows, image.cols, CV_8UC1, cv::Scalar(255,255,255));
-    level = image;
+    cv::Mat level = image;
+    if (level.channels() != 1)
+    {
+        cv::cvtColor(level, level, cv::COLOR_BGR2GRAY);
+    }
     drawDetectedLines(level, cv::Scalar(0,0,0));
     
-    for (int row = 0; row < image.rows; row += divisorRows)
+    for (int row = 0; row < image.rows; ++row)
     {
         uchar* pixel = level.ptr<uchar>(row);
-        for (int col = 0; col < image.cols; col += divisorCols)
+        for (int col = 0; col < image.cols; ++col)
         {
-            if (static_cast<int>(pixel[0]) != 255)
+            int asdf = static_cast<int>(*pixel);
+            if (asdf != 0)
             {
-                file << 1;
-            } else
-            {
-                file << 0;
+                std::cout << "hello" << std::endl;
             }
+            file << static_cast<int>(*pixel);
+//            if (static_cast<int>(pixel[0]) != 255)
+//            {
+//                file << 1;
+//            } else
+//            {
+//                file << 0;
+//            }
         }
         file << std::endl;
     }
