@@ -12,9 +12,13 @@ class Entities
 {
 public:
     Entities();
-    void setPosition(sf::Vector2f pos);
-    void setPosition(float px, float py);
-    sf::Vector2f getPosition() const;
+    Entities(sf::Vector2f pos);
+    Entities(float px, float py);
+    virtual ~Entities(); //; = default;
+    virtual void setPosition(sf::Vector2f pos);
+    virtual void setPosition(float px, float py);
+    virtual sf::Vector2f getPosition() const;
+    virtual void move(sf::Vector2f movement);
     
 private:
     sf::Vector2f position;
@@ -23,13 +27,16 @@ private:
 class Player : public Entities
 {
 public:
+    Player();
     // construct the player object at a specific position
     Player(sf::Vector2f pos);
     Player(float px, float py);
+    ~Player();
     void setJumpTime(float time);
     float getJumpTime() const;
     void setJumpHeight(int height);
     int getJumpHeight() const;
+    void move(sf::Vector2f movement);
     
 private:
     // how high is the player able to jump
@@ -37,7 +44,7 @@ private:
     // how long may the player jump
     float jumpTime;
     // maybe used in further implementations with other obstacles than falling down (enemies, etc.)
-    sf::Rect hitBox;
+    sf::Rect<float> hitBox = sf::Rect<float>(0.f,0.f,0.f,0.f);//(float rectLeft, float rectTop, float rectWidth, float rectHeight);
 };
 
 #endif // ENTITIES_H
