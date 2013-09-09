@@ -76,6 +76,7 @@ std::string Play::detect(std::string fileNameImage,
 
 int Play::buildLevel(std::string fileNameLevel)
 {
+    // loading text file which contains instructions for building the level
     std::ifstream level(fileNameLevel);
     if (!level.is_open())
     {
@@ -84,9 +85,14 @@ int Play::buildLevel(std::string fileNameLevel)
         return READ_ERROR;
     }
     std::string line;
+    sf::Texture map;
+    map.loadFromFile("assets/castleCenter_rounded.png");
     while(std::getline(level, line))
     {
-        // build level here
+        if(line == "1")
+        {
+            // to be continued
+        }
     }
 }
 

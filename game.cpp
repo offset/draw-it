@@ -1,93 +1,106 @@
-#include "game.hpp"
 #include <iostream>
-#include <fstream>
-#include <vector>
-#include <string>
+#include "game.hpp"
 
-Game* Game::singleton = 0;
-
-Game::~Game()
+Game::Game() : window(sf::VideoMode(640,480), "Draw it!"), timePerFrame(sf::seconds(1.f/60.f)), playerTexture(), playerSprite()
 {
-    delete finder;
-}
-
-Game* Game::getInstance()
-{
-    if (singleton == 0)
+    if (!playerTexture.loadFromFile("assets/p1_front.png"));
     {
-        singleton = new Game();
-    }
-    return singleton;
-}
-
-void Game::destroy()
-{
-    if (singleton != 0)
-    {
-        delete singleton;
-        singleton = 0;
-    }
-}
-
-std::string Game::detect(std::string fileNameImage,
-                   std::string fileNameLevel,
-                   float minLength , 
-                   float minGap, 
-                   int minVote,
-                   int skelThreshold,
-                   int cannyThreshold1,
-                   int cannyThreshold2,
-                   int cannyApertureSize,
-                   bool l2Gradient
-                   )
-{
-    LineFinder finder;
-    finder.setLineLengthAndGap(minLength, minGap);
-    finder.setMinVote(minVote);
-    
-    cv::Mat image = cv::imread(fileNameImage);
-    if(!image.data)
-    {
-        std::cout << "File could not be loaded..." <<
-                "Exiting." << std::endl;
-        exit;
-    }
-    
-    // creating a skeleton
-    image = finder.createSkeleton(image, skelThreshold);
-    finder.saveToDisk(image);
-    
-    // detecting the contours
-    cv::Mat contours;
-    cv::Canny(image, contours, cannyThreshold1, cannyThreshold2, cannyApertureSize, l2Gradient);
-    cv::imwrite("contours.jpg", contours);
-    
-    std::vector<cv::Vec4i> lines = finder.findLines(contours);
-    finder.drawDetectedLines(image, cv::Scalar(0,0,0));
-    
-//    cv::Mat drawImage2(image.rows,image.cols, CV_8UC3,cv::Scalar(255,255,255));
-//    finder.drawDetectedLines(drawImage2, cv::Scalar(0,0,0));
-//    cv::imwrite("lines.jpg", drawImage2);
-    
-    finder.saveToDisk(image, fileNameLevel);
-    
-    return fileNameLevel;
-}
-
-int Game::play(std::string fileNameLevel)
-{
-    std::ifstream level(fileNameLevel);
-    if (!level.is_open())
-    {
-        std::cout << "Could not read level file." << std::endl
+        std::cerr << "Could not load texture files for the player." << std::endl
                   << "Now exiting." << std::endl;
-        return READ_ERROR;
+        exit();
     }
-    std::string line;
-    while(std::getline(level, line))
+    playerSprite.setTexture(playerTexture);
+    playerSprite.setPosition(player.position.x, player.position.y);
+}
+
+Game::processEvents()
+{
+    sf::Event event;
+    while(window.pollEvent(event))
     {
-        // build level here
+        switch(event.type)
+        {
+            case sf::Event::KeyPressed:
+                handlePlayerInput(event.key.code, true);
+                break;
+            case sf::Event::KeyReleased:
+                handlePlayerInput(event.key.code, false);
+                break;
+            case sf::Event::Closed:
+                std::cerr << "Received close event, window is being closed." << std::endl;
+                window.close();
+                break;
+        }
+    }
+}
+
+Game::update(sf::Time deltaTime)
+{
+    sf::Vector2f movement(0.f, 0.f);
+    
+    // the y axis starts from the top, so we need to decrease the y value when we move up
+    if(isMovingUp)
+    {
+        movement.y -= 1.f;
+    }
+    if(isMovingDown)
+    {
+        movement.y += 1.f;
+    }
+    if(isMovingLeft)
+    {
+        movement.x -= 1.f;
+    }
+    if(isMovingRight)
+    {
+        movement.x += 1.f;
+    }
+    
+    player.move(movement * deltaTime.asSeconds());
+}
+
+Game::render()
+{
+    window.clear();
+    window.draw(playerSprite);
+    window.display();
+}
+
+int Game::run()
+{   
+    sf::Clock clock;
+    sf::Time timeSinceLastUpdate = sf::Time::Zero;
+    // closing the window terminates the application
+    while(window.isOpen())
+    {
+        timeSinceLastUpdate += clock.restart();
+        while(timeSinceLastUpdate > timePerFrame)
+        {
+            timeSinceLastUpdate -= timePerFrame;
+            processEvents();
+            update(timePerFrame);
+        }
+        render();
     }
     
     return SUCCESS;
+}
+
+void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed)
+{
+    switch(key)
+    {
+        case sf::Keyboard::W:
+            isMovingUp = isPressed;
+            break;
+        case sf::Keyboard::S:
+            isMovingDown = isPressed;
+            break;
+        case sf::Keyboard::A:
+            isMovingLeft = isPressed;
+            break;
+        case sf::Keyboard::D:
+            isMovingRight = isPressed;
+            break;
+    }
 }

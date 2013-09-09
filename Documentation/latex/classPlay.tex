@@ -1,0 +1,138 @@
+\hypertarget{classPlay}{\section{Play Class Reference}
+\label{classPlay}\index{Play@{Play}}
+}
+
+
+The \hyperlink{classPlay}{Play} class.  
+
+
+
+
+{\ttfamily \#include $<$play.\-hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classPlay_a6f7dd4d097454caef2e81fa94fe739d5}{$\sim$\-Play} ()
+\item 
+std\-::string \hyperlink{classPlay_a01e7b642c01dcd567185a7dbf351678e}{detect} (std\-::string file\-Name\-Image=\char`\"{}../level.\-png\char`\"{}, std\-::string file\-Name\-Level=\char`\"{}../level.\-txt\char`\"{}, float min\-Length=100.f, float min\-Gap=40.f, int min\-Vote=80, int skel\-Threshold=50, int canny\-Threshold1=40, int canny\-Threshold2=300, int canny\-Aperture\-Size=3, bool l2\-Gradient=true)
+\begin{DoxyCompactList}\small\item\em Calls all neccessary functions to detect the lines in an image and writes them to a text file. \end{DoxyCompactList}\item 
+int \hyperlink{classPlay_a8c5e85cf9ee9da5c1ff812aaa0558a5a}{play} (std\-::string file\-Name\-Level=\char`\"{}../level.\-txt\char`\"{})
+\begin{DoxyCompactList}\small\item\em Builds a level based on a text file and instantiates a game object and calls it's run method. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{classPlay}{Play} $\ast$ \hyperlink{classPlay_acb42061faea4c74846f0e1ab668a6c61}{get\-Instance} ()
+\begin{DoxyCompactList}\small\item\em Used to access \hyperlink{classPlay}{Play} class which has a static constructor. \end{DoxyCompactList}\item 
+static void \hyperlink{classPlay_a189f1935376f3dcd47d9d05b8ff29e65}{destroy} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \hyperlink{classPlay}{Play} class. 
+
+This class acts as a wrapper for the detection and game functionalities of the program. It calls each in a seperate function. The class is implemented with the singleton pattern, meaning that the classes functions must be called via \hyperlink{classPlay_acb42061faea4c74846f0e1ab668a6c61}{Play\-::get\-Instance()}-\/$>$function. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classPlay_a6f7dd4d097454caef2e81fa94fe739d5}{\index{Play@{Play}!$\sim$\-Play@{$\sim$\-Play}}
+\index{$\sim$\-Play@{$\sim$\-Play}!Play@{Play}}
+\subsubsection[{$\sim$\-Play}]{\setlength{\rightskip}{0pt plus 5cm}Play\-::$\sim$\-Play (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classPlay_a6f7dd4d097454caef2e81fa94fe739d5}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classPlay_a189f1935376f3dcd47d9d05b8ff29e65}{\index{Play@{Play}!destroy@{destroy}}
+\index{destroy@{destroy}!Play@{Play}}
+\subsubsection[{destroy}]{\setlength{\rightskip}{0pt plus 5cm}void Play\-::destroy (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{classPlay_a189f1935376f3dcd47d9d05b8ff29e65}
+\hypertarget{classPlay_a01e7b642c01dcd567185a7dbf351678e}{\index{Play@{Play}!detect@{detect}}
+\index{detect@{detect}!Play@{Play}}
+\subsubsection[{detect}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string Play\-::detect (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{file\-Name\-Image = {\ttfamily \char`\"{}../level.png\char`\"{}}, }
+\item[{std\-::string}]{file\-Name\-Level = {\ttfamily \char`\"{}../level.txt\char`\"{}}, }
+\item[{float}]{min\-Length = {\ttfamily 100.f}, }
+\item[{float}]{min\-Gap = {\ttfamily 40.f}, }
+\item[{int}]{min\-Vote = {\ttfamily 80}, }
+\item[{int}]{skel\-Threshold = {\ttfamily 50}, }
+\item[{int}]{canny\-Threshold1 = {\ttfamily 40}, }
+\item[{int}]{canny\-Threshold2 = {\ttfamily 300}, }
+\item[{int}]{canny\-Aperture\-Size = {\ttfamily 3}, }
+\item[{bool}]{l2\-Gradient = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{classPlay_a01e7b642c01dcd567185a7dbf351678e}
+
+
+Calls all neccessary functions to detect the lines in an image and writes them to a text file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\-Name\-Image\mbox{[}in\mbox{]},\-:} & which image shall be used \\
+\hline
+{\em file\-Name\-Level\mbox{[}in\mbox{]},\-:} & how should the generated level file be named \\
+\hline
+{\em min\-Length\mbox{[}in\mbox{]},\-:} & minimal length for \hyperlink{classLineFinder}{Line\-Finder} class \\
+\hline
+{\em min\-Gap\mbox{[}in\mbox{]},\-:} & minimal gap for \hyperlink{classLineFinder}{Line\-Finder} class \\
+\hline
+{\em min\-Vote\mbox{[}in\mbox{]},\-:} & minimal amount of votes for \hyperlink{classLineFinder}{Line\-Finder} class \\
+\hline
+{\em skel\-Threshold,\-:} & minimal threshold for the generation of the skeleton of the image \\
+\hline
+{\em canny\-Threshold1\mbox{[}in\mbox{]},\-:} & minimal threshold for contour detection with the canny-\/edge filter. \\
+\hline
+{\em canny\-Threshold2\mbox{[}in\mbox{]},\-:} & maximum threshold for contour detection with the canny-\/edge filter. \\
+\hline
+{\em canny\-Aperture\-Size\mbox{[}in\mbox{]},\-:} & Aperture Size for the canny-\/edge detector. If set higher it should remove some noise, but due to skeleton this is unneccessary. \\
+\hline
+{\em l2\-Gradient\mbox{[}in\mbox{]},\-:} & If set to true, the calculation is more demanding, but also yields better results. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Path to the created level text file. 
+\end{DoxyReturn}
+\hypertarget{classPlay_acb42061faea4c74846f0e1ab668a6c61}{\index{Play@{Play}!get\-Instance@{get\-Instance}}
+\index{get\-Instance@{get\-Instance}!Play@{Play}}
+\subsubsection[{get\-Instance}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Play} $\ast$ Play\-::get\-Instance (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{classPlay_acb42061faea4c74846f0e1ab668a6c61}
+
+
+Used to access \hyperlink{classPlay}{Play} class which has a static constructor. 
+
+\begin{DoxyReturn}{Returns}
+pointer to a \hyperlink{classPlay}{Play} instance 
+\end{DoxyReturn}
+\hypertarget{classPlay_a8c5e85cf9ee9da5c1ff812aaa0558a5a}{\index{Play@{Play}!play@{play}}
+\index{play@{play}!Play@{Play}}
+\subsubsection[{play}]{\setlength{\rightskip}{0pt plus 5cm}int Play\-::play (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{file\-Name\-Level = {\ttfamily \char`\"{}../level.txt\char`\"{}}}
+\end{DoxyParamCaption}
+)}}\label{classPlay_a8c5e85cf9ee9da5c1ff812aaa0558a5a}
+
+
+Builds a level based on a text file and instantiates a game object and calls it's run method. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\-Name\-Level\mbox{[}in\mbox{]},\-:} & Specifies which level file to use. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Error/\-Success Code 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{play_8hpp}{play.\-hpp}\item 
+\hyperlink{play_8cpp}{play.\-cpp}\end{DoxyCompactItemize}

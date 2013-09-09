@@ -1,0 +1,374 @@
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/TeX Live for SUSE Linux) (format=latex 2013.8.28)  29 AUG 2013 22:09
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**main_8cpp.tex
+(./main_8cpp.tex
+LaTeX2e <2011/06/27>
+Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, ge
+rman-x-2011-07-01, ngerman-x-2011-07-01, afrikaans, ancientgreek, ibycus, arabi
+c, armenian, basque, bulgarian, catalan, pinyin, coptic, croatian, czech, danis
+h, dutch, ukenglish, usenglishmax, esperanto, estonian, ethiopic, farsi, finnis
+h, french, friulan, galician, german, ngerman, swissgerman, monogreek, greek, h
+ungarian, icelandic, assamese, bengali, gujarati, hindi, kannada, malayalam, ma
+rathi, oriya, panjabi, tamil, telugu, indonesian, interlingua, irish, italian, 
+kurmanji, lao, latin, latvian, lithuanian, mongolian, mongolianlmc, bokmal, nyn
+orsk, polish, portuguese, romanian, romansh, russian, sanskrit, serbian, serbia
+nc, slovak, slovenian, spanish, swedish, turkish, turkmen, ukrainian, uppersorb
+ian, welsh, loaded.
+! Undefined control sequence.
+l.1 \hypertarget
+                {main_8cpp}{\section{main.\-cpp File Reference}
+? 
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1 \hypertarget{m
+                  ain_8cpp}{\section{main.\-cpp File Reference}
+? 
+Missing character: There is no m in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.1 \hypertarget{main_
+                      8cpp}{\section{main.\-cpp File Reference}
+? 
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 1.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 1.
+! Extra }, or forgotten $.
+l.1 \hypertarget{main_8cpp}
+                           {\section{main.\-cpp File Reference}
+? 
+! Undefined control sequence.
+l.1 \hypertarget{main_8cpp}{\section
+                                    {main.\-cpp File Reference}
+? 
+Missing character: There is no - in font nullfont!
+
+! LaTeX Error: Command \ttfamily invalid in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4 {\ttfamily
+               \#include $<$iostream$>$}\\*
+? 
+! Missing } inserted.
+<inserted text> 
+                }
+l.4 {\ttfamily \#include $
+                          <$iostream$>$}\\*
+? 
+Missing character: There is no < in font nullfont!
+Missing character: There is no > in font nullfont!
+! Extra }, or forgotten $.
+<recently read> }
+                 
+l.4 {\ttfamily \#include $<$iostream$>$}
+                                        \\*
+? 
+
+! LaTeX Error: Command \ttfamily invalid in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.5 {\ttfamily
+               \#include $<$string$>$}\\*
+? 
+! Missing } inserted.
+<inserted text> 
+                }
+l.5 {\ttfamily \#include $
+                          <$string$>$}\\*
+? 
+Missing character: There is no < in font nullfont!
+Missing character: There is no > in font nullfont!
+! Extra }, or forgotten $.
+<recently read> }
+                 
+l.5 {\ttfamily \#include $<$string$>$}
+                                      \\*
+? 
+
+! LaTeX Error: Command \ttfamily invalid in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.6 {\ttfamily
+               \#include \char`\"{}linefinder.\-hpp\char`\"{}}\\*
+? 
+
+! LaTeX Error: Command \ttfamily invalid in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.7 {\ttfamily
+               \#include $<$opencv2/opencv.\-hpp$>$}\\*
+? 
+! Missing } inserted.
+<inserted text> 
+                }
+l.7 {\ttfamily \#include $
+                          <$opencv2/opencv.\-hpp$>$}\\*
+? 
+Missing character: There is no < in font nullfont!
+Missing character: There is no - in font nullfont!
+Missing character: There is no > in font nullfont!
+! Extra }, or forgotten $.
+<recently read> }
+                 
+l.7 ...amily \#include $<$opencv2/opencv.\-hpp$>$}
+                                                  \\*
+? 
+
+! LaTeX Error: Command \ttfamily invalid in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.8 {\ttfamily
+               \#include $<$opencv2/highgui/highgui.\-hpp$>$}\\*
+? 
+! Missing } inserted.
+<inserted text> 
+                }
+l.8 {\ttfamily \#include $
+                          <$opencv2/highgui/highgui.\-hpp$>$}\\*
+? 
+Missing character: There is no < in font nullfont!
+Missing character: There is no - in font nullfont!
+Missing character: There is no > in font nullfont!
+! Extra }, or forgotten $.
+<recently read> }
+                 
+l.8 ...nclude $<$opencv2/highgui/highgui.\-hpp$>$}
+                                                  \\*
+? 
+
+! LaTeX Error: Command \ttfamily invalid in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.9 {\ttfamily
+               \#include $<$opencv2/core/core.\-hpp$>$}\\*
+? 
+! Missing } inserted.
+<inserted text> 
+                }
+l.9 {\ttfamily \#include $
+                          <$opencv2/core/core.\-hpp$>$}\\*
+? 
+Missing character: There is no < in font nullfont!
+Missing character: There is no - in font nullfont!
+Missing character: There is no > in font nullfont!
+! Extra }, or forgotten $.
+<recently read> }
+                 
+l.9 ...ly \#include $<$opencv2/core/core.\-hpp$>$}
+                                                  \\*
+? 
+! Undefined control sequence.
+<recently read> \subsection 
+                            
+l.10 \subsection
+                *{Functions}
+? 
+
+! LaTeX Error: Environment DoxyCompactItemize undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.11 \begin{DoxyCompactItemize}
+                               
+? 
+
+! LaTeX Error: Command \item invalid in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.12 \item
+          
+? 
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.13 i
+      nt \hyperlink{main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main} ()
+? 
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.13 i
+      nt \hyperlink{main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main} ()
+? 
+
+! LaTeX Error: Lonely \item--perhaps a missing list environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.13 i
+      nt \hyperlink{main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main} ()
+? 
+! Interruption.
+\GenericError  ...                                
+                                                  \endgroup 
+l.13 i
+      nt \hyperlink{main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main} ()
+? 
+! Undefined control sequence.
+l.13 int \hyperlink
+                   {main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main} ()
+? 
+
+! LaTeX Error: \begin{document} ended by \end{DoxyCompactItemize}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.14 \end{DoxyCompactItemize}
+                             
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.15 
+     
+? 
+
+Overfull \hbox (227.02303pt too wide) in paragraph at lines 1--15
+[]$[]\OML/cmm/m/it/10 cpp[][]$$iostream$$ 
+ []
+
+
+Overfull \hbox (68.5386pt too wide) in paragraph at lines 1--15
+[]$$\OML/cmm/m/it/10 string$$ 
+ []
+
+
+Overfull \hbox (116.27557pt too wide) in paragraph at lines 1--15
+[] 
+ []
+
+
+Overfull \hbox (113.79382pt too wide) in paragraph at lines 1--15
+[]$$\OML/cmm/m/it/10 opencv\OT1/cmr/m/n/10 2\OML/cmm/m/it/10 =opencv:
+ []
+
+
+Overfull \hbox (15.82408pt too wide) in paragraph at lines 1--15
+\OML/cmm/m/it/10 hpp$$ 
+ []
+
+
+Overfull \hbox (157.51303pt too wide) in paragraph at lines 1--15
+[]$$\OML/cmm/m/it/10 opencv\OT1/cmr/m/n/10 2\OML/cmm/m/it/10 =highgui=highgui:
+ []
+
+
+Overfull \hbox (15.82408pt too wide) in paragraph at lines 1--15
+\OML/cmm/m/it/10 hpp$$ 
+ []
+
+
+Overfull \hbox (125.96402pt too wide) in paragraph at lines 1--15
+[]$$\OML/cmm/m/it/10 opencv\OT1/cmr/m/n/10 2\OML/cmm/m/it/10 =core=core:
+ []
+
+
+Overfull \hbox (15.82408pt too wide) in paragraph at lines 1--15
+\OML/cmm/m/it/10 hpp$$ 
+ []
+
+
+Overfull \hbox (304.7811pt too wide) in paragraph at lines 1--15
+\OMS/cmsy/m/n/10 ^^C[]\OML/cmm/m/it/10 int[][]\OT1/cmr/m/n/10 ()$ 
+ []
+
+! Undefined control sequence.
+l.17 \subsection
+                {Function Documentation}
+? 
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.17 \subsection{F
+                  unction Documentation}
+? 
+Missing character: There is no F in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no D in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
+! Undefined control sequence.
+l.18 \hypertarget
+                 {main_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{\index{main.\...
+
+? 
+Missing character: There is no m in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+! Missing $ inserted.
+<inserted text> 
+                $
+l.18 \hypertarget{main_
+                       8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{\index{main.\...
+
+? 
+! Extra }, or forgotten $.
+l.18 ...in_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}
+                                                  {\index{main.\

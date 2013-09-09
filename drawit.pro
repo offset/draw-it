@@ -5,8 +5,9 @@ CONFIG -= qt
 
 SOURCES += main.cpp \
     linefinder.cpp \
-    game.cpp \
-    entities.cpp
+    entities.cpp \
+    play.cpp \
+    game.cpp
 
 QMAKE_CXXFLAGS += -std=c++11
 
@@ -40,5 +41,7 @@ LIBS += -L/usr/local/lib \
 
 HEADERS += \
     linefinder.hpp \
+    play.hpp \
+    entities.hpp \
     game.hpp \
-    entities.h
+    errcodes.h

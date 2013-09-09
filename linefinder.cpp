@@ -169,12 +169,16 @@ int LineFinder::saveToDisk(cv::Mat image, std::string fileName)
         uchar* pixel = level.ptr<uchar>(row);
         for (int col = 0; col < image.cols; ++col)
         {
-            int asdf = static_cast<int>(*pixel);
+            // int asdf = static_cast<int>(*pixel);
             if (asdf != 0)
             {
+                file << "1";
+                // testing purposes
                 std::cout << "hello" << std::endl;
+            } else
+            {
+                file << "0";
             }
-            file << static_cast<int>(*pixel);
 //            if (static_cast<int>(pixel[0]) != 255)
 //            {
 //                file << 1;
