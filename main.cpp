@@ -12,7 +12,7 @@ using namespace std;
 
 int main()
 {   
-    std::string fileNameLevel = Play::getInstance()->detect();
+    std::vector<std::vector<int> > = Play::getInstance()->detect();
     Play::getInstance()->destroy();
     Play::getInstance()->play(fileNameLevel);
 }

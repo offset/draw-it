@@ -50,8 +50,7 @@ public:
      * \param l2Gradient[in]: If set to true, the calculation is more demanding, but also yields better results.
      * \return Path to the created level text file.
      */
-    std::string detect(std::string fileNameImage = "../level.png",
-                       std::string fileNameLevel = "../level.txt",
+    std::vector<std::vector<int> > detect(std::string fileNameImage = "../level.png",
                        float minLength = 100.f, 
                        float minGap = 40.f, 
                        int minVote = 80,
@@ -64,10 +63,10 @@ public:
     
     /*!
      * \brief Builds a level based on a text file and instantiates a game object and calls it's run method.
-     * \param fileNameLevel[in]: Specifies which level file to use.
+     * \param vector which contains the lines
      * \return Error/Success Code
      */
-    int play(std::string fileNameLevel = "../level.txt");
+    int play(std::vector<std::vector<int> > levelFile);
     
     /*!
      * \brief Builds a level based on the contents of the text file.
@@ -76,7 +75,7 @@ public:
      */
     
 private:
-    int buildLevel(std::string fileNameLevel);
+    int buildLevel(std::vector<std::vector<int> > levelFile);
 };
 
 #endif // PLAY_H

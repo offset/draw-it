@@ -2,6 +2,7 @@
 #define LINEFINDER_H
 #include <opencv2/opencv.hpp>
 #include <fstream>
+#include <vector>
 
 class LineFinder
 {
@@ -66,8 +67,8 @@ public:
      *
      * \param image[in]: The image to be saved
      *
-     * @return error/success code
+     * @return vector containing the line information.
      */
-    int saveToDisk(cv::Mat image, std::string fileName = "../level.txt");
+    std::vector<std::vector<int> > saveToVec(cv::Mat image);
 };
 #endif // LINEFINDER_H

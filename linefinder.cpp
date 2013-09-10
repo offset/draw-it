@@ -150,12 +150,14 @@ cv::Mat LineFinder::createSkeleton(cv::Mat& image, int threshold)
 }
 
 
-int LineFinder::saveToDisk(cv::Mat image, std::string fileName)
+std::vector<std::vector<int> > LineFinder::saveToVec(cv::Mat image)
 {   
-    std::ofstream file(fileName);
-    
-    // will be implemented later
-    //cv::resize(image, image, cv::Size());
+    std::vector<std::vector<int> > levelFile;
+    for (int i = 0; i < image.rows; ++i)
+    {
+        std::vector<int> row(image.cols);
+        levelFile.push_back(row);
+    }
     
     cv::Mat level = image;
     if (level.channels() != 1)
@@ -169,25 +171,14 @@ int LineFinder::saveToDisk(cv::Mat image, std::string fileName)
         uchar* pixel = level.ptr<uchar>(row);
         for (int col = 0; col < image.cols; ++col)
         {
-            // int asdf = static_cast<int>(*pixel);
-            if (asdf != 0)
+            if(static_cast<int>(*pixel) != 0)
             {
-                file << "1";
-                // testing purposes
-                std::cout << "hello" << std::endl;
+                levelFile[row][col] = 1;
             } else
             {
-                file << "0";
+                levelFile[row][col] = 0;
             }
-//            if (static_cast<int>(pixel[0]) != 255)
-//            {
-//                file << 1;
-//            } else
-//            {
-//                file << 0;
-//            }
         }
-        file << std::endl;
     }
-    file.close();
+    return levelFile;
 }

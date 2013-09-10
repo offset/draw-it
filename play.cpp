@@ -29,8 +29,7 @@ void Play::destroy()
     }
 }
 
-std::string Play::detect(std::string fileNameImage,
-                   std::string fileNameLevel,
+std::vector<std::vector<int> > Play::detect(std::string fileNameImage,
                    float minLength , 
                    float minGap, 
                    int minVote,
@@ -65,40 +64,21 @@ std::string Play::detect(std::string fileNameImage,
     std::vector<cv::Vec4i> lines = finder.findLines(contours);
     finder.drawDetectedLines(image, cv::Scalar(0,0,0));
     
-//    cv::Mat drawImage2(image.rows,image.cols, CV_8UC3,cv::Scalar(255,255,255));
-//    finder.drawDetectedLines(drawImage2, cv::Scalar(0,0,0));
-//    cv::imwrite("lines.jpg", drawImage2);
+    std::vector<std::vector<int> > levelFile = finder.saveToVec(image);
     
-    finder.saveToDisk(image, fileNameLevel);
-    
-    return fileNameLevel;
+    return levelFile;
 }
 
-int Play::buildLevel(std::string fileNameLevel)
+int Play::buildLevel(std::vector<std::vector<int> > levelFile)
 {
-    // loading text file which contains instructions for building the level
-    std::ifstream level(fileNameLevel);
-    if (!level.is_open())
-    {
-        std::cout << "Could not read level file." << std::endl
-                  << "Now exiting." << std::endl;
-        return READ_ERROR;
-    }
-    std::string line;
     sf::Texture map;
     map.loadFromFile("assets/castleCenter_rounded.png");
-    while(std::getline(level, line))
-    {
-        if(line == "1")
-        {
-            // to be continued
-        }
-    }
+    // to be continued
 }
 
-int Play::play(std::string fileNameLevel)
+int Play::play(std::vector<std::vector<int> > levelFile)
 {
-    buildLevel(fileNameLevel);
+    buildLevel(levelFile);
     Game game;
     int success = game.run();
     return success;
