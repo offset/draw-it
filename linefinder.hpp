@@ -65,9 +65,20 @@ public:
      *
      * \brief Stores the image in a format SFML can read for further processing.
      *
+     * Firstly the function resizes a copy of the image (same size) and the lines depending on their size:
+     * < 512px: no rescale
+     * up to 1024: scale 2
+     * up to 2048: scale 4
+     * > 2048: scale 6
+     * NOTE: These limits and scales were chosen quite randomly and may change in the next revision.
+     * Then the lines are drawn on the (grayscale) copy and a sort of a 'threshold' is performed:
+     * If the pixel value is unequal 0, the corresponding value in a vector of a vector of int (represents the image)
+     * is set to 1 (line), otherwise to 0.
+     * This may change in the future because a certain number could be used for certain terrain objects (walls, obstacles, etc.).
+     *
      * \param image[in]: The image to be saved
      *
-     * @return vector containing the line information.
+     * @return vector of a vector of int containing the line information.
      */
     std::vector<std::vector<int> > saveToVec(cv::Mat image);
 };

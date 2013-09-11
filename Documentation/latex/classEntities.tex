@@ -8,7 +8,7 @@ The entities class.
 
 
 
-{\ttfamily \#include $<$entities.\-h$>$}
+{\ttfamily \#include $<$entities.\-hpp$>$}
 
 Inheritance diagram for Entities\-:\begin{figure}[H]
 \begin{center}
@@ -21,11 +21,19 @@ Inheritance diagram for Entities\-:\begin{figure}[H]
 \item 
 \hyperlink{classEntities_a0632e3790f40fec4e831800d48ff491b}{Entities} ()
 \item 
-void \hyperlink{classEntities_a10bf20192cbd1316f6b743aa2f4344ec}{set\-Position} (sf\-::\-Vector2f pos)
+\hyperlink{classEntities_af131357f6b31e9e9bec551a5afa57dbd}{Entities} (sf\-::\-Vector2f pos)
 \item 
-void \hyperlink{classEntities_a86f93c9f2b2ece831234f274554de431}{set\-Position} (float px, float py)
+\hyperlink{classEntities_a2b523e8705f7a102b466efad8d3162ba}{Entities} (float px, float py)
 \item 
-sf\-::\-Vector2f \hyperlink{classEntities_a7cf4315e835d2a68b91151f32fddeff7}{get\-Position} () const 
+virtual \hyperlink{classEntities_ae9ab15aedaf164a61050f64f1623b94e}{$\sim$\-Entities} ()
+\item 
+virtual void \hyperlink{classEntities_a10bf20192cbd1316f6b743aa2f4344ec}{set\-Position} (sf\-::\-Vector2f pos)
+\item 
+virtual void \hyperlink{classEntities_a86f93c9f2b2ece831234f274554de431}{set\-Position} (float px, float py)
+\item 
+virtual sf\-::\-Vector2f \hyperlink{classEntities_a7cf4315e835d2a68b91151f32fddeff7}{get\-Position} () const 
+\item 
+virtual void \hyperlink{classEntities_a83e21f073e6792a036b9bd9388b0a083}{move} (sf\-::\-Vector2f movement)
 \end{DoxyCompactItemize}
 
 
@@ -42,6 +50,28 @@ This is a base class for different entities appearing in the game. It only speci
 {}
 \end{DoxyParamCaption}
 )}}\label{classEntities_a0632e3790f40fec4e831800d48ff491b}
+\hypertarget{classEntities_af131357f6b31e9e9bec551a5afa57dbd}{\index{Entities@{Entities}!Entities@{Entities}}
+\index{Entities@{Entities}!Entities@{Entities}}
+\subsubsection[{Entities}]{\setlength{\rightskip}{0pt plus 5cm}Entities\-::\-Entities (
+\begin{DoxyParamCaption}
+\item[{sf\-::\-Vector2f}]{pos}
+\end{DoxyParamCaption}
+)}}\label{classEntities_af131357f6b31e9e9bec551a5afa57dbd}
+\hypertarget{classEntities_a2b523e8705f7a102b466efad8d3162ba}{\index{Entities@{Entities}!Entities@{Entities}}
+\index{Entities@{Entities}!Entities@{Entities}}
+\subsubsection[{Entities}]{\setlength{\rightskip}{0pt plus 5cm}Entities\-::\-Entities (
+\begin{DoxyParamCaption}
+\item[{float}]{px, }
+\item[{float}]{py}
+\end{DoxyParamCaption}
+)}}\label{classEntities_a2b523e8705f7a102b466efad8d3162ba}
+\hypertarget{classEntities_ae9ab15aedaf164a61050f64f1623b94e}{\index{Entities@{Entities}!$\sim$\-Entities@{$\sim$\-Entities}}
+\index{$\sim$\-Entities@{$\sim$\-Entities}!Entities@{Entities}}
+\subsubsection[{$\sim$\-Entities}]{\setlength{\rightskip}{0pt plus 5cm}virtual Entities\-::$\sim$\-Entities (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classEntities_ae9ab15aedaf164a61050f64f1623b94e}
 
 
 \subsection{Member Function Documentation}
@@ -51,14 +81,25 @@ This is a base class for different entities appearing in the game. It only speci
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-) const}}\label{classEntities_a7cf4315e835d2a68b91151f32fddeff7}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classEntities_a7cf4315e835d2a68b91151f32fddeff7}
+\hypertarget{classEntities_a83e21f073e6792a036b9bd9388b0a083}{\index{Entities@{Entities}!move@{move}}
+\index{move@{move}!Entities@{Entities}}
+\subsubsection[{move}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Entities\-::move (
+\begin{DoxyParamCaption}
+\item[{sf\-::\-Vector2f}]{movement}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classEntities_a83e21f073e6792a036b9bd9388b0a083}
+
+
+Reimplemented in \hyperlink{classPlayer_af7dc81f2576b432bc20e4040bb111422}{Player}.
+
 \hypertarget{classEntities_a10bf20192cbd1316f6b743aa2f4344ec}{\index{Entities@{Entities}!set\-Position@{set\-Position}}
 \index{set\-Position@{set\-Position}!Entities@{Entities}}
 \subsubsection[{set\-Position}]{\setlength{\rightskip}{0pt plus 5cm}void Entities\-::set\-Position (
 \begin{DoxyParamCaption}
 \item[{sf\-::\-Vector2f}]{pos}
 \end{DoxyParamCaption}
-)}}\label{classEntities_a10bf20192cbd1316f6b743aa2f4344ec}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classEntities_a10bf20192cbd1316f6b743aa2f4344ec}
 \hypertarget{classEntities_a86f93c9f2b2ece831234f274554de431}{\index{Entities@{Entities}!set\-Position@{set\-Position}}
 \index{set\-Position@{set\-Position}!Entities@{Entities}}
 \subsubsection[{set\-Position}]{\setlength{\rightskip}{0pt plus 5cm}void Entities\-::set\-Position (
@@ -66,10 +107,10 @@ This is a base class for different entities appearing in the game. It only speci
 \item[{float}]{px, }
 \item[{float}]{py}
 \end{DoxyParamCaption}
-)}}\label{classEntities_a86f93c9f2b2ece831234f274554de431}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classEntities_a86f93c9f2b2ece831234f274554de431}
 
 
 The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-\hyperlink{entities_8h}{entities.\-h}\item 
+\hyperlink{entities_8hpp}{entities.\-hpp}\item 
 \hyperlink{entities_8cpp}{entities.\-cpp}\end{DoxyCompactItemize}

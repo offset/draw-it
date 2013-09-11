@@ -12,3 +12,9 @@ the following is required:
  - The SFML library and header files (I am using version 2.1)
  - A c++11 compatible c++ compiler (I am using the g++ which is part of the gcc)
 I havent't build the program without QT-Creator yet, so I can't give you any further information.
+
+Building the Documentation
+==========================
+
+If you want to create the documentation yourself, which is included in the source code, you need the tool 'doxygen' (http://www.stack.nl/~dimitri/doxygen/).
+A config file is alreay included in the repo. Just run doxygen like 'doxygen config' and there is a documentation in html and latex created.

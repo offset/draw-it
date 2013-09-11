@@ -152,6 +152,61 @@ cv::Mat LineFinder::createSkeleton(cv::Mat& image, int threshold)
 
 std::vector<std::vector<int> > LineFinder::saveToVec(cv::Mat image)
 {   
+    cv::Mat level;
+    image.copyTo(level);
+    level.setTo(cv::Scalar(255,255,255));
+    // scaling level size
+    if(level.cols <= 1024 && level.cols >= 512)
+    {
+        // scale 2
+        int scale = 2;
+        cv::resize(level, level, cv::Size(0,0), scale, scale, cv::INTER_NEAREST);
+        // scaling line sizes
+        // how many elements are there in Vec4i
+        uint vecSize = 4;
+        for (auto it = lines.begin(); it != lines.end(); ++it)
+        {
+            for (uint i = 0; i < vecSize; ++i)
+            {
+                (*it)[i] /= scale;
+            }
+        }
+    } else if (level.cols > 1024 && level.cols <= 2048)
+    {
+        // scale 4
+        int scale = 4;
+        cv::resize(level, level, cv::Size(0,0), scale, scale, cv::INTER_NEAREST);
+        // scaling line sizes
+        // how many elements are there in Vec4i
+        uint vecSize = 4;
+        for (auto it = lines.begin(); it != lines.end(); ++it)
+        {
+            for (uint i = 0; i < vecSize; ++i)
+            {
+                (*it)[i] /= scale;
+            }
+        }
+    } else if (level.cols > 2048)
+    {
+        // scale 6
+        int scale = 6;
+        cv::resize(level, level, cv::Size(0,0), scale, scale, cv::INTER_NEAREST);
+        // scaling line sizes
+        // how many elements are there in Vec4i
+        uint vecSize = 4;
+        for (auto it = lines.begin(); it != lines.end(); ++it)
+        {
+            for (uint i = 0; i < vecSize; ++i)
+            {
+                (*it)[i] /= scale;
+            }
+        }
+    } else if (level.cols < 512)
+    {
+        // scale 1
+        // nothing to do
+    }
+    
     std::vector<std::vector<int> > levelFile;
     for (int i = 0; i < image.rows; ++i)
     {
@@ -159,7 +214,6 @@ std::vector<std::vector<int> > LineFinder::saveToVec(cv::Mat image)
         levelFile.push_back(row);
     }
     
-    cv::Mat level = image;
     if (level.channels() != 1)
     {
         cv::cvtColor(level, level, cv::COLOR_BGR2GRAY);

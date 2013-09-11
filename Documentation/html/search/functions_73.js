@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['savetodisk',['saveToDisk',['../classLineFinder.html#a9dc74b9d8732aefeefdf8d439e1e043e',1,'LineFinder']]],
+  ['savetovec',['saveToVec',['../classLineFinder.html#ad2dfe1367c2dd671f23a49304fe5240b',1,'LineFinder']]],
   ['setaccresolution',['setAccResolution',['../classLineFinder.html#a4ffb60e7c12143a6824b884239243da9',1,'LineFinder']]],
   ['setjumpheight',['setJumpHeight',['../classPlayer.html#aa04cc1ac4ae2b43bfb841929e3d59315',1,'Player']]],
   ['setjumptime',['setJumpTime',['../classPlayer.html#a01c63b9632f8a4f679f2e4cd704f14b9',1,'Player']]],

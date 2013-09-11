@@ -87,48 +87,46 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define PLAY_H</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="linefinder_8hpp.html">linefinder.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="game_8h.html">game.h</a>&quot;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="game_8hpp.html">game.hpp</a>&quot;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">// error/success codes</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno"><a class="code" href="play_8hpp.html#aa90cac659d18e8ef6294c7ae337f6b58">    8</a></span>&#160;<span class="preprocessor">#define SUCCESS 0</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno"><a class="code" href="play_8hpp.html#ac41734365e76e2fcab439c31c28ea28c">    9</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define READ_ERROR -1</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00019"></a><span class="lineno"><a class="code" href="classPlay.html">   19</a></span>&#160;<span class="keyword">class </span><a class="code" href="classPlay.html" title="The Play class.">Play</a></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;{</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <a class="code" href="classPlay.html#a6f7dd4d097454caef2e81fa94fe739d5">~Play</a>();</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keyword">static</span> <a class="code" href="classPlay.html" title="The Play class.">Play</a>* singleton;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <a class="code" href="classLineFinder.html">LineFinder</a>* finder = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <a class="code" href="classPlay.html" title="The Play class.">Play</a>()</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    {</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        finder = <span class="keyword">new</span> <a class="code" href="classLineFinder.html">LineFinder</a>;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    }</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <a class="code" href="classPlay.html" title="The Play class.">Play</a>(<span class="keyword">const</span> <a class="code" href="classPlay.html" title="The Play class.">Play</a>&amp; copy) {}</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <a class="code" href="classPlay.html" title="The Play class.">Play</a>&amp; operator=(<span class="keyword">const</span> <a class="code" href="classPlay.html" title="The Play class.">Play</a>&amp; copy) {<span class="keywordflow">return</span> *<span class="keyword">this</span>;}</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keyword">static</span> <a class="code" href="classPlay.html" title="The Play class.">Play</a>* <a class="code" href="classPlay.html#acb42061faea4c74846f0e1ab668a6c61" title="Used to access Play class which has a static constructor.">getInstance</a>();</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classPlay.html#a189f1935376f3dcd47d9d05b8ff29e65">destroy</a>();</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    std::string <a class="code" href="classPlay.html#a01e7b642c01dcd567185a7dbf351678e" title="Calls all neccessary functions to detect the lines in an image and writes them to a text file...">detect</a>(std::string fileNameImage = <span class="stringliteral">&quot;../level.png&quot;</span>,</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                       std::string fileNameLevel = <span class="stringliteral">&quot;../level.txt&quot;</span>,</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                       <span class="keywordtype">float</span> minLength = 100.f, </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                       <span class="keywordtype">float</span> minGap = 40.f, </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;                       <span class="keywordtype">int</span> minVote = 80,</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;                       <span class="keywordtype">int</span> skelThreshold = 50,</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;                       <span class="keywordtype">int</span> cannyThreshold1 = 40,</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                       <span class="keywordtype">int</span> cannyThreshold2 = 300,</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;                       <span class="keywordtype">int</span> cannyApertureSize = 3,</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                       <span class="keywordtype">bool</span> l2Gradient = <span class="keyword">true</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;                       );</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classPlay.html#a8c5e85cf9ee9da5c1ff812aaa0558a5a" title="Builds a level based on a text file and instantiates a game object and calls it&#39;s run method...">play</a>(std::string fileNameLevel = <span class="stringliteral">&quot;../level.txt&quot;</span>);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;};</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor">#endif // PLAY_H</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="code" href="classPlay.html">   15</a></span>&#160;<span class="keyword">class </span><a class="code" href="classPlay.html" title="The Play class.">Play</a></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;{</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <a class="code" href="classPlay.html#a6f7dd4d097454caef2e81fa94fe739d5">~Play</a>();</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keyword">static</span> <a class="code" href="classPlay.html" title="The Play class.">Play</a>* singleton;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <a class="code" href="classLineFinder.html">LineFinder</a>* finder = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <a class="code" href="classPlay.html" title="The Play class.">Play</a>()</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    {</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        finder = <span class="keyword">new</span> <a class="code" href="classLineFinder.html">LineFinder</a>;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    }</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <a class="code" href="classPlay.html" title="The Play class.">Play</a>(<span class="keyword">const</span> <a class="code" href="classPlay.html" title="The Play class.">Play</a>&amp; copy) {}</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <a class="code" href="classPlay.html" title="The Play class.">Play</a>&amp; operator=(<span class="keyword">const</span> <a class="code" href="classPlay.html" title="The Play class.">Play</a>&amp; copy) {<span class="keywordflow">return</span> *<span class="keyword">this</span>;}</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keyword">static</span> <a class="code" href="classPlay.html" title="The Play class.">Play</a>* <a class="code" href="classPlay.html#acb42061faea4c74846f0e1ab668a6c61" title="Used to access Play class which has a static constructor.">getInstance</a>();</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classPlay.html#a189f1935376f3dcd47d9d05b8ff29e65">destroy</a>();</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    std::vector&lt;std::vector&lt;int&gt; &gt; <a class="code" href="classPlay.html#a6c5115ce3ff13935a5792bbfd52fecd9" title="Calls all neccessary functions to detect the lines in an image and writes them to a text file...">detect</a>(std::string fileNameImage = <span class="stringliteral">&quot;../level.png&quot;</span>,</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                       <span class="keywordtype">float</span> minLength = 100.f, </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;                       <span class="keywordtype">float</span> minGap = 40.f, </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                       <span class="keywordtype">int</span> minVote = 80,</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                       <span class="keywordtype">int</span> skelThreshold = 50,</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                       <span class="keywordtype">int</span> cannyThreshold1 = 40,</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                       <span class="keywordtype">int</span> cannyThreshold2 = 300,</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                       <span class="keywordtype">int</span> cannyApertureSize = 3,</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;                       <span class="keywordtype">bool</span> l2Gradient = <span class="keyword">true</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;                       );</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classPlay.html#a3110107a17daf5459841feac52303768" title="Builds a level based on a text file and instantiates a game object and calls it&#39;s run method...">play</a>(std::vector&lt;std::vector&lt;int&gt; &gt; levelFile);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    </div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keywordtype">int</span> buildLevel(std::vector&lt;std::vector&lt;int&gt; &gt; levelFile);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;};</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor">#endif // PLAY_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

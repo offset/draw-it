@@ -112,9 +112,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad9aa51b43bb797b324305d3c89f5145f"><td class="memItemLeft" align="right" valign="top">cv::Mat&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLineFinder.html#ad9aa51b43bb797b324305d3c89f5145f">createSkeleton</a> (cv::Mat &amp;image, int threshold=127)</td></tr>
 <tr class="memdesc:ad9aa51b43bb797b324305d3c89f5145f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a refined image by removing outer pixels of the structures in the image.  <a href="#ad9aa51b43bb797b324305d3c89f5145f"></a><br/></td></tr>
 <tr class="separator:ad9aa51b43bb797b324305d3c89f5145f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9dc74b9d8732aefeefdf8d439e1e043e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLineFinder.html#a9dc74b9d8732aefeefdf8d439e1e043e">saveToDisk</a> (cv::Mat image, std::string fileName=&quot;../level.txt&quot;)</td></tr>
-<tr class="memdesc:a9dc74b9d8732aefeefdf8d439e1e043e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores the image in a format SFML can read for further processing.  <a href="#a9dc74b9d8732aefeefdf8d439e1e043e"></a><br/></td></tr>
-<tr class="separator:a9dc74b9d8732aefeefdf8d439e1e043e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2dfe1367c2dd671f23a49304fe5240b"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLineFinder.html#ad2dfe1367c2dd671f23a49304fe5240b">saveToVec</a> (cv::Mat image)</td></tr>
+<tr class="memdesc:ad2dfe1367c2dd671f23a49304fe5240b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores the image in a format SFML can read for further processing.  <a href="#ad2dfe1367c2dd671f23a49304fe5240b"></a><br/></td></tr>
+<tr class="separator:ad2dfe1367c2dd671f23a49304fe5240b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="ac9a83317df7ff3d74a9add150962e849"></a>
@@ -258,34 +258,35 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a9dc74b9d8732aefeefdf8d439e1e043e"></a>
+<a class="anchor" id="ad2dfe1367c2dd671f23a49304fe5240b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int LineFinder::saveToDisk </td>
+          <td class="memname">std::vector&lt; std::vector&lt; int &gt; &gt; LineFinder::saveToVec </td>
           <td>(</td>
           <td class="paramtype">cv::Mat&#160;</td>
-          <td class="paramname"><em>image</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>image</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>fileName</em> = <code>&quot;../level.txt&quot;</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Stores the image in a format SFML can read for further processing. </p>
-<dl class="section author"><dt>Author</dt><dd>zemann <pre class="fragment">  \param image[in]: The image to be saved
+<dl class="section author"><dt>Author</dt><dd>zemann <pre class="fragment">  Firstly the function resizes a copy of the image (same size) and the lines depending on their size:
+  &lt; 512px: no rescale
+  up to 1024: scale 2
+  up to 2048: scale 4
+  &gt; 2048: scale 6
+  NOTE: These limits and scales were chosen quite randomly and may change in the next revision.
+  Then the lines are drawn on the (grayscale) copy and a sort of a 'threshold' is performed:
+  If the pixel value is unequal 0, the corresponding value in a vector of a vector of int (represents the image)
+  is set to 1 (line), otherwise to 0.
+  This may change in the future because a certain number could be used for certain terrain objects (walls, obstacles, etc.).
 
-  @return error/success code</pre> </dd></dl>
+  \param image[in]: The image to be saved
+
+  @return vector of a vector of int containing the line information.</pre> </dd></dl>
 
 </div>
 </div>

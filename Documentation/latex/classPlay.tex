@@ -15,9 +15,9 @@ The \hyperlink{classPlay}{Play} class.
 \item 
 \hyperlink{classPlay_a6f7dd4d097454caef2e81fa94fe739d5}{$\sim$\-Play} ()
 \item 
-std\-::string \hyperlink{classPlay_a01e7b642c01dcd567185a7dbf351678e}{detect} (std\-::string file\-Name\-Image=\char`\"{}../level.\-png\char`\"{}, std\-::string file\-Name\-Level=\char`\"{}../level.\-txt\char`\"{}, float min\-Length=100.f, float min\-Gap=40.f, int min\-Vote=80, int skel\-Threshold=50, int canny\-Threshold1=40, int canny\-Threshold2=300, int canny\-Aperture\-Size=3, bool l2\-Gradient=true)
+std\-::vector$<$ std\-::vector$<$ int $>$ $>$ \hyperlink{classPlay_a6c5115ce3ff13935a5792bbfd52fecd9}{detect} (std\-::string file\-Name\-Image=\char`\"{}../level.\-png\char`\"{}, float min\-Length=100.f, float min\-Gap=40.f, int min\-Vote=80, int skel\-Threshold=50, int canny\-Threshold1=40, int canny\-Threshold2=300, int canny\-Aperture\-Size=3, bool l2\-Gradient=true)
 \begin{DoxyCompactList}\small\item\em Calls all neccessary functions to detect the lines in an image and writes them to a text file. \end{DoxyCompactList}\item 
-int \hyperlink{classPlay_a8c5e85cf9ee9da5c1ff812aaa0558a5a}{play} (std\-::string file\-Name\-Level=\char`\"{}../level.\-txt\char`\"{})
+int \hyperlink{classPlay_a3110107a17daf5459841feac52303768}{play} (std\-::vector$<$ std\-::vector$<$ int $>$ $>$ level\-File)
 \begin{DoxyCompactList}\small\item\em Builds a level based on a text file and instantiates a game object and calls it's run method. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
@@ -51,12 +51,11 @@ This class acts as a wrapper for the detection and game functionalities of the p
 {}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [static]}}}\label{classPlay_a189f1935376f3dcd47d9d05b8ff29e65}
-\hypertarget{classPlay_a01e7b642c01dcd567185a7dbf351678e}{\index{Play@{Play}!detect@{detect}}
+\hypertarget{classPlay_a6c5115ce3ff13935a5792bbfd52fecd9}{\index{Play@{Play}!detect@{detect}}
 \index{detect@{detect}!Play@{Play}}
-\subsubsection[{detect}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string Play\-::detect (
+\subsubsection[{detect}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ std\-::vector$<$ int $>$ $>$ Play\-::detect (
 \begin{DoxyParamCaption}
 \item[{std\-::string}]{file\-Name\-Image = {\ttfamily \char`\"{}../level.png\char`\"{}}, }
-\item[{std\-::string}]{file\-Name\-Level = {\ttfamily \char`\"{}../level.txt\char`\"{}}, }
 \item[{float}]{min\-Length = {\ttfamily 100.f}, }
 \item[{float}]{min\-Gap = {\ttfamily 40.f}, }
 \item[{int}]{min\-Vote = {\ttfamily 80}, }
@@ -66,7 +65,7 @@ This class acts as a wrapper for the detection and game functionalities of the p
 \item[{int}]{canny\-Aperture\-Size = {\ttfamily 3}, }
 \item[{bool}]{l2\-Gradient = {\ttfamily true}}
 \end{DoxyParamCaption}
-)}}\label{classPlay_a01e7b642c01dcd567185a7dbf351678e}
+)}}\label{classPlay_a6c5115ce3ff13935a5792bbfd52fecd9}
 
 
 Calls all neccessary functions to detect the lines in an image and writes them to a text file. 
@@ -111,20 +110,20 @@ Used to access \hyperlink{classPlay}{Play} class which has a static constructor.
 \begin{DoxyReturn}{Returns}
 pointer to a \hyperlink{classPlay}{Play} instance 
 \end{DoxyReturn}
-\hypertarget{classPlay_a8c5e85cf9ee9da5c1ff812aaa0558a5a}{\index{Play@{Play}!play@{play}}
+\hypertarget{classPlay_a3110107a17daf5459841feac52303768}{\index{Play@{Play}!play@{play}}
 \index{play@{play}!Play@{Play}}
 \subsubsection[{play}]{\setlength{\rightskip}{0pt plus 5cm}int Play\-::play (
 \begin{DoxyParamCaption}
-\item[{std\-::string}]{file\-Name\-Level = {\ttfamily \char`\"{}../level.txt\char`\"{}}}
+\item[{std\-::vector$<$ std\-::vector$<$ int $>$ $>$}]{level\-File}
 \end{DoxyParamCaption}
-)}}\label{classPlay_a8c5e85cf9ee9da5c1ff812aaa0558a5a}
+)}}\label{classPlay_a3110107a17daf5459841feac52303768}
 
 
 Builds a level based on a text file and instantiates a game object and calls it's run method. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em file\-Name\-Level\mbox{[}in\mbox{]},\-:} & Specifies which level file to use. \\
+{\em vector} & which contains the lines \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}

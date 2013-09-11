@@ -89,7 +89,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="entities_8h_source.html">entities.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="entities_8hpp_source.html">entities.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for Player:</div>
 <div class="dyncontent">
@@ -102,10 +102,14 @@ Inheritance diagram for Player:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:affe0cc3cb714f6deb4e62f0c0d3f1fd8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPlayer.html#affe0cc3cb714f6deb4e62f0c0d3f1fd8">Player</a> ()</td></tr>
+<tr class="separator:affe0cc3cb714f6deb4e62f0c0d3f1fd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a590f9fa9624d8734027fa2b290fa909e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPlayer.html#a590f9fa9624d8734027fa2b290fa909e">Player</a> (sf::Vector2f pos)</td></tr>
 <tr class="separator:a590f9fa9624d8734027fa2b290fa909e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2d6910c46e7fdf375870da47ae3db5f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPlayer.html#ad2d6910c46e7fdf375870da47ae3db5f">Player</a> (float px, float py)</td></tr>
 <tr class="separator:ad2d6910c46e7fdf375870da47ae3db5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a749d2c00e1fe0f5c2746f7505a58c062"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPlayer.html#a749d2c00e1fe0f5c2746f7505a58c062">~Player</a> ()</td></tr>
+<tr class="separator:a749d2c00e1fe0f5c2746f7505a58c062"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a01c63b9632f8a4f679f2e4cd704f14b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPlayer.html#a01c63b9632f8a4f679f2e4cd704f14b9">setJumpTime</a> (float time)</td></tr>
 <tr class="separator:a01c63b9632f8a4f679f2e4cd704f14b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9165dbc42a8d434d4eb0c64251305855"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPlayer.html#a9165dbc42a8d434d4eb0c64251305855">getJumpTime</a> () const </td></tr>
@@ -114,17 +118,40 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aa04cc1ac4ae2b43bfb841929e3d59315"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a41384c619c72d9cfd1ad6a354e917f8e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPlayer.html#a41384c619c72d9cfd1ad6a354e917f8e">getJumpHeight</a> () const </td></tr>
 <tr class="separator:a41384c619c72d9cfd1ad6a354e917f8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7dc81f2576b432bc20e4040bb111422"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPlayer.html#af7dc81f2576b432bc20e4040bb111422">move</a> (sf::Vector2f movement)</td></tr>
+<tr class="separator:af7dc81f2576b432bc20e4040bb111422"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classEntities"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classEntities')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classEntities.html">Entities</a></td></tr>
 <tr class="memitem:a0632e3790f40fec4e831800d48ff491b inherit pub_methods_classEntities"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEntities.html#a0632e3790f40fec4e831800d48ff491b">Entities</a> ()</td></tr>
 <tr class="separator:a0632e3790f40fec4e831800d48ff491b inherit pub_methods_classEntities"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a10bf20192cbd1316f6b743aa2f4344ec inherit pub_methods_classEntities"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEntities.html#a10bf20192cbd1316f6b743aa2f4344ec">setPosition</a> (sf::Vector2f pos)</td></tr>
+<tr class="memitem:af131357f6b31e9e9bec551a5afa57dbd inherit pub_methods_classEntities"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEntities.html#af131357f6b31e9e9bec551a5afa57dbd">Entities</a> (sf::Vector2f pos)</td></tr>
+<tr class="separator:af131357f6b31e9e9bec551a5afa57dbd inherit pub_methods_classEntities"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b523e8705f7a102b466efad8d3162ba inherit pub_methods_classEntities"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEntities.html#a2b523e8705f7a102b466efad8d3162ba">Entities</a> (float px, float py)</td></tr>
+<tr class="separator:a2b523e8705f7a102b466efad8d3162ba inherit pub_methods_classEntities"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9ab15aedaf164a61050f64f1623b94e inherit pub_methods_classEntities"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEntities.html#ae9ab15aedaf164a61050f64f1623b94e">~Entities</a> ()</td></tr>
+<tr class="separator:ae9ab15aedaf164a61050f64f1623b94e inherit pub_methods_classEntities"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10bf20192cbd1316f6b743aa2f4344ec inherit pub_methods_classEntities"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEntities.html#a10bf20192cbd1316f6b743aa2f4344ec">setPosition</a> (sf::Vector2f pos)</td></tr>
 <tr class="separator:a10bf20192cbd1316f6b743aa2f4344ec inherit pub_methods_classEntities"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86f93c9f2b2ece831234f274554de431 inherit pub_methods_classEntities"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEntities.html#a86f93c9f2b2ece831234f274554de431">setPosition</a> (float px, float py)</td></tr>
+<tr class="memitem:a86f93c9f2b2ece831234f274554de431 inherit pub_methods_classEntities"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEntities.html#a86f93c9f2b2ece831234f274554de431">setPosition</a> (float px, float py)</td></tr>
 <tr class="separator:a86f93c9f2b2ece831234f274554de431 inherit pub_methods_classEntities"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7cf4315e835d2a68b91151f32fddeff7 inherit pub_methods_classEntities"><td class="memItemLeft" align="right" valign="top">sf::Vector2f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEntities.html#a7cf4315e835d2a68b91151f32fddeff7">getPosition</a> () const </td></tr>
+<tr class="memitem:a7cf4315e835d2a68b91151f32fddeff7 inherit pub_methods_classEntities"><td class="memItemLeft" align="right" valign="top">virtual sf::Vector2f&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEntities.html#a7cf4315e835d2a68b91151f32fddeff7">getPosition</a> () const </td></tr>
 <tr class="separator:a7cf4315e835d2a68b91151f32fddeff7 inherit pub_methods_classEntities"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="affe0cc3cb714f6deb4e62f0c0d3f1fd8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Player::Player </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a590f9fa9624d8734027fa2b290fa909e"></a>
 <div class="memitem">
 <div class="memproto">
@@ -167,6 +194,21 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a749d2c00e1fe0f5c2746f7505a58c062"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Player::~Player </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a41384c619c72d9cfd1ad6a354e917f8e"></a>
 <div class="memitem">
@@ -195,6 +237,32 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="af7dc81f2576b432bc20e4040bb111422"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Player::move </td>
+          <td>(</td>
+          <td class="paramtype">sf::Vector2f&#160;</td>
+          <td class="paramname"><em>movement</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented from <a class="el" href="classEntities.html#a83e21f073e6792a036b9bd9388b0a083">Entities</a>.</p>
 
 </div>
 </div>
@@ -231,7 +299,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li><a class="el" href="entities_8h_source.html">entities.h</a></li>
+<li><a class="el" href="entities_8hpp_source.html">entities.hpp</a></li>
 <li><a class="el" href="entities_8cpp.html">entities.cpp</a></li>
 </ul>
 </div><!-- contents -->
