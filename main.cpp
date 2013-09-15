@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include "errcodes.h"
+#include "errcodes.hpp"
 #include <linefinder.hpp>
 #include "play.hpp"
 #include <opencv2/opencv.hpp>
@@ -12,7 +12,7 @@ using namespace std;
 
 int main()
 {   
-    std::vector<std::vector<int> > = Play::getInstance()->detect();
+    Play::getInstance()->detect();
+    Play::getInstance()->play();
     Play::getInstance()->destroy();
-    Play::getInstance()->play(fileNameLevel);
 }

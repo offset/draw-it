@@ -1,6 +1,7 @@
 #ifndef PLAY_H
 #define PLAY_H
 #include <string>
+#include <vector>
 #include "linefinder.hpp"
 #include "game.hpp"
 
@@ -37,7 +38,7 @@ public:
     static void destroy();
     
     /*!
-     * \brief Calls all neccessary functions to detect the lines in an image and writes them to a text file.
+     * \brief Calls all neccessary functions to detect the lines in an image and saves them in form of a two-dimensional vector which can be accessed via getLevelMap().
      * \param fileNameImage[in]: which image shall be used
      * \param fileNameLevel[in]: how should the generated level file be named
      * \param minLength[in]: minimal length for LineFinder class
@@ -48,9 +49,8 @@ public:
      * \param cannyThreshold2[in]: maximum threshold for contour detection with the canny-edge filter.
      * \param cannyApertureSize[in]: Aperture Size for the canny-edge detector. If set higher it should remove some noise, but due to skeleton this is unneccessary.
      * \param l2Gradient[in]: If set to true, the calculation is more demanding, but also yields better results.
-     * \return Path to the created level text file.
      */
-    std::vector<std::vector<int> > detect(std::string fileNameImage = "../level.png",
+    void detect(std::string fileNameImage = "../level.png",
                        float minLength = 100.f, 
                        float minGap = 40.f, 
                        int minVote = 80,
@@ -63,19 +63,30 @@ public:
     
     /*!
      * \brief Builds a level based on a text file and instantiates a game object and calls it's run method.
-     * \param vector which contains the lines
      * \return Error/Success Code
      */
-    int play(std::vector<std::vector<int> > levelFile);
+    int play();
+    
+    /*!
+     * \brief Change the private Level Map.
+     */
+    void setLevelMap(std::vector<std::vector<int> > lm);
+    
+    /*!
+     * \brief Access the Level Map.
+     */
+    std::vector<std::vector<int> > & getLevelMap();
     
     /*!
      * \brief Builds a level based on the contents of the text file.
-     * \param fileNameLevel[in]: Specifies which file to use.
-     * \return 
+     * \return The built level as a RenderTexture.
      */
     
 private:
-    int buildLevel(std::vector<std::vector<int> > levelFile);
+    sf::RenderTexture buildLevel();
+    // contains the data to build the level
+    std::vector<std::vector<int> > levelMap;
+    sf::RenderTexture level;
 };
 
 #endif // PLAY_H

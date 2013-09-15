@@ -4,7 +4,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include "entities.hpp"
-#include "errcodes.h"
+#include "errcodes.hpp"
 
 class Game
 {

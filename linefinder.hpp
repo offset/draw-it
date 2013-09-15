@@ -41,8 +41,6 @@ public:
     
     std::vector<cv::Vec4i> refineDetectedLines(float minDifference = 0.05f);
     
-    void alignLinesToGrid(cv::Mat &image);
-    
     /*! \author zemann
      *
      * \brief Creates a refined image by removing outer pixels of the structures in the image.

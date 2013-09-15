@@ -3,6 +3,7 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <SFML/Graphics/Sprite.hpp>
 
 Play* Play::singleton = 0;
 
@@ -29,7 +30,7 @@ void Play::destroy()
     }
 }
 
-std::vector<std::vector<int> > Play::detect(std::string fileNameImage,
+void Play::detect(std::string fileNameImage,
                    float minLength , 
                    float minGap, 
                    int minVote,
@@ -54,7 +55,7 @@ std::vector<std::vector<int> > Play::detect(std::string fileNameImage,
     
     // creating a skeleton
     image = finder.createSkeleton(image, skelThreshold);
-    finder.saveToDisk(image);
+    finder.saveToVec(image);
     
     // detecting the contours
     cv::Mat contours;
@@ -65,20 +66,57 @@ std::vector<std::vector<int> > Play::detect(std::string fileNameImage,
     finder.drawDetectedLines(image, cv::Scalar(0,0,0));
     
     std::vector<std::vector<int> > levelFile = finder.saveToVec(image);
-    
-    return levelFile;
+    setLevelMap(levelFile);
 }
 
-int Play::buildLevel(std::vector<std::vector<int> > levelFile)
+void Play::setLevelMap(std::vector<std::vector<int> > lm)
 {
-    sf::Texture map;
-    map.loadFromFile("assets/castleCenter_rounded.png");
-    // to be continued
+    levelMap = lm;
 }
 
-int Play::play(std::vector<std::vector<int> > levelFile)
+std::vector<std::vector<int> > & Play::getLevelMap()
 {
-    buildLevel(levelFile);
+    return levelMap;
+}
+
+sf::RenderTexture Play::buildLevel()
+{
+    std::vector<sf::Texture> Textures(2);
+    sf::Texture texture;
+    texture.loadFromFile("assets/textures/tiles/castleCenter.png");
+    Textures[0] = texture;
+    texture.loadFromFile("assets/textures/tiles/sky.png");
+    Textures[1] = texture;
+    int tileWidth = 70;
+    int tileHeight = 70;
+    level.create(levelMap[0].size()*tileWidth, levelMap[0].size()*tileHeight);
+    level.setSmooth(true);
+    level.clear();
+    sf::Sprite tile;
+    // building the level
+    for (uint row = 0; row < levelMap.size(); ++ row)
+    {
+        for (uint col = 0; col < levelMap[0].size(); ++ col)
+        {
+            if(levelMap[row][col] == 0)
+            {
+                tile.setTexture(Textures[0]);
+                tile.setPosition(static_cast<float>(row*tileWidth/2),
+                                 static_cast<float>(col*tileHeight/2));
+            } else
+            {
+                tile.setTexture(Textures[1]);
+                tile.setPosition(static_cast<float>(row*tileWidth/2),
+                                 static_cast<float>(col*tileHeight/2));
+            }
+            level.draw(tile);
+        }
+    }
+}
+
+int Play::play()
+{
+    buildLevel();
     Game game;
     int success = game.run();
     return success;
