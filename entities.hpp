@@ -14,7 +14,7 @@ public:
     Entities();
     Entities(sf::Vector2f pos);
     Entities(float px, float py);
-    virtual ~Entities(); //; = default;
+    virtual ~Entities();
     virtual void setPosition(sf::Vector2f pos);
     virtual void setPosition(float px, float py);
     virtual sf::Vector2f getPosition() const;
@@ -36,7 +36,6 @@ public:
     float getJumpTime() const;
     void setJumpHeight(int height);
     int getJumpHeight() const;
-    void move(sf::Vector2f movement);
     
 private:
     // how high is the player able to jump
@@ -45,6 +44,7 @@ private:
     float jumpTime;
     // maybe used in further implementations with other obstacles than falling down (enemies, etc.)
     sf::Rect<float> hitBox = sf::Rect<float>(0.f,0.f,0.f,0.f);//(float rectLeft, float rectTop, float rectWidth, float rectHeight);
+    sf::Vector2f position;
 };
 
 #endif // ENTITIES_H

@@ -83,10 +83,10 @@ public:
      */
     
 private:
-    sf::RenderTexture buildLevel();
+    sf::Image buildLevel();
     // contains the data to build the level
     std::vector<std::vector<int> > levelMap;
-    sf::RenderTexture level;
+    sf::Image level;
 };
 
 #endif // PLAY_H

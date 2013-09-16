@@ -1,19 +1,20 @@
 #include <iostream>
 #include "game.hpp"
+#include "errcodes.hpp"
 
 Game::Game() : window(sf::VideoMode(640,480), "Draw it!"), timePerFrame(sf::seconds(1.f/60.f)), playerTexture(), playerSprite()
 {
-    if (!playerTexture.loadFromFile("assets/p1_front.png"));
+    if (!playerTexture.loadFromFile("../drawit/assets/textures/player/p1_front.png"));
     {
         std::cerr << "Could not load texture files for the player." << std::endl
                   << "Now exiting." << std::endl;
-        exit();
+        exit(READ_ERROR);
     }
     playerSprite.setTexture(playerTexture);
-    playerSprite.setPosition(player.position.x, player.position.y);
+    playerSprite.setPosition(player.getPosition().x, player.getPosition().y);
 }
 
-Game::processEvents()
+void Game::processEvents()
 {
     sf::Event event;
     while(window.pollEvent(event))
@@ -34,7 +35,7 @@ Game::processEvents()
     }
 }
 
-Game::update(sf::Time deltaTime)
+void Game::update(sf::Time deltaTime)
 {
     sf::Vector2f movement(0.f, 0.f);
     
@@ -59,7 +60,7 @@ Game::update(sf::Time deltaTime)
     player.move(movement * deltaTime.asSeconds());
 }
 
-Game::render()
+void Game::render()
 {
     window.clear();
     window.draw(playerSprite);

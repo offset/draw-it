@@ -1,11 +1,21 @@
 #include "entities.hpp"
 
+Entities::Entities() : position(sf::Vector2f(0,0))
+{
+    
+}
+
 Entities::Entities(sf::Vector2f pos) : position(pos)
 {
     
 }
 
 Entities::Entities(float px, float py) : position(px, py)
+{
+    
+}
+
+Entities::~Entities()
 {
     
 }
@@ -26,6 +36,19 @@ sf::Vector2f Entities::getPosition() const
     return position;
 }
 
+void Entities::move(sf::Vector2f movement)
+{
+    if(movement.x != 0.f)
+    {
+        position.x += movement.x;
+    }
+    if(movement.y != 0.f)
+    {
+        position.y += movement.y;
+    }
+}
+
+
 
 Player::Player() : Entities(), jumpHeight(2), jumpTime(2.f)
 {
@@ -42,14 +65,7 @@ Player::Player(float px, float py) : Entities(px, py), jumpHeight(2), jumpTime(2
     
 }
 
-void Player::move(sf::Vector2f movement)
+Player::~Player()
 {
-    if(movement.x != 0.f)
-    {
-        position.x += movement.x;
-    }
-    if(movement.y != 0.f)
-    {
-        position.y += movement.y;
-    }
+    
 }

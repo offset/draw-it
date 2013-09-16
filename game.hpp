@@ -4,7 +4,6 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include "entities.hpp"
-#include "errcodes.hpp"
 
 class Game
 {
@@ -47,7 +46,7 @@ private:
     bool isMovingUp;
     bool isMovingDown;
     // variable for fixed framerate
-    const float timePerFrame;
+    const sf::Time timePerFrame;
     
 };
 

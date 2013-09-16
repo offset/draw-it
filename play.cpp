@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <SFML/Graphics/Sprite.hpp>
+#include <errcodes.hpp>
 
 Play* Play::singleton = 0;
 
@@ -79,13 +80,23 @@ std::vector<std::vector<int> > & Play::getLevelMap()
     return levelMap;
 }
 
-sf::RenderTexture Play::buildLevel()
+sf::Image Play::buildLevel()
 {
     std::vector<sf::Texture> Textures(2);
     sf::Texture texture;
-    texture.loadFromFile("assets/textures/tiles/castleCenter.png");
+    if(!texture.loadFromFile("../drawit/assets/textures/tiles/castleCenter.png"))
+    {
+        std::cout << "Could not load texture." << std::endl <<
+                     "Now exiting." << std::endl;
+        exit(READ_ERROR);
+    }
     Textures[0] = texture;
-    texture.loadFromFile("assets/textures/tiles/sky.png");
+    if(!texture.loadFromFile("../drawit/assets/textures/tiles/sky.png"))
+    {
+        std::cout << "Could not load texture." << std::endl <<
+                     "Now exiting." << std::endl;
+        exit(READ_ERROR);
+    }
     Textures[1] = texture;
     int tileWidth = 70;
     int tileHeight = 70;

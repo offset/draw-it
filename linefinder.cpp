@@ -5,12 +5,12 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/imgproc.hpp>
 
-LineFinder::LineFinder() : deltaRho(1), 
+LineFinder::LineFinder() : img(),
+    deltaRho(1), 
     deltaTheta(3.14f/180), 
     minVote(10), 
     minLength(0.f), 
-    maxGap(0.f),
-    img()
+    maxGap(0.f)
 {
     // empty
 }
@@ -78,36 +78,6 @@ void LineFinder::drawDetectedLines(cv::Mat &image,
     }
 }
 
-// deprecated
-void LineFinder::alignLinesToGrid(cv::Mat& image)
-{
-    // we sort the detected lines horizontally by start point
-    std::stable_sort(lines.begin(), lines.end(),
-                     [] (cv::Vec4i arg1, cv::Vec4i arg2)
-            -> bool {return arg1[0] < arg2[0];});
-    
-    std::vector<std::pair<cv::Vec4i, double> > gradients;
-    //std::vector<double> gradients;
-    for (uint i = 0; i < lines.size(); ++i)
-    {
-        double gradient = 0;
-                    // calculating the gradient for grid matching
-                    // gradient = y0-y1 / x0-x1
-        if (lines[i][0] != lines[i][2])
-            {
-                gradient = (lines[i][1]-lines[i][3])/(lines[i][0]-lines[i][2]);
-                gradients.push_back(std::pair<cv::Vec4i, double>(lines[i], gradient));
-            } else
-            {
-                gradient = std::numeric_limits<double>::infinity(); // should be replaced by pos infinite
-                gradients.push_back(std::pair<cv::Vec4i, double>(lines[i], gradient));
-            }
-    }
-    std::vector<std::vector<std::pair<cv::Vec4i, double> >::iterator> foundElements;
-    std::vector<std::pair<cv::Vec4i, double> >::iterator foundElement;
-}
-
-
 cv::Mat LineFinder::createSkeleton(cv::Mat& image, int threshold)
 {
     // the image has to be grayscale
@@ -169,6 +139,8 @@ std::vector<std::vector<int> > LineFinder::saveToVec(cv::Mat image)
             for (uint i = 0; i < vecSize; ++i)
             {
                 (*it)[i] /= scale;
+                assert((*it)[i] <= level.cols
+                       && (*it)[i] <= level.rows);
             }
         }
     } else if (level.cols > 1024 && level.cols <= 2048)
@@ -184,6 +156,8 @@ std::vector<std::vector<int> > LineFinder::saveToVec(cv::Mat image)
             for (uint i = 0; i < vecSize; ++i)
             {
                 (*it)[i] /= scale;
+                assert((*it)[i] <= level.cols
+                       && (*it)[i] <= level.rows);
             }
         }
     } else if (level.cols > 2048)
@@ -199,6 +173,8 @@ std::vector<std::vector<int> > LineFinder::saveToVec(cv::Mat image)
             for (uint i = 0; i < vecSize; ++i)
             {
                 (*it)[i] /= scale;
+                assert((*it)[i] <= level.cols
+                       && (*it)[i] <= level.rows);
             }
         }
     } else if (level.cols < 512)
@@ -225,7 +201,7 @@ std::vector<std::vector<int> > LineFinder::saveToVec(cv::Mat image)
         uchar* pixel = level.ptr<uchar>(row);
         for (int col = 0; col < image.cols; ++col)
         {
-            if(static_cast<int>(*pixel) != 0)
+            if(static_cast<int>(*pixel) == 0)
             {
                 levelFile[row][col] = 1;
             } else

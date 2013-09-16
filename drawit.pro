@@ -44,4 +44,4 @@ HEADERS += \
     play.hpp \
     entities.hpp \
     game.hpp \
-    errcodes.h
+    errcodes.hpp
