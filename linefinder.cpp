@@ -34,11 +34,31 @@ void LineFinder::setLineLengthAndGap(double length,
     maxGap = gap;
 }
 
-std::vector<cv::Vec4i> LineFinder::findLines(cv::Mat &binary)
+cv::Mat & LineFinder::getImage()
+{
+    return img;
+}
+
+int LineFinder::setImage(std::string filePath)
+{
+    img = cv::imread(filePath);
+    if(!img.data)
+    {
+        std::cout << "File could not be loaded..." <<
+                "Exiting." << std::endl;
+        return -1;
+    }
+    return 0;
+}
+
+std::vector<cv::Vec4i> LineFinder::findLines()
 {
     lines.clear();
     
-    cv::HoughLinesP(binary,
+    // debugging purposes
+    assert(img.channels() == 1);
+    
+    cv::HoughLinesP(img,
                     lines,
                     deltaRho,
                     deltaTheta,
@@ -49,88 +69,74 @@ std::vector<cv::Vec4i> LineFinder::findLines(cv::Mat &binary)
     return lines;
 }
 
-void LineFinder::drawDetectedLines(cv::Mat &image, 
-                                   cv::Scalar color, int scaleFactorRows, int scaleFactorCols)
+void LineFinder::drawDetectedLines( cv::Scalar color)
 {
     std::vector<cv::Vec4i>::const_iterator it2 = lines.begin();
     
-    if (scaleFactorRows != -1 || scaleFactorCols != -1)
+    while (it2 != lines.end())
     {
-        while (it2 != lines.end())
-        {
-            cv::Point pt1((*it2)[0]/scaleFactorCols, (*it2)[1]/scaleFactorRows);
-            cv::Point pt2((*it2)[2]/scaleFactorCols, (*it2)[3]/scaleFactorRows);
-            
-            cv::line(image, pt1, pt2, color);
-            
-            ++it2;
-        }
-    } else {
-        while (it2 != lines.end())
-        {
-            cv::Point pt1((*it2)[0], (*it2)[1]);
-            cv::Point pt2((*it2)[2], (*it2)[3]);
-            
-            cv::line(image, pt1, pt2, color);
-            
-            ++it2;
-        }
+        cv::Point pt1((*it2)[0], (*it2)[1]);
+        cv::Point pt2((*it2)[2], (*it2)[3]);
+        
+        cv::line(img, pt1, pt2, color);
+        
+        ++it2;
     }
 }
 
-cv::Mat LineFinder::createSkeleton(cv::Mat& image, int threshold)
+void LineFinder::createSkeleton(int threshold)
 {
     // the image has to be grayscale
-    if (image.channels() != 1)
+    if (img.channels() != 1)
     {
-        cv::cvtColor(image, image, cv::COLOR_BGR2GRAY);
+        cv::cvtColor(img, img, cv::COLOR_BGR2GRAY);
     }
     
     // we need to enhance the lighting before we can threshold the image
-    cv::equalizeHist(image, image);
+    cv::equalizeHist(img, img);
     // a binary image is needed
-    cv::threshold(image, image, threshold, 255, cv::THRESH_BINARY_INV);
-    cv::imwrite("thresholdedImage.jpg", image);
+    cv::threshold(img, img, threshold, 255, cv::THRESH_BINARY_INV);
     
     // the resulting skeleton
-    cv::Mat skeleton(image.size(), CV_8UC1, cv::Scalar(0,0,0));
+    cv::Mat skeleton(img.size(), CV_8UC1, cv::Scalar(0,0,0));
     // needed if in-place processing is not possible
-    cv::Mat temp(image.size(), CV_8UC1);
+    cv::Mat temp(img.size(), CV_8UC1);
     // eroded image is saved here
     cv::Mat eroded;
     // needed for morphological transforms (erodation, dilation)
     cv::Mat element = cv::getStructuringElement(cv::MORPH_CROSS, cv::Size(3,3));
     
-    //bool done = true;
     int i = 0;
     while(i != 20)
     {
         // eroding + dilating = opening
-        cv::erode(image, eroded, element);
+        cv::erode(img, eroded, element);
         cv::dilate(eroded, temp, element);
-        cv::subtract(image, temp, temp);
+        cv::subtract(img, temp, temp);
         cv::bitwise_or(skeleton, temp, skeleton);
-        eroded.copyTo(image);
+        eroded.copyTo(img);
         
         //done = (cv::countNonZero(image) == 0);
         ++i;
     }
-    cv::imwrite("skeleton.jpg", skeleton);
-    return skeleton;
+    
+    img = skeleton;
 }
 
 
-std::vector<std::vector<int> > LineFinder::saveToVec(cv::Mat image)
+std::vector<std::vector<int> > LineFinder::saveToVec()
 {   
     cv::Mat level;
-    image.copyTo(level);
+    img.copyTo(level);
     level.setTo(cv::Scalar(255,255,255));
     // scaling level size
     if(level.cols <= 1024 && level.cols >= 512)
     {
         // scale 2
-        int scale = 2;
+        float scale = 0.5;
         cv::resize(level, level, cv::Size(0,0), scale, scale, cv::INTER_NEAREST);
+        int a = level.cols;
+        int b = level.rows;
         // scaling line sizes
         // how many elements are there in Vec4i
         uint vecSize = 4;
@@ -139,14 +145,14 @@ std::vector<std::vector<int> > LineFinder::saveToVec(cv::Mat image)
             for (uint i = 0; i < vecSize; ++i)
             {
                 (*it)[i] /= scale;
-                assert((*it)[i] <= level.cols
-                       && (*it)[i] <= level.rows);
+//                assert((*it)[i] <= level.cols
+//                       && (*it)[i] <= level.rows);
             }
         }
     } else if (level.cols > 1024 && level.cols <= 2048)
     {
         // scale 4
-        int scale = 4;
+        float scale = 0.25;
         cv::resize(level, level, cv::Size(0,0), scale, scale, cv::INTER_NEAREST);
         // scaling line sizes
         // how many elements are there in Vec4i
@@ -163,7 +169,7 @@ std::vector<std::vector<int> > LineFinder::saveToVec(cv::Mat image)
     } else if (level.cols > 2048)
     {
         // scale 6
-        int scale = 6;
+        float scale = 0.16;
         cv::resize(level, level, cv::Size(0,0), scale, scale, cv::INTER_NEAREST);
         // scaling line sizes
         // how many elements are there in Vec4i
@@ -184,9 +190,9 @@ std::vector<std::vector<int> > LineFinder::saveToVec(cv::Mat image)
     }
     
     std::vector<std::vector<int> > levelFile;
-    for (int i = 0; i < image.rows; ++i)
+    for (int i = 0; i < img.rows; ++i)
     {
-        std::vector<int> row(image.cols);
+        std::vector<int> row(img.cols);
         levelFile.push_back(row);
     }
     
@@ -194,12 +200,12 @@ std::vector<std::vector<int> > LineFinder::saveToVec(cv::Mat image)
     {
         cv::cvtColor(level, level, cv::COLOR_BGR2GRAY);
     }
-    drawDetectedLines(level, cv::Scalar(0,0,0));
+    drawDetectedLines(cv::Scalar(0,0,0));
     
-    for (int row = 0; row < image.rows; ++row)
+    for (int row = 0; row < img.rows; ++row)
     {
         uchar* pixel = level.ptr<uchar>(row);
-        for (int col = 0; col < image.cols; ++col)
+        for (int col = 0; col < img.cols; ++col)
         {
             if(static_cast<int>(*pixel) == 0)
             {
@@ -210,5 +216,7 @@ std::vector<std::vector<int> > LineFinder::saveToVec(cv::Mat image)
             }
         }
     }
+    img = level;
+    
     return levelFile;
 }

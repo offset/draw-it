@@ -1,18 +1,23 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include "errcodes.hpp"
-#include <linefinder.hpp>
-#include "play.hpp"
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/core/core.hpp>
+#include <QApplication>
+#include "play.hpp"
+#include "mainwindow.hpp"
 
 using namespace std;
 
-int main()
+int main(int argc, char* argv[])
 {   
-    Play::getInstance()->detect();
-    Play::getInstance()->play();
+    QApplication a(argc, argv);
+    MainWindow w;
+    
+    w.show();
+    
     Play::getInstance()->destroy();
+    
+    return a.exec();
 }

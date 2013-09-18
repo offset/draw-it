@@ -22,6 +22,11 @@ Play* Play::getInstance()
     return singleton;
 }
 
+LineFinder* Play::getFinder()
+{
+    return finder;
+}
+
 void Play::destroy()
 {
     if (singleton != 0)
@@ -31,8 +36,7 @@ void Play::destroy()
     }
 }
 
-void Play::detect(std::string fileNameImage,
-                   float minLength , 
+void Play::detect(float minLength , 
                    float minGap, 
                    int minVote,
                    int skelThreshold,
@@ -46,27 +50,15 @@ void Play::detect(std::string fileNameImage,
     finder.setLineLengthAndGap(minLength, minGap);
     finder.setMinVote(minVote);
     
-    cv::Mat image = cv::imread(fileNameImage);
-    if(!image.data)
-    {
-        std::cout << "File could not be loaded..." <<
-                "Exiting." << std::endl;
-        exit;
-    }
-    
     // creating a skeleton
-    image = finder.createSkeleton(image, skelThreshold);
-    finder.saveToVec(image);
+    finder.createSkeleton(skelThreshold);
     
     // detecting the contours
-    cv::Mat contours;
-    cv::Canny(image, contours, cannyThreshold1, cannyThreshold2, cannyApertureSize, l2Gradient);
-    cv::imwrite("contours.jpg", contours);
+    cv::Canny(finder.getImage(), finder.getImage(), cannyThreshold1, cannyThreshold2, cannyApertureSize, l2Gradient);
     
-    std::vector<cv::Vec4i> lines = finder.findLines(contours);
-    finder.drawDetectedLines(image, cv::Scalar(0,0,0));
+    std::vector<cv::Vec4i> lines = finder.findLines();
     
-    std::vector<std::vector<int> > levelFile = finder.saveToVec(image);
+    std::vector<std::vector<int> > levelFile = finder.saveToVec();
     setLevelMap(levelFile);
 }
 
@@ -98,8 +90,8 @@ sf::Image Play::buildLevel()
         exit(READ_ERROR);
     }
     Textures[1] = texture;
-    int tileWidth = 70;
-    int tileHeight = 70;
+    int tileWidth = 10;
+    int tileHeight = 10;
     level.create(levelMap[0].size()*tileWidth, levelMap[0].size()*tileHeight);
     level.setSmooth(true);
     level.clear();

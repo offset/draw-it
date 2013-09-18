@@ -32,12 +32,13 @@ public:
     void setLineLengthAndGap(double length,
                              double gap);
     
-    std::vector<cv::Vec4i> findLines(cv::Mat& binary);
+    cv::Mat & getImage();
     
-    void drawDetectedLines(cv::Mat& image,
-                           cv::Scalar color = cv::Scalar(255, 255, 255),
-                           int scaleFactorRows = -1,
-                           int scaleFactorCols = -1);
+    int setImage(std::string filePath);
+    
+    std::vector<cv::Vec4i> findLines();
+    
+    void drawDetectedLines(cv::Scalar color = cv::Scalar(255, 255, 255));
     
     std::vector<cv::Vec4i> refineDetectedLines(float minDifference = 0.05f);
     
@@ -52,12 +53,11 @@ public:
      * The function is based on this blog entry:
      * http://felix.abecassis.me/2011/09/opencv-morphological-skeleton
      *
-     * \param image[in,out]: The image to use for generating the skeleton. NOTE: This image is all zero at the end.
      * \param threshold[in]: optional parameter for specifing the threshold limit. The mode is always THRESH_BINARY.
      *
      * @return The created skeleton image.
      */
-    cv::Mat createSkeleton(cv::Mat& image, int threshold = 127);
+    void createSkeleton(int threshold = 127);
     
     /*! \author zemann
      *
@@ -74,10 +74,8 @@ public:
      * is set to 1 (line), otherwise to 0.
      * This may change in the future because a certain number could be used for certain terrain objects (walls, obstacles, etc.).
      *
-     * \param image[in]: The image to be saved
-     *
      * @return vector of a vector of int containing the line information.
      */
-    std::vector<std::vector<int> > saveToVec(cv::Mat image);
+    std::vector<std::vector<int> > saveToVec();
 };
 #endif // LINEFINDER_H

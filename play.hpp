@@ -35,11 +35,16 @@ public:
      */
     static Play* getInstance();
     
+    /*!
+     * \brief Access the LineFinder object.
+     * \return A pointer to the LineFinder object.
+     */
+    LineFinder* getFinder();
+    
     static void destroy();
     
     /*!
      * \brief Calls all neccessary functions to detect the lines in an image and saves them in form of a two-dimensional vector which can be accessed via getLevelMap().
-     * \param fileNameImage[in]: which image shall be used
      * \param fileNameLevel[in]: how should the generated level file be named
      * \param minLength[in]: minimal length for LineFinder class
      * \param minGap[in]: minimal gap for LineFinder class
@@ -50,8 +55,7 @@ public:
      * \param cannyApertureSize[in]: Aperture Size for the canny-edge detector. If set higher it should remove some noise, but due to skeleton this is unneccessary.
      * \param l2Gradient[in]: If set to true, the calculation is more demanding, but also yields better results.
      */
-    void detect(std::string fileNameImage = "../level.png",
-                       float minLength = 100.f, 
+    void detect(float minLength = 100.f, 
                        float minGap = 40.f, 
                        int minVote = 80,
                        int skelThreshold = 50,
@@ -86,7 +90,7 @@ private:
     sf::Image buildLevel();
     // contains the data to build the level
     std::vector<std::vector<int> > levelMap;
-    sf::Image level;
+    sf::RenderTexture level;
 };
 
 #endif // PLAY_H

@@ -1,13 +1,14 @@
 TEMPLATE = app
-CONFIG += console
+CONFIG -= console
 CONFIG -= app_bundle
-CONFIG -= qt
+CONFIG += qt
 
 SOURCES += main.cpp \
     linefinder.cpp \
     entities.cpp \
     play.cpp \
-    game.cpp
+    game.cpp \
+    mainwindow.cpp
 
 QMAKE_CXXFLAGS += -std=c++11
 
@@ -44,4 +45,8 @@ HEADERS += \
     play.hpp \
     entities.hpp \
     game.hpp \
-    errcodes.hpp
+    errcodes.hpp \
+    mainwindow.hpp
+
+FORMS += \
+    mainwindow.ui
