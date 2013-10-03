@@ -3,12 +3,17 @@ CONFIG -= console
 CONFIG -= app_bundle
 CONFIG += qt
 
+# The name of the executable
+TARGET = drawit
+
 SOURCES += main.cpp \
     linefinder.cpp \
     entities.cpp \
     play.cpp \
     game.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    #qsfmlcanvas.cpp \
+    #mycanvas.cpp
 
 QMAKE_CXXFLAGS += -std=c++11
 
@@ -46,7 +51,9 @@ HEADERS += \
     entities.hpp \
     game.hpp \
     errcodes.hpp \
-    mainwindow.hpp
+    mainwindow.hpp \
+    #qsfmlcanvas.h \
+    #mycanvas.h
 
 FORMS += \
     mainwindow.ui
