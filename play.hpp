@@ -83,14 +83,20 @@ public:
     
     /*!
      * \brief Builds a level based on the contents of the text file.
-     * \return The built level as a RenderTexture.
+     * \return The built level as a vector of a vector.
      */
     
 private:
-    sf::Image buildLevel();
+    //sf::Image buildLevel();
+    /*!
+     * \brief Loads Textures and builds a background image based on the data in levelMap.
+     * \return Error/Success Code
+     */
+    int buildLevel();
     // contains the data to build the level
     std::vector<std::vector<int> > levelMap;
     sf::RenderTexture level;
+    cv::Mat levelBg;
 };
 
 #endif // PLAY_H

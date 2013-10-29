@@ -102,7 +102,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Convert Image</string>
+     <string>Transform Image</string>
     </property>
    </widget>
    <widget class="QPushButton" name="exit">
@@ -118,22 +118,6 @@
      <string>Exit</string>
     </property>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>793</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuDraw_it">
-    <property name="title">
-     <string>Draw it!</string>
-    </property>
-   </widget>
-   <addaction name="menuDraw_it"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

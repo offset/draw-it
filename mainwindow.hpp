@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QObject>
 #include "errcodes.hpp"
 #include "linefinder.hpp"
 #include "play.hpp"

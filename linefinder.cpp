@@ -4,6 +4,7 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/imgproc.hpp>
+#include <play.hpp>
 
 LineFinder::LineFinder() : img(),
     deltaRho(1), 
@@ -39,12 +40,29 @@ cv::Mat & LineFinder::getImage()
     return img;
 }
 
+std::vector<cv::Vec4i> LineFinder::getLines()
+{
+    return lines;
+}
+
 int LineFinder::setImage(std::string filePath)
 {
     img = cv::imread(filePath);
     if(!img.data)
     {
-        std::cout << "File could not be loaded..." <<
+        std::cerr << "File could not be set..." <<
+                "Exiting." << std::endl;
+        return -1;
+    }
+    return 0;
+}
+
+int LineFinder::setImage(cv::Mat image)
+{
+    img = image;
+    if(!img.data)
+    {
+        std::cout << "File could not be set..." <<
                 "Exiting." << std::endl;
         return -1;
     }
@@ -53,54 +71,66 @@ int LineFinder::setImage(std::string filePath)
 
 std::vector<cv::Vec4i> LineFinder::findLines()
 {
-    lines.clear();
-    
+    Play::getInstance()->getFinder()->lines.clear();
     // debugging purposes
-    assert(img.channels() == 1);
+    assert(Play::getInstance()->getFinder()->getImage().channels() == 1);
     
-    cv::HoughLinesP(img,
-                    lines,
+    cv::HoughLinesP(Play::getInstance()->getFinder()->getImage(),
+                    Play::getInstance()->getFinder()->lines,
                     deltaRho,
                     deltaTheta,
                     minVote,
                     minLength,
                     maxGap);
     
+    // debugging
+    for (auto it = Play::getInstance()->getFinder()->lines.begin(); it != Play::getInstance()->getFinder()->lines.end(); ++it)
+    {
+        std::cout << *it << std::endl;
+    }
+    
+    // debugging
+    drawLinePoints();
+    
     return lines;
 }
 
 void LineFinder::drawDetectedLines( cv::Scalar color)
 {
-    std::vector<cv::Vec4i>::const_iterator it2 = lines.begin();
+    //std::vector<cv::Vec4i>::const_iterator it2 = lines.begin();
+    std::vector<cv::Vec4i>::const_iterator it2 = Play::getInstance()->getFinder()->getLines().begin();
     
-    while (it2 != lines.end())
+    
+    while (it2 != Play::getInstance()->getFinder()->getLines().end())
     {
         cv::Point pt1((*it2)[0], (*it2)[1]);
         cv::Point pt2((*it2)[2], (*it2)[3]);
         
-        cv::line(img, pt1, pt2, color);
+        cv::line(Play::getInstance()->getFinder()->getImage(), pt1, pt2, color);
         
         ++it2;
     }
+    cv::imwrite("drawDetectedLines.jpg", Play::getInstance()->getFinder()->getImage());
 }
 
 void LineFinder::createSkeleton(int threshold)
 {
     // the image has to be grayscale
-    if (img.channels() != 1)
+    if (Play::getInstance()->getFinder()->getImage().channels() != 1)
     {
-        cv::cvtColor(img, img, cv::COLOR_BGR2GRAY);
+        cv::cvtColor(Play::getInstance()->getFinder()->getImage(), Play::getInstance()->getFinder()->getImage(), cv::COLOR_BGR2GRAY);
     }
+    //Play::getInstance()->getFinder()->getImage().setTo(cv::Scalar(0,0,0));
     
     // we need to enhance the lighting before we can threshold the image
-    cv::equalizeHist(img, img);
+    cv::equalizeHist(Play::getInstance()->getFinder()->getImage(), Play::getInstance()->getFinder()->getImage());
     // a binary image is needed
-    cv::threshold(img, img, threshold, 255, cv::THRESH_BINARY_INV);
+    cv::threshold(Play::getInstance()->getFinder()->getImage(), Play::getInstance()->getFinder()->getImage(), threshold, 255, cv::THRESH_BINARY_INV);
     
     // the resulting skeleton
-    cv::Mat skeleton(img.size(), CV_8UC1, cv::Scalar(0,0,0));
+    cv::Mat skeleton(Play::getInstance()->getFinder()->getImage().size(), CV_8UC1, cv::Scalar(0,0,0));
     // needed if in-place processing is not possible
-    cv::Mat temp(img.size(), CV_8UC1);
+    cv::Mat temp(Play::getInstance()->getFinder()->getImage().size(), CV_8UC1);
     // eroded image is saved here
     cv::Mat eroded;
     // needed for morphological transforms (erodation, dilation)
@@ -110,33 +140,31 @@ void LineFinder::createSkeleton(int threshold)
     while(i != 20)
     {
         // eroding + dilating = opening
-        cv::erode(img, eroded, element);
+        cv::erode(Play::getInstance()->getFinder()->getImage(), eroded, element);
         cv::dilate(eroded, temp, element);
-        cv::subtract(img, temp, temp);
+        cv::subtract(Play::getInstance()->getFinder()->getImage(), temp, temp);
         cv::bitwise_or(skeleton, temp, skeleton);
-        eroded.copyTo(img);
+        eroded.copyTo(Play::getInstance()->getFinder()->getImage());
         
         //done = (cv::countNonZero(image) == 0);
         ++i;
     }
     
-    img = skeleton;
+    Play::getInstance()->getFinder()->setImage(skeleton);
 }
 
 
 std::vector<std::vector<int> > LineFinder::saveToVec()
 {   
     cv::Mat level;
-    img.copyTo(level);
-    level.setTo(cv::Scalar(255,255,255));
+    Play::getInstance()->getFinder()->getImage().copyTo(level);
+    //level.setTo(cv::Scalar(255,255,255));
     // scaling level size
     if(level.cols <= 1024 && level.cols >= 512)
     {
         // scale 2
         float scale = 0.5;
         cv::resize(level, level, cv::Size(0,0), scale, scale, cv::INTER_NEAREST);
-        int a = level.cols;
-        int b = level.rows;
         // scaling line sizes
         // how many elements are there in Vec4i
         uint vecSize = 4;
@@ -190,9 +218,9 @@ std::vector<std::vector<int> > LineFinder::saveToVec()
     }
     
     std::vector<std::vector<int> > levelFile;
-    for (int i = 0; i < img.rows; ++i)
+    for (int i = 0; i < Play::getInstance()->getFinder()->getImage().rows; ++i)
     {
-        std::vector<int> row(img.cols);
+        std::vector<int> row(Play::getInstance()->getFinder()->getImage().cols);
         levelFile.push_back(row);
     }
     
@@ -200,12 +228,13 @@ std::vector<std::vector<int> > LineFinder::saveToVec()
     {
         cv::cvtColor(level, level, cv::COLOR_BGR2GRAY);
     }
-    drawDetectedLines(cv::Scalar(0,0,0));
+    Play::getInstance()->getFinder()->drawDetectedLines();
+    //drawDetectedLines(cv::Scalar(0,0,0));
     
-    for (int row = 0; row < img.rows; ++row)
+    for (int row = 0; row < Play::getInstance()->getFinder()->getImage().rows; ++row)
     {
         uchar* pixel = level.ptr<uchar>(row);
-        for (int col = 0; col < img.cols; ++col)
+        for (int col = 0; col < Play::getInstance()->getFinder()->getImage().cols; ++col)
         {
             if(static_cast<int>(*pixel) == 0)
             {
@@ -216,7 +245,29 @@ std::vector<std::vector<int> > LineFinder::saveToVec()
             }
         }
     }
-    img = level;
+    Play::getInstance()->getFinder()->setImage(level);
     
     return levelFile;
+}
+
+void LineFinder::drawLinePoints()
+{
+    //cv::Mat img = Play::getInstance()->getFinder()->getImage();
+    cv::Mat img;
+    img.create(Play::getInstance()->getFinder()->getImage().rows, Play::getInstance()->getFinder()->getImage().cols, CV_8UC3);
+    img = cv::imread("../level.png");
+    img.setTo(cv::Scalar(0,0,0));
+    
+    std::vector<cv::Vec4i> lineCoords = Play::getInstance()->getFinder()->getLines();
+    
+    for (uint i = 0; i < lineCoords.size(); ++i)
+    {
+        cv::circle(img, cv::Point(lineCoords[i][0], lineCoords[i][1]), 4, cv::Scalar(0,0,255));
+        cv::circle(img, cv::Point(lineCoords[i][2], lineCoords[i][3]), 4, cv::Scalar(255,0,0));
+        cv::line(img, cv::Point(lineCoords[i][0], lineCoords[i][1]),
+                cv::Point(lineCoords[i][2], lineCoords[i][3]),
+                cv::Scalar(0,255,0));
+    }
+    
+    cv::imwrite("pointsDrawn.jpg", img);
 }

@@ -34,7 +34,16 @@ public:
     
     cv::Mat & getImage();
     
+    /*!
+     * \brief Access the detected lines.
+     * \return lines
+     */
+    
+    std::vector<cv::Vec4i> getLines();
+    
     int setImage(std::string filePath);
+    
+    int setImage(cv::Mat image);
     
     std::vector<cv::Vec4i> findLines();
     
@@ -77,5 +86,10 @@ public:
      * @return vector of a vector of int containing the line information.
      */
     std::vector<std::vector<int> > saveToVec();
+    
+    /*!
+     * \brief Draws the beginning and the ending of a detected line on the original image. For debugging purposes.
+     */
+    void drawLinePoints();
 };
 #endif // LINEFINDER_H

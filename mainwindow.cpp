@@ -2,7 +2,8 @@
 #include "ui_mainwindow.h"
 #include <QFileDialog>
 #include <QImage>
-#include <QObject>
+#include <iostream>
+#include <QDesktopServices>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -11,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     
     // makes the exit button work
-    connect(ui->exit,SIGNAL(clicked()),/*QCoreApplication::instance()*/this, SLOT(close()));
+    connect(ui->exit,SIGNAL(clicked()),this, SLOT(close()));
 }
 
 MainWindow::~MainWindow()
@@ -22,7 +23,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_selection_clicked()
 {
     // when this button is clicked, the user may choose an image which is set as the to be processed image
-    QString filename = QFileDialog::getOpenFileName(this, tr("Choose Image"), ".", tr("Image Files(*.png *.jpg *.jpeg *.bmp)"));
+    QString filename = QFileDialog::getOpenFileName(this, tr("Choose Image"), QDesktopServices::storageLocation(QDesktopServices::HomeLocation), tr("Image Files(*.png *.jpg *.jpeg *.bmp)"));
     Play::getInstance()->getFinder()->setImage(filename.toLatin1().data());
     // The selected image is being displayed in a label in the gui
     QImage img = QImage(static_cast<unsigned char*>(Play::getInstance()->getFinder()->getImage().data), 
@@ -47,6 +48,12 @@ void MainWindow::on_conversion_clicked()
 
 void MainWindow::on_game_clicked()
 {
+    if(Play::getInstance()->getLevelMap().empty())
+    {
+        std::cout << "There were no lines detected." << std::endl
+                  << "Now exiting." << std::endl;
+        exit(-1);
+    }
     Play::getInstance()->play();
 }
 
