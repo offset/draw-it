@@ -38,12 +38,15 @@ void MainWindow::on_conversion_clicked()
 {
     // The lines are being detected and an image with the lines only is being displayed
     Play::getInstance()->detect();
+    cv::Mat image;
+    cv::cvtColor(Play::getInstance()->getFinder()->getImage(), Play::getInstance()->getFinder()->getImage(), cv::COLOR_GRAY2BGR);
     QImage img = QImage(static_cast<unsigned char*>(Play::getInstance()->getFinder()->getImage().data), 
                                                     Play::getInstance()->getFinder()->getImage().cols,
                                                     Play::getInstance()->getFinder()->getImage().rows,
                                                     QImage::Format_RGB888);
     ui->label->setPixmap(QPixmap::fromImage(img));
     ui->label->resize(ui->label->pixmap()->size());
+    cv::imwrite("convertedImage.png", Play::getInstance()->getFinder()->getImage());
 }
 
 void MainWindow::on_game_clicked()

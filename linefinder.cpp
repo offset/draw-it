@@ -19,8 +19,8 @@ LineFinder::LineFinder() : img(),
 void LineFinder::setAccResolution(double dRho, 
                              double dTheta)
 {
-    dRho = deltaRho;
-    dTheta = deltaTheta;
+    deltaRho = dRho;
+    deltaTheta = dTheta;
 }
 
 void LineFinder::setMinVote(int minv)

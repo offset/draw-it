@@ -103,7 +103,6 @@ int Play::buildLevel()
         {
             if(levelMap[row][col] == 0)
             {
-                // ROI needed
                 texture = Textures[0];
                 cv::Mat roi = bgImg(cv::Rect(col, row, tileWidth, tileHeight));
                 texture.copyTo(roi);
