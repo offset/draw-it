@@ -13,6 +13,9 @@ MainWindow::MainWindow(QWidget *parent) :
     
     // makes the exit button work
     connect(ui->exit,SIGNAL(clicked()),this, SLOT(close()));
+    
+    selected = false;
+    converted = false;
 }
 
 MainWindow::~MainWindow()
@@ -32,13 +35,23 @@ void MainWindow::on_selection_clicked()
                                                     QImage::Format_RGB888);
     ui->label->setPixmap(QPixmap::fromImage(img));
     ui->label->resize(ui->label->pixmap()->size());
+    
+    selected = true;
 }
 
 void MainWindow::on_conversion_clicked()
 {
+    // makes sure that there has been an image previously selected
+    if(!selected)
+    {
+        message.setText("Please select an image first!");
+        message.exec();
+        return;
+    }
     // The lines are being detected and an image with the lines only is being displayed
     Play::getInstance()->detect();
     cv::Mat image;
+    // The image needs to be converted to BGR to be displayed correctly by the Qt window.
     cv::cvtColor(Play::getInstance()->getFinder()->getImage(), Play::getInstance()->getFinder()->getImage(), cv::COLOR_GRAY2BGR);
     QImage img = QImage(static_cast<unsigned char*>(Play::getInstance()->getFinder()->getImage().data), 
                                                     Play::getInstance()->getFinder()->getImage().cols,
@@ -46,11 +59,26 @@ void MainWindow::on_conversion_clicked()
                                                     QImage::Format_RGB888);
     ui->label->setPixmap(QPixmap::fromImage(img));
     ui->label->resize(ui->label->pixmap()->size());
-    cv::imwrite("convertedImage.png", Play::getInstance()->getFinder()->getImage());
+    
+    converted = true;
+    // DEBUG
+    //cv::imwrite("convertedImage.png", Play::getInstance()->getFinder()->getImage());
 }
 
 void MainWindow::on_game_clicked()
 {
+    if(!selected)
+    {
+        message.setText("Please select an image first!");
+        message.exec();
+        return;
+    }
+    if(!converted)
+    {
+        message.setText("Please convert the selected image first!");
+        message.exec();
+        return;
+    }
     if(Play::getInstance()->getLevelMap().empty())
     {
         std::cout << "There were no lines detected." << std::endl

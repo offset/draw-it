@@ -60,7 +60,7 @@ void Play::detect(float minLength ,
     
     std::vector<std::vector<int> > levelFile = finder.saveToVec();
     setLevelMap(levelFile);
-    int howLong = Play::getInstance()->getFinder()->getLines().size();
+    //int howLong = Play::getInstance()->getFinder()->getLines().size();
     assert(!levelFile.empty());
     assert(!Play::getInstance()->getLevelMap().empty());
 }
@@ -96,7 +96,7 @@ int Play::buildLevel()
     Textures[1] = texture;
     int tileWidth = texture.size().width;
     int tileHeight = texture.size().height;
-    cv::Mat bgImg(levelMap.size(), levelMap[0].size(), CV_8UC3, cv::Scalar(255,255,255));
+    cv::Mat bgImg(levelMap.size(), levelMap[0].size(), CV_8UC3, cv::Scalar(255,0,255));
     for (uint row = 0; row < levelMap.size(); ++ row)
     {
         for (uint col = 0; col < levelMap[0].size(); ++ col)

@@ -6,6 +6,7 @@
 #include "errcodes.hpp"
 #include "linefinder.hpp"
 #include "play.hpp"
+#include <QMessageBox>
 
 namespace Ui {
 class MainWindow;
@@ -20,16 +21,45 @@ public:
     ~MainWindow();
     
 private slots:
-    void on_game_clicked();
     
+    /*!
+     * \brief Executes when the 'select' button is clicked. 
+     *
+     * Lets the user select a file via a file dialog (provided by Qt), tells the 
+     * LineFinder object about it and displays it in the GUI.
+     *
+     */
     void on_selection_clicked();
     
+    /*!
+     * \brief Executes when the 'convert' button is clicked.
+     *
+     * First makes sure there has been an image selected, when not, it aborts. 
+     * Then the magic happens, the lines are extracted, the information about their 
+     * locations is stored in the std::vector<std::vector<int> > levelMap and at last
+     * the extracted lines are displayed in the GUI.
+     */
     void on_conversion_clicked();
     
+    /*!
+     * \brief Executes when the 'play' button is clicked.
+     *
+     * Makes sure there has been an image selected AND that it has been converted, 
+     * then builds a level out of the calculated data and creates the game.
+     */
+    void on_game_clicked();
+    
+    /*!
+     * \brief When the 'exit' button is clicked this function is executed and 
+     * terminates the application.
+     */
     void on_exit_clicked();
     
 private:
     Ui::MainWindow *ui;
+    bool selected;
+    bool converted;
+    QMessageBox message;
 };
 
 #endif // MAINWINDOW_H

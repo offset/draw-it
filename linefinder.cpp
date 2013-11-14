@@ -72,7 +72,7 @@ int LineFinder::setImage(cv::Mat image)
 std::vector<cv::Vec4i> LineFinder::findLines()
 {
     Play::getInstance()->getFinder()->lines.clear();
-    // debugging purposes
+    // debugging
     assert(Play::getInstance()->getFinder()->getImage().channels() == 1);
     
     cv::HoughLinesP(Play::getInstance()->getFinder()->getImage(),
@@ -166,7 +166,7 @@ std::vector<std::vector<int> > LineFinder::saveToVec()
         float scale = 0.5;
         cv::resize(level, level, cv::Size(0,0), scale, scale, cv::INTER_NEAREST);
         // scaling line sizes
-        // how many elements are there in Vec4i
+        // how many elements are there in Vec4i?
         uint vecSize = 4;
         for (auto it = lines.begin(); it != lines.end(); ++it)
         {
@@ -221,6 +221,10 @@ std::vector<std::vector<int> > LineFinder::saveToVec()
     for (int i = 0; i < Play::getInstance()->getFinder()->getImage().rows; ++i)
     {
         std::vector<int> row(Play::getInstance()->getFinder()->getImage().cols);
+        for (int j = 0; j < Play::getInstance()->getFinder()->getImage().cols; ++j)
+        {
+            row.push_back(Play::getInstance()->getFinder()->getImage().at<int>(j, i));
+        }
         levelFile.push_back(row);
     }
     
@@ -255,7 +259,7 @@ void LineFinder::drawLinePoints()
     //cv::Mat img = Play::getInstance()->getFinder()->getImage();
     cv::Mat img;
     img.create(Play::getInstance()->getFinder()->getImage().rows, Play::getInstance()->getFinder()->getImage().cols, CV_8UC3);
-    img = cv::imread("../level.png");
+    //img = cv::imread("../level.png");
     img.setTo(cv::Scalar(0,0,0));
     
     std::vector<cv::Vec4i> lineCoords = Play::getInstance()->getFinder()->getLines();
