@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 #include <SFML/Graphics/Sprite.hpp>
-#include <errcodes.hpp>
+#include "errcodes.hpp"
 
 Play* Play::singleton = 0;
 
@@ -77,7 +77,8 @@ std::vector<std::vector<int> > & Play::getLevelMap()
 
 int Play::buildLevel()
 {
-    std::vector<cv::Mat> Textures(2);
+    // PART 1: building the background image
+    std::vector<cv::Mat> TexturesBg(2);
     cv::Mat texture = cv::imread("../drawit/assets/textures/tiles/dummy1.png");
     if(!texture.data)
     {
@@ -85,7 +86,7 @@ int Play::buildLevel()
                      "Exiting." << std::endl;
         return -1;
     }
-    Textures[0] = texture;
+    TexturesBg[0] = texture;
     texture = cv::imread("../drawit/assets/textures/tiles/dummy2.png");
     if(!texture.data)
     {
@@ -93,9 +94,11 @@ int Play::buildLevel()
                      "Exiting." << std::endl;
         return -1;
     }
-    Textures[1] = texture;
+    TexturesBg[1] = texture;
     int tileWidth = texture.size().width;
     int tileHeight = texture.size().height;
+    int levelMapWidth = levelMap.size();
+    int levelMapHeight = levelMap[0].size();
     cv::Mat bgImg(levelMap.size(), levelMap[0].size(), CV_8UC3, cv::Scalar(255,0,255));
     for (uint row = 0; row < levelMap.size(); ++ row)
     {
@@ -103,12 +106,12 @@ int Play::buildLevel()
         {
             if(levelMap[row][col] == 0)
             {
-                texture = Textures[0];
+                texture = TexturesBg[0];
                 cv::Mat roi = bgImg(cv::Rect(col, row, tileWidth, tileHeight));
                 texture.copyTo(roi);
             } else
             {
-                texture = Textures[1];
+                texture = TexturesBg[1];
                 cv::Mat roi = bgImg(cv::Rect(col, row, tileWidth, tileHeight));
                 texture.copyTo(roi);
             }
@@ -116,60 +119,26 @@ int Play::buildLevel()
     }
     levelBg = bgImg;
     cv::imwrite("levelBg.png", bgImg);
+    
+    // IMPORTANT: This needs to be done via vertexes, DO IT!
+    // PART 2: building the level environment
+    if(!m_TileMap.load("../drawit/assets/textures/tiles/tiles_spritesheet_cropped.png", sf::Vector2u(70, 70), Play::getInstance()->getLevelMap(), levelMap[0].size(), levelMap.size()))
+    {
+        return -1; 
+    }
+
+    return 0;
 }
-
-//sf::Image Play::buildLevel()
-//{
-//    std::vector<sf::Texture> Textures(2);
-//    sf::Texture texture;
-//    if(!texture.loadFromFile("../drawit/assets/textures/tiles/dummy1.png"))
-//    {
-//        std::cout << "Could not load texture." << std::endl <<
-//                     "Now exiting." << std::endl;
-//        exit(READ_ERROR);
-//    }
-//    Textures[0] = texture;
-//    if(!texture.loadFromFile("../drawit/assets/textures/tiles/dummy2.png"))
-//    {
-//        std::cout << "Could not load texture." << std::endl <<
-//                     "Now exiting." << std::endl;
-//        exit(READ_ERROR);
-//    }
-//    Textures[1] = texture;
-//    int tileWidth = 1;
-//    int tileHeight = 1;
-//    level.create(levelMap[0].size()*tileWidth, levelMap[0].size()*tileHeight);
-//    level.setSmooth(true);
-//    level.clear();
-//    sf::Sprite tile;
-//    // building the level
-//    for (uint row = 0; row < levelMap.size(); ++ row)
-//    {
-//        for (uint col = 0; col < levelMap[0].size(); ++ col)
-//        {
-//            if(levelMap[row][col] == 0)
-//            {
-//                tile.setTexture(Textures[0]);
-//                tile.setPosition(static_cast<float>(row*tileWidth/2),
-//                                 static_cast<float>(col*tileHeight/2));
-//            } else
-//            {
-//                tile.setTexture(Textures[1]);
-//                tile.setPosition(static_cast<float>(row*tileWidth/2),
-//                                 static_cast<float>(col*tileHeight/2));
-//            }
-//            level.draw(tile);
-//        }
-//    }
-//    std::cout << "Level width: " << Play::getInstance()->getLevelMap().size() << std::endl
-//              << "Level height: " << Play::getInstance()->getLevelMap()[0].size() << std::endl;
-//    std::cout << sf::Texture::getMaximumSize() << std::endl;
-//}
-
+            
 int Play::play()
 {
     buildLevel();
     Game game;
     int success = game.run();
     return success;
+}
+
+tileMap & Play::getTileMap()
+{
+    return m_TileMap;
 }

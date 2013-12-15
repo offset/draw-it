@@ -14,6 +14,7 @@ SOURCES += main.cpp \
     mainwindow.cpp \
     #qsfmlcanvas.cpp \
     #mycanvas.cpp
+    tilemap.cpp
 
 QMAKE_CXXFLAGS += -std=c++11
 
@@ -26,12 +27,12 @@ LIBS += -L/usr/local/lib \
 -lopencv_imgproc \
 -lopencv_highgui \
 #-lopencv_ml \
--lopencv_video \
--lopencv_features2d \
+#-lopencv_video \
+#-lopencv_features2d \
 #-lopencv_calib3d \
--lopencv_objdetect \
--lopencv_contrib \
--lopencv_legacy \
+#-lopencv_objdetect \
+#-lopencv_contrib \
+#-lopencv_legacy \
 #-lopencv_flann
 
 # Libraries and headers needed for the gameplay
@@ -52,6 +53,7 @@ HEADERS += \
     game.hpp \
     errcodes.hpp \
     mainwindow.hpp \
+    tilemap.hpp
     #qsfmlcanvas.h \
     #mycanvas.h
 

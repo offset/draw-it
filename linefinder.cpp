@@ -97,9 +97,7 @@ std::vector<cv::Vec4i> LineFinder::findLines()
 
 void LineFinder::drawDetectedLines( cv::Scalar color)
 {
-    //std::vector<cv::Vec4i>::const_iterator it2 = lines.begin();
     std::vector<cv::Vec4i>::const_iterator it2 = Play::getInstance()->getFinder()->getLines().begin();
-    
     
     while (it2 != Play::getInstance()->getFinder()->getLines().end())
     {
@@ -158,7 +156,6 @@ std::vector<std::vector<int> > LineFinder::saveToVec()
 {   
     cv::Mat level;
     Play::getInstance()->getFinder()->getImage().copyTo(level);
-    //level.setTo(cv::Scalar(255,255,255));
     // scaling level size
     if(level.cols <= 1024 && level.cols >= 512)
     {
@@ -168,6 +165,7 @@ std::vector<std::vector<int> > LineFinder::saveToVec()
         // scaling line sizes
         // how many elements are there in Vec4i?
         uint vecSize = 4;
+        // scales to lines which are to be drawn
         for (auto it = lines.begin(); it != lines.end(); ++it)
         {
             for (uint i = 0; i < vecSize; ++i)
@@ -177,6 +175,7 @@ std::vector<std::vector<int> > LineFinder::saveToVec()
 //                       && (*it)[i] <= level.rows);
             }
         }
+        cv::imwrite("scaledImage.png", level);
     } else if (level.cols > 1024 && level.cols <= 2048)
     {
         // scale 4
@@ -218,12 +217,18 @@ std::vector<std::vector<int> > LineFinder::saveToVec()
     }
     
     std::vector<std::vector<int> > levelFile;
+    // debug
+    int imagewidth = Play::getInstance()->getFinder()->getImage().rows;
+    int imageHeight = Play::getInstance()->getFinder()->getImage().cols;
+    
+    Play::getInstance()->getFinder()->drawDetectedLines(cv::Scalar(0,0,0));
+    
     for (int i = 0; i < Play::getInstance()->getFinder()->getImage().rows; ++i)
     {
         std::vector<int> row(Play::getInstance()->getFinder()->getImage().cols);
         for (int j = 0; j < Play::getInstance()->getFinder()->getImage().cols; ++j)
         {
-            row.push_back(Play::getInstance()->getFinder()->getImage().at<int>(j, i));
+            row.push_back(Play::getInstance()->getFinder()->getImage().at<int>(i, j));
         }
         levelFile.push_back(row);
     }
@@ -232,23 +237,46 @@ std::vector<std::vector<int> > LineFinder::saveToVec()
     {
         cv::cvtColor(level, level, cv::COLOR_BGR2GRAY);
     }
+    int iWidth = level.cols;
+    int iHeight = level.rows;
     Play::getInstance()->getFinder()->drawDetectedLines();
+    iWidth = level.cols;
+    iHeight = level.rows;
     //drawDetectedLines(cv::Scalar(0,0,0));
     
-    for (int row = 0; row < Play::getInstance()->getFinder()->getImage().rows; ++row)
-    {
-        uchar* pixel = level.ptr<uchar>(row);
-        for (int col = 0; col < Play::getInstance()->getFinder()->getImage().cols; ++col)
+//    for (int row = 0; row < Play::getInstance()->getFinder()->getImage().rows; ++row)
+//    {
+//        uchar* pixel = level.ptr<uchar>(row);
+//        for (int col = 0; col < Play::getInstance()->getFinder()->getImage().cols; ++col)
+//        {
+//            if(static_cast<int>(*pixel) == 0)
+//            {
+//                levelFile[row][col] = 1;
+//            } else
+//            {
+//                levelFile[row][col] = 0;
+//            }
+//        }
+//    }
+    
+    // debugging
+//    int levelWidth = levelFile.size();
+//    int levelHeight = levelFile[0].size();
+    
+    for(int i = 0; i < levelFile.size(); ++i)
+    { 
+        for (int j = 0; j < levelFile[0].size(); ++j)
         {
-            if(static_cast<int>(*pixel) == 0)
+            if(levelFile[i][j] == 0)
             {
-                levelFile[row][col] = 1;
+                levelFile[i][j] = 1;
             } else
             {
-                levelFile[row][col] = 0;
+                levelFile[i][j] = 0;
             }
         }
     }
+    
     Play::getInstance()->getFinder()->setImage(level);
     
     return levelFile;

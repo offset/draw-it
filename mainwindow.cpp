@@ -90,5 +90,5 @@ void MainWindow::on_game_clicked()
 
 void MainWindow::on_exit_clicked()
 {
-    
+    // see constructor
 }

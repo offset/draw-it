@@ -4,6 +4,7 @@
 #include <vector>
 #include "linefinder.hpp"
 #include "game.hpp"
+#include "tilemap.hpp"
 
 /*!
  * \brief The Play class
@@ -78,24 +79,29 @@ public:
     
     /*!
      * \brief Access the Level Map.
+     * \return The level Map
      */
     std::vector<std::vector<int> > & getLevelMap();
     
     /*!
-     * \brief Builds a level based on the contents of the text file.
-     * \return The built level as a vector of a vector.
+     * \brief Access the tile map
+     * \return The tile map.
      */
+    tileMap & getTileMap();
     
 private:
-    //sf::Image buildLevel();
+    
     /*!
-     * \brief Loads Textures and builds a background image based on the data in levelMap.
+     * \brief Loads Textures and builds a background image as well as the level data based on the data in levelMap.
+     *
+     * In the first part, there is an image (cv::Mat) created, in the second one we draw into Game::window.
+     *
      * \return Error/Success Code
      */
     int buildLevel();
     // contains the data to build the level
     std::vector<std::vector<int> > levelMap;
-    sf::RenderTexture level;
+    tileMap m_TileMap;
     cv::Mat levelBg;
 };
 

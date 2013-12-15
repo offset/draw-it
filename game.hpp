@@ -15,6 +15,10 @@ public:
      * @return Error/Success code.
      */
     int run();
+    /*!
+     * \brief Accesses Game::window.
+     */
+    sf::RenderWindow& getRenderWindow();
     
 private:
     /*!

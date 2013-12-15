@@ -1,6 +1,7 @@
 #include <iostream>
 #include "game.hpp"
 #include "errcodes.hpp"
+#include "play.hpp"
 
 Game::Game() : window(sf::VideoMode(640,480), "Draw it!"), timePerFrame(sf::seconds(1.f/60.f)), playerTexture(), playerSprite()
 {
@@ -63,7 +64,10 @@ void Game::update(sf::Time deltaTime)
 void Game::render()
 {
     window.clear();
+    
     window.draw(playerSprite);
+    window.draw(Play::getInstance()->getTileMap());
+    
     window.display();
 }
 
@@ -104,4 +108,9 @@ void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed)
             isMovingRight = isPressed;
             break;
     }
+}
+
+sf::RenderWindow& Game::getRenderWindow()
+{
+    return(window);
 }

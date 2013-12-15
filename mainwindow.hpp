@@ -8,6 +8,8 @@
 #include "play.hpp"
 #include <QMessageBox>
 
+/*! This namespaces contains the GUI (Ui = user interface). */
+
 namespace Ui {
 class MainWindow;
 }
