@@ -3,16 +3,13 @@
 #include "errcodes.hpp"
 #include "play.hpp"
 
-Game::Game() : window(sf::VideoMode(640,480), "Draw it!"), timePerFrame(sf::seconds(1.f/60.f)), playerTexture(), playerSprite()
+Game::Game() : window(sf::VideoMode(640,480), "Draw it!"), timePerFrame(sf::seconds(1.f/60.f)), 
+    playerTexture(), playerSprite(), view(sf::Vector2f(player.getPosition().x, player.getPosition().y), static_cast<sf::Vector2f>(window.getSize()))
 {
-    if (!playerTexture.loadFromFile("../drawit/assets/textures/player/p1_front.png"));
-    {
-        std::cerr << "Could not load texture files for the player." << std::endl
-                  << "Now exiting." << std::endl;
-        exit(READ_ERROR);
-    }
+    assert(playerTexture.loadFromFile("../drawit/assets/textures/player/dummyPlayer.png"));
     playerSprite.setTexture(playerTexture);
     playerSprite.setPosition(player.getPosition().x, player.getPosition().y);
+    window.setView(view);
 }
 
 void Game::processEvents()
@@ -31,6 +28,8 @@ void Game::processEvents()
             case sf::Event::Closed:
                 std::cerr << "Received close event, window is being closed." << std::endl;
                 window.close();
+                break;
+            default:
                 break;
         }
     }
@@ -59,14 +58,23 @@ void Game::update(sf::Time deltaTime)
     }
     
     player.move(movement * deltaTime.asSeconds());
+    
+    playerSprite.setPosition(player.getPosition().x, player.getPosition().y);
+    
+    view.setCenter(player.getPosition().x, player.getPosition().y);
+    
+    std::cerr << movement.x << " " << movement.y << std::endl;
 }
 
 void Game::render()
 {
     window.clear();
     
-    window.draw(playerSprite);
+    window.setView(view);
+    
     window.draw(Play::getInstance()->getTileMap());
+    
+    window.draw(playerSprite);
     
     window.display();
 }
@@ -106,6 +114,8 @@ void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed)
             break;
         case sf::Keyboard::D:
             isMovingRight = isPressed;
+            break;
+        default:
             break;
     }
 }

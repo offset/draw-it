@@ -55,8 +55,9 @@ public:
      * \param cannyThreshold2[in]: maximum threshold for contour detection with the canny-edge filter.
      * \param cannyApertureSize[in]: Aperture Size for the canny-edge detector. If set higher it should remove some noise, but due to skeleton this is unneccessary.
      * \param l2Gradient[in]: If set to true, the calculation is more demanding, but also yields better results.
+     * \return error/success code
      */
-    void detect(float minLength = 100.f, 
+    int detect(float minLength = 100.f, 
                        float minGap = 40.f, 
                        int minVote = 80,
                        int skelThreshold = 50,

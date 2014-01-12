@@ -49,7 +49,23 @@ void MainWindow::on_conversion_clicked()
         return;
     }
     // The lines are being detected and an image with the lines only is being displayed
-    Play::getInstance()->detect();
+    // It is tried again and again until there were lines detected
+    int errorSuccess = 0;
+    int loopCnt = 0;
+    while (errorSuccess == 0)
+    {
+        if (Play::getInstance()->detect() != -1)
+        {
+            errorSuccess = 1;
+        }
+        if (loopCnt == 20)
+        {
+            std::cerr << "There could be no lines detected after 20 loop runs." << std::endl
+                      << "Please try another image." << std::endl;
+            message.setText("Please try again or provide another image.");
+            exit(-1);
+        }
+    }
     cv::Mat image;
     // The image needs to be converted to BGR to be displayed correctly by the Qt window.
     cv::cvtColor(Play::getInstance()->getFinder()->getImage(), Play::getInstance()->getFinder()->getImage(), cv::COLOR_GRAY2BGR);
@@ -61,8 +77,6 @@ void MainWindow::on_conversion_clicked()
     ui->label->resize(ui->label->pixmap()->size());
     
     converted = true;
-    // DEBUG
-    //cv::imwrite("convertedImage.png", Play::getInstance()->getFinder()->getImage());
 }
 
 void MainWindow::on_game_clicked()

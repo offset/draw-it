@@ -11,7 +11,7 @@ the following is required:
  - The OpenCV library and header files (I am using version 2.4.6)
  - The SFML library and header files (I am using version 2.1)
  - A c++11 compatible c++ compiler (I am using the g++ which is part of the gcc)
-I havent't build the program without QT-Creator yet, so I can't give you any further information.
+I havent't build the program without Qt-Creator yet, so I can't give you any further information.
 
 Building the Documentation
 ==========================

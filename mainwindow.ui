@@ -23,6 +23,9 @@
       <height>61</height>
      </rect>
     </property>
+    <property name="locale">
+     <locale language="English" country="UnitedStates"/>
+    </property>
     <property name="text">
      <string>Choose Image</string>
     </property>
@@ -35,6 +38,9 @@
       <width>371</width>
       <height>61</height>
      </rect>
+    </property>
+    <property name="locale">
+     <locale language="English" country="UnitedStates"/>
     </property>
     <property name="text">
      <string>Play</string>
@@ -70,6 +76,9 @@
       <height>61</height>
      </rect>
     </property>
+    <property name="locale">
+     <locale language="English" country="UnitedStates"/>
+    </property>
     <property name="text">
      <string>Transform Image</string>
     </property>
@@ -82,6 +91,9 @@
       <width>201</width>
       <height>41</height>
      </rect>
+    </property>
+    <property name="locale">
+     <locale language="English" country="UnitedStates"/>
     </property>
     <property name="text">
      <string>Exit</string>
@@ -102,6 +114,9 @@
       <weight>75</weight>
       <bold>true</bold>
      </font>
+    </property>
+    <property name="locale">
+     <locale language="English" country="UnitedStates"/>
     </property>
     <property name="text">
      <string>Draw it!</string>

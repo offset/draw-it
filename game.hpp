@@ -51,7 +51,7 @@ private:
     bool isMovingDown;
     // variable for fixed framerate
     const sf::Time timePerFrame;
-    
+    sf::View view;
 };
 
 #endif // GAME_H

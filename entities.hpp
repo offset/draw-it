@@ -24,6 +24,9 @@ private:
     sf::Vector2f position;
 };
 
+/*!
+ * \brief The Player class
+ */
 class Player : public Entities
 {
 public:
