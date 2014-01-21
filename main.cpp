@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
     
     w.show();
     
-    Play::getInstance()->destroy();
-    
     return a.exec();
+    
+    Play::getInstance()->destroy();
 }

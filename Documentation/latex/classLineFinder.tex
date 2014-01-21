@@ -16,18 +16,26 @@ void \hyperlink{classLineFinder_af76de2e78cc28b37fd15652e2967e56b}{set\-Min\-Vot
 \item 
 void \hyperlink{classLineFinder_a7655dc9adfaca75ed92c585d226a60df}{set\-Line\-Length\-And\-Gap} (double length, double gap)
 \item 
-std\-::vector$<$ cv\-::\-Vec4i $>$ \hyperlink{classLineFinder_adb0567e29363788ba519cff1f1f6686d}{find\-Lines} (cv\-::\-Mat \&binary)
+cv\-::\-Mat \& \hyperlink{classLineFinder_abd5e230f01feaecbc0f138ee3da504bf}{get\-Image} ()
 \item 
-void \hyperlink{classLineFinder_aa20781cdf8620689b78c221d1f30371f}{draw\-Detected\-Lines} (cv\-::\-Mat \&image, cv\-::\-Scalar color=cv\-::\-Scalar(255, 255, 255), int scale\-Factor\-Rows=-\/1, int scale\-Factor\-Cols=-\/1)
+std\-::vector$<$ cv\-::\-Vec4i $>$ \hyperlink{classLineFinder_a2769bdd5845ce23539d6abce15aa0814}{get\-Lines} ()
+\begin{DoxyCompactList}\small\item\em Access the detected lines. \end{DoxyCompactList}\item 
+int \hyperlink{classLineFinder_a238c97d0b07eae22b1dcce4201309771}{set\-Image} (std\-::string file\-Path)
+\item 
+int \hyperlink{classLineFinder_a798b342c3ac2cc0f20145b16761ff701}{set\-Image} (cv\-::\-Mat image)
+\item 
+std\-::vector$<$ cv\-::\-Vec4i $>$ \hyperlink{classLineFinder_a7f516bf30904fa0037d19ab1d6306c15}{find\-Lines} ()
+\item 
+void \hyperlink{classLineFinder_a538e8d3ab154e53bdbe379f55c322530}{draw\-Detected\-Lines} (cv\-::\-Scalar color=cv\-::\-Scalar(255, 255, 255))
 \item 
 std\-::vector$<$ cv\-::\-Vec4i $>$ \hyperlink{classLineFinder_a4fe5f72054ba400611549ea25c25904e}{refine\-Detected\-Lines} (float min\-Difference=0.\-05f)
 \item 
-void \hyperlink{classLineFinder_a7dbb0089ad37b33bdd904e1347775098}{align\-Lines\-To\-Grid} (cv\-::\-Mat \&image)
-\item 
-cv\-::\-Mat \hyperlink{classLineFinder_ad9aa51b43bb797b324305d3c89f5145f}{create\-Skeleton} (cv\-::\-Mat \&image, int threshold=127)
+void \hyperlink{classLineFinder_ac075a64fd7e52769fae9b78c337e00e1}{create\-Skeleton} (int threshold=127)
 \begin{DoxyCompactList}\small\item\em Creates a refined image by removing outer pixels of the structures in the image. \end{DoxyCompactList}\item 
-std\-::vector$<$ std\-::vector$<$ int $>$ $>$ \hyperlink{classLineFinder_ad2dfe1367c2dd671f23a49304fe5240b}{save\-To\-Vec} (cv\-::\-Mat image)
-\begin{DoxyCompactList}\small\item\em Stores the image in a format S\-F\-M\-L can read for further processing. \end{DoxyCompactList}\end{DoxyCompactItemize}
+std\-::vector$<$ std\-::vector$<$ int $>$ $>$ \hyperlink{classLineFinder_a16d011cf00154adb96a37a75773017dc}{save\-To\-Vec} ()
+\begin{DoxyCompactList}\small\item\em Stores the image in a format S\-F\-M\-L can read for further processing. \end{DoxyCompactList}\item 
+void \hyperlink{classLineFinder_af42fca457731b5911f4b9787f5ad0b15}{draw\-Line\-Points} ()
+\begin{DoxyCompactList}\small\item\em Draws the beginning and the ending of a detected line on the original image. For debugging purposes. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Constructor \& Destructor Documentation}
@@ -41,56 +49,76 @@ std\-::vector$<$ std\-::vector$<$ int $>$ $>$ \hyperlink{classLineFinder_ad2dfe1
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classLineFinder_a7dbb0089ad37b33bdd904e1347775098}{\index{Line\-Finder@{Line\-Finder}!align\-Lines\-To\-Grid@{align\-Lines\-To\-Grid}}
-\index{align\-Lines\-To\-Grid@{align\-Lines\-To\-Grid}!LineFinder@{Line\-Finder}}
-\subsubsection[{align\-Lines\-To\-Grid}]{\setlength{\rightskip}{0pt plus 5cm}void Line\-Finder\-::align\-Lines\-To\-Grid (
-\begin{DoxyParamCaption}
-\item[{cv\-::\-Mat \&}]{image}
-\end{DoxyParamCaption}
-)}}\label{classLineFinder_a7dbb0089ad37b33bdd904e1347775098}
-\hypertarget{classLineFinder_ad9aa51b43bb797b324305d3c89f5145f}{\index{Line\-Finder@{Line\-Finder}!create\-Skeleton@{create\-Skeleton}}
+\hypertarget{classLineFinder_ac075a64fd7e52769fae9b78c337e00e1}{\index{Line\-Finder@{Line\-Finder}!create\-Skeleton@{create\-Skeleton}}
 \index{create\-Skeleton@{create\-Skeleton}!LineFinder@{Line\-Finder}}
-\subsubsection[{create\-Skeleton}]{\setlength{\rightskip}{0pt plus 5cm}cv\-::\-Mat Line\-Finder\-::create\-Skeleton (
+\subsubsection[{create\-Skeleton}]{\setlength{\rightskip}{0pt plus 5cm}void Line\-Finder\-::create\-Skeleton (
 \begin{DoxyParamCaption}
-\item[{cv\-::\-Mat \&}]{image, }
 \item[{int}]{threshold = {\ttfamily 127}}
 \end{DoxyParamCaption}
-)}}\label{classLineFinder_ad9aa51b43bb797b324305d3c89f5145f}
+)}}\label{classLineFinder_ac075a64fd7e52769fae9b78c337e00e1}
 
 
 Creates a refined image by removing outer pixels of the structures in the image. 
 
 \begin{DoxyAuthor}{Author}
-zemann \begin{DoxyVerb}  The function makes sure that the image is grayscale, then applies a inverted threshold on it to obtain a binary image.
-  In a loop, which ends when all pixels of the image are zero, the image is opened to remove unneccessary pixels,
-  then this opened image is subtracted from the original image, which is in return copied to skeleton.
-  At last, the image is eroded. This then is the starting image for the next iteration. The skeleton is returned.
-  The function is based on this blog entry:
-  http://felix.abecassis.me/2011/09/opencv-morphological-skeleton
-
-  \param image[in,out]: The image to use for generating the skeleton. NOTE: This image is all zero at the end.
-  \param threshold[in]: optional parameter for specifing the threshold limit. The mode is always THRESH_BINARY.
-
-  @return The created skeleton image.\end{DoxyVerb}
- 
+zemann
 \end{DoxyAuthor}
-\hypertarget{classLineFinder_aa20781cdf8620689b78c221d1f30371f}{\index{Line\-Finder@{Line\-Finder}!draw\-Detected\-Lines@{draw\-Detected\-Lines}}
+The function makes sure that the image is grayscale, then applies a inverted threshold on it to obtain a binary image. In a loop, which ends when all pixels of the image are zero, the image is opened to remove unneccessary pixels, then this opened image is subtracted from the original image, which is in return copied to skeleton. At last, the image is eroded. This then is the starting image for the next iteration. The skeleton is returned. The function is based on this blog entry\-: \href{http://felix.abecassis.me/2011/09/opencv-morphological-skeleton}{\tt http\-://felix.\-abecassis.\-me/2011/09/opencv-\/morphological-\/skeleton}
+
+
+\begin{DoxyParams}{Parameters}
+{\em threshold\mbox{[}in\mbox{]},\-:} & optional parameter for specifing the threshold limit. The mode is always T\-H\-R\-E\-S\-H\-\_\-\-B\-I\-N\-A\-R\-Y.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The created skeleton image. 
+\end{DoxyReturn}
+\hypertarget{classLineFinder_a538e8d3ab154e53bdbe379f55c322530}{\index{Line\-Finder@{Line\-Finder}!draw\-Detected\-Lines@{draw\-Detected\-Lines}}
 \index{draw\-Detected\-Lines@{draw\-Detected\-Lines}!LineFinder@{Line\-Finder}}
 \subsubsection[{draw\-Detected\-Lines}]{\setlength{\rightskip}{0pt plus 5cm}void Line\-Finder\-::draw\-Detected\-Lines (
 \begin{DoxyParamCaption}
-\item[{cv\-::\-Mat \&}]{image, }
-\item[{cv\-::\-Scalar}]{color = {\ttfamily cv\-:\-:Scalar(255,~255,~255)}, }
-\item[{int}]{scale\-Factor\-Rows = {\ttfamily -\/1}, }
-\item[{int}]{scale\-Factor\-Cols = {\ttfamily -\/1}}
+\item[{cv\-::\-Scalar}]{color = {\ttfamily cv\-:\-:Scalar(255,~255,~255)}}
 \end{DoxyParamCaption}
-)}}\label{classLineFinder_aa20781cdf8620689b78c221d1f30371f}
-\hypertarget{classLineFinder_adb0567e29363788ba519cff1f1f6686d}{\index{Line\-Finder@{Line\-Finder}!find\-Lines@{find\-Lines}}
+)}}\label{classLineFinder_a538e8d3ab154e53bdbe379f55c322530}
+\hypertarget{classLineFinder_af42fca457731b5911f4b9787f5ad0b15}{\index{Line\-Finder@{Line\-Finder}!draw\-Line\-Points@{draw\-Line\-Points}}
+\index{draw\-Line\-Points@{draw\-Line\-Points}!LineFinder@{Line\-Finder}}
+\subsubsection[{draw\-Line\-Points}]{\setlength{\rightskip}{0pt plus 5cm}void Line\-Finder\-::draw\-Line\-Points (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classLineFinder_af42fca457731b5911f4b9787f5ad0b15}
+
+
+Draws the beginning and the ending of a detected line on the original image. For debugging purposes. 
+
+\hypertarget{classLineFinder_a7f516bf30904fa0037d19ab1d6306c15}{\index{Line\-Finder@{Line\-Finder}!find\-Lines@{find\-Lines}}
 \index{find\-Lines@{find\-Lines}!LineFinder@{Line\-Finder}}
 \subsubsection[{find\-Lines}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ cv\-::\-Vec4i $>$ Line\-Finder\-::find\-Lines (
 \begin{DoxyParamCaption}
-\item[{cv\-::\-Mat \&}]{binary}
+{}
 \end{DoxyParamCaption}
-)}}\label{classLineFinder_adb0567e29363788ba519cff1f1f6686d}
+)}}\label{classLineFinder_a7f516bf30904fa0037d19ab1d6306c15}
+\hypertarget{classLineFinder_abd5e230f01feaecbc0f138ee3da504bf}{\index{Line\-Finder@{Line\-Finder}!get\-Image@{get\-Image}}
+\index{get\-Image@{get\-Image}!LineFinder@{Line\-Finder}}
+\subsubsection[{get\-Image}]{\setlength{\rightskip}{0pt plus 5cm}cv\-::\-Mat \& Line\-Finder\-::get\-Image (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classLineFinder_abd5e230f01feaecbc0f138ee3da504bf}
+\hypertarget{classLineFinder_a2769bdd5845ce23539d6abce15aa0814}{\index{Line\-Finder@{Line\-Finder}!get\-Lines@{get\-Lines}}
+\index{get\-Lines@{get\-Lines}!LineFinder@{Line\-Finder}}
+\subsubsection[{get\-Lines}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ cv\-::\-Vec4i $>$ Line\-Finder\-::get\-Lines (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classLineFinder_a2769bdd5845ce23539d6abce15aa0814}
+
+
+Access the detected lines. 
+
+\begin{DoxyReturn}{Returns}
+lines 
+\end{DoxyReturn}
 \hypertarget{classLineFinder_a4fe5f72054ba400611549ea25c25904e}{\index{Line\-Finder@{Line\-Finder}!refine\-Detected\-Lines@{refine\-Detected\-Lines}}
 \index{refine\-Detected\-Lines@{refine\-Detected\-Lines}!LineFinder@{Line\-Finder}}
 \subsubsection[{refine\-Detected\-Lines}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$cv\-::\-Vec4i$>$ Line\-Finder\-::refine\-Detected\-Lines (
@@ -98,34 +126,29 @@ zemann \begin{DoxyVerb}  The function makes sure that the image is grayscale, th
 \item[{float}]{min\-Difference = {\ttfamily 0.05f}}
 \end{DoxyParamCaption}
 )}}\label{classLineFinder_a4fe5f72054ba400611549ea25c25904e}
-\hypertarget{classLineFinder_ad2dfe1367c2dd671f23a49304fe5240b}{\index{Line\-Finder@{Line\-Finder}!save\-To\-Vec@{save\-To\-Vec}}
+\hypertarget{classLineFinder_a16d011cf00154adb96a37a75773017dc}{\index{Line\-Finder@{Line\-Finder}!save\-To\-Vec@{save\-To\-Vec}}
 \index{save\-To\-Vec@{save\-To\-Vec}!LineFinder@{Line\-Finder}}
 \subsubsection[{save\-To\-Vec}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ std\-::vector$<$ int $>$ $>$ Line\-Finder\-::save\-To\-Vec (
 \begin{DoxyParamCaption}
-\item[{cv\-::\-Mat}]{image}
+{}
 \end{DoxyParamCaption}
-)}}\label{classLineFinder_ad2dfe1367c2dd671f23a49304fe5240b}
+)}}\label{classLineFinder_a16d011cf00154adb96a37a75773017dc}
 
 
 Stores the image in a format S\-F\-M\-L can read for further processing. 
 
 \begin{DoxyAuthor}{Author}
-zemann \begin{DoxyVerb}  Firstly the function resizes a copy of the image (same size) and the lines depending on their size:
-  < 512px: no rescale
-  up to 1024: scale 2
-  up to 2048: scale 4
-  > 2048: scale 6
-  NOTE: These limits and scales were chosen quite randomly and may change in the next revision.
-  Then the lines are drawn on the (grayscale) copy and a sort of a 'threshold' is performed:
-  If the pixel value is unequal 0, the corresponding value in a vector of a vector of int (represents the image)
-  is set to 1 (line), otherwise to 0.
-  This may change in the future because a certain number could be used for certain terrain objects (walls, obstacles, etc.).
-
-  \param image[in]: The image to be saved
-
-  @return vector of a vector of int containing the line information.\end{DoxyVerb}
- 
+zemann
 \end{DoxyAuthor}
+Firstly the function resizes a copy of the image (same size) and the lines depending on their size\-: $<$ 512px\-: no rescale up to 1024\-: scale 2 up to 2048\-: scale 4 \begin{quotation}
+2048\-: scale 6
+
+\end{quotation}
+N\-O\-T\-E\-: These limits and scales were chosen quite randomly and may change in the next revision. Then the lines are drawn on the (grayscale) copy and a sort of a 'threshold' is performed\-: If the pixel value is unequal 0, the corresponding value in a vector of a vector of int (represents the image) is set to 1 (line), otherwise to 0. This may change in the future because a certain number could be used for certain terrain objects (walls, obstacles, etc.).
+
+\begin{DoxyReturn}{Returns}
+vector of a vector of int containing the line information. 
+\end{DoxyReturn}
 \hypertarget{classLineFinder_a4ffb60e7c12143a6824b884239243da9}{\index{Line\-Finder@{Line\-Finder}!set\-Acc\-Resolution@{set\-Acc\-Resolution}}
 \index{set\-Acc\-Resolution@{set\-Acc\-Resolution}!LineFinder@{Line\-Finder}}
 \subsubsection[{set\-Acc\-Resolution}]{\setlength{\rightskip}{0pt plus 5cm}void Line\-Finder\-::set\-Acc\-Resolution (
@@ -134,6 +157,20 @@ zemann \begin{DoxyVerb}  Firstly the function resizes a copy of the image (same 
 \item[{double}]{d\-Theta}
 \end{DoxyParamCaption}
 )}}\label{classLineFinder_a4ffb60e7c12143a6824b884239243da9}
+\hypertarget{classLineFinder_a238c97d0b07eae22b1dcce4201309771}{\index{Line\-Finder@{Line\-Finder}!set\-Image@{set\-Image}}
+\index{set\-Image@{set\-Image}!LineFinder@{Line\-Finder}}
+\subsubsection[{set\-Image}]{\setlength{\rightskip}{0pt plus 5cm}int Line\-Finder\-::set\-Image (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{file\-Path}
+\end{DoxyParamCaption}
+)}}\label{classLineFinder_a238c97d0b07eae22b1dcce4201309771}
+\hypertarget{classLineFinder_a798b342c3ac2cc0f20145b16761ff701}{\index{Line\-Finder@{Line\-Finder}!set\-Image@{set\-Image}}
+\index{set\-Image@{set\-Image}!LineFinder@{Line\-Finder}}
+\subsubsection[{set\-Image}]{\setlength{\rightskip}{0pt plus 5cm}int Line\-Finder\-::set\-Image (
+\begin{DoxyParamCaption}
+\item[{cv\-::\-Mat}]{image}
+\end{DoxyParamCaption}
+)}}\label{classLineFinder_a798b342c3ac2cc0f20145b16761ff701}
 \hypertarget{classLineFinder_a7655dc9adfaca75ed92c585d226a60df}{\index{Line\-Finder@{Line\-Finder}!set\-Line\-Length\-And\-Gap@{set\-Line\-Length\-And\-Gap}}
 \index{set\-Line\-Length\-And\-Gap@{set\-Line\-Length\-And\-Gap}!LineFinder@{Line\-Finder}}
 \subsubsection[{set\-Line\-Length\-And\-Gap}]{\setlength{\rightskip}{0pt plus 5cm}void Line\-Finder\-::set\-Line\-Length\-And\-Gap (

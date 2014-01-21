@@ -90,20 +90,36 @@ public:
      */
     tileMap & getTileMap();
     
+    sf::Vector2u getMapSize();
+    
+    void setMapSize(int width, int height);
+    
+    /*!
+     * \brief Access the physics map.
+     * \return The physics map.
+     */
+    std::vector<std::vector<int> > & getPhysicsMap();
+    
+    /*!
+     * \brief Set the vector to use for the physics map.
+     */
+    void setPhysicsMap(std::vector<std::vector<int> > newPhMap);
+    
 private:
     
     /*!
-     * \brief Loads Textures and builds a background image as well as the level data based on the data in levelMap.
-     *
-     * In the first part, there is an image (cv::Mat) created, in the second one we draw into Game::window.
+     * \brief Builds the level as a tileMap consisting of vertex arrays. See more at class tileMap.
      *
      * \return Error/Success Code
      */
     int buildLevel();
     // contains the data to build the level
     std::vector<std::vector<int> > levelMap;
+    // Contains the built level.
     tileMap m_TileMap;
-    cv::Mat levelBg;
+    // Tells the game where there are solid objects.
+    std::vector<std::vector<int> > physicsMap;
+    sf::Vector2u mapSize;
 };
 
 #endif // PLAY_H

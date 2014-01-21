@@ -39,7 +39,7 @@ public:
      * \return lines
      */
     
-    std::vector<cv::Vec4i> getLines();
+    std::vector<cv::Vec4i>& getLines();
     
     int setImage(std::string filePath);
     

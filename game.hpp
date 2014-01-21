@@ -39,19 +39,29 @@ private:
      */
     void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
     
+    /*!
+     * \brief Calculates the starting position for the player.
+     * \return Success/error.
+     */
+    int getStartingPosition();
+    
 private:
     sf::RenderWindow window;
     Player player;
-    sf::Texture playerTexture;
-    sf::Sprite playerSprite;
+    sf::VertexArray playerVertex;
+    sf::Vector2u playerBottom;
+    sf::Vector2u playerUp;
+    sf::Vector2u playerLeft;
+    sf::Vector2u playerRight;
     // needed for movement (in processEvents)
     bool isMovingLeft;
     bool isMovingRight;
-    bool isMovingUp;
-    bool isMovingDown;
+    bool isJumping;
+    bool hasBeenJumping;
     // variable for fixed framerate
     const sf::Time timePerFrame;
     sf::View view;
+    sf::View miniMap;
 };
 
 #endif // GAME_H

@@ -40,7 +40,7 @@ cv::Mat & LineFinder::getImage()
     return img;
 }
 
-std::vector<cv::Vec4i> LineFinder::getLines()
+std::vector<cv::Vec4i>& LineFinder::getLines()
 {
     return lines;
 }
@@ -97,18 +97,13 @@ std::vector<cv::Vec4i> LineFinder::findLines()
 
 void LineFinder::drawDetectedLines( cv::Scalar color)
 {
-    std::vector<cv::Vec4i>::const_iterator it2 = Play::getInstance()->getFinder()->getLines().begin();
-    
-    while (it2 != Play::getInstance()->getFinder()->getLines().end())
+    for (int i = 0; i < Play::getInstance()->getFinder()->getLines().size(); ++i)
     {
-        cv::Point pt1((*it2)[0], (*it2)[1]);
-        cv::Point pt2((*it2)[2], (*it2)[3]);
+        cv::Point pt1(Play::getInstance()->getFinder()->getLines()[i][0], Play::getInstance()->getFinder()->getLines()[i][1]);
+        cv::Point pt2(Play::getInstance()->getFinder()->getLines()[i][2], Play::getInstance()->getFinder()->getLines()[i][3]);
         
         cv::line(Play::getInstance()->getFinder()->getImage(), pt1, pt2, color);
-        
-        ++it2;
     }
-    cv::imwrite("drawDetectedLines.jpg", Play::getInstance()->getFinder()->getImage());
 }
 
 void LineFinder::createSkeleton(int threshold)
@@ -216,10 +211,14 @@ std::vector<std::vector<int> > LineFinder::saveToVec()
         // nothing to do
     }
     
+    if (level.channels() != 1)
+    {
+        cv::cvtColor(level, level, cv::COLOR_BGR2GRAY);
+    }
+    
+    Play::getInstance()->getFinder()->setImage(level);
+    
     std::vector<std::vector<int> > levelFile;
-    // debug
-    int imagewidth = Play::getInstance()->getFinder()->getImage().rows;
-    int imageHeight = Play::getInstance()->getFinder()->getImage().cols;
     
     Play::getInstance()->getFinder()->drawDetectedLines(cv::Scalar(0,0,0));
     
@@ -233,49 +232,38 @@ std::vector<std::vector<int> > LineFinder::saveToVec()
         levelFile.push_back(row);
     }
     
-    if (level.channels() != 1)
-    {
-        cv::cvtColor(level, level, cv::COLOR_BGR2GRAY);
-    }
     int iWidth = level.cols;
     int iHeight = level.rows;
     Play::getInstance()->getFinder()->drawDetectedLines();
     iWidth = level.cols;
     iHeight = level.rows;
-    //drawDetectedLines(cv::Scalar(0,0,0));
     
-//    for (int row = 0; row < Play::getInstance()->getFinder()->getImage().rows; ++row)
-//    {
-//        uchar* pixel = level.ptr<uchar>(row);
-//        for (int col = 0; col < Play::getInstance()->getFinder()->getImage().cols; ++col)
-//        {
-//            if(static_cast<int>(*pixel) == 0)
-//            {
-//                levelFile[row][col] = 1;
-//            } else
-//            {
-//                levelFile[row][col] = 0;
-//            }
-//        }
-//    }
+    std::ofstream os("levelFile.txt");
+    //cv::Mat imageOfLevelMap(levelFile.size(), levelFile[0].size(), CV_8UC1, cv::Scalar(0,0,0));
     
-    // debugging
-//    int levelWidth = levelFile.size();
-//    int levelHeight = levelFile[0].size();
-    
-    for(int i = 0; i < levelFile.size(); ++i)
+    for(uint i = 0; i < levelFile.size(); ++i)
     { 
-        for (int j = 0; j < levelFile[0].size(); ++j)
+        for (uint j = 0; j < levelFile[0].size(); ++j)
         {
             if(levelFile[i][j] == 0)
             {
-                levelFile[i][j] = 1;
+                levelFile[i][j] = 0;
+                os << 0;
+                //imageOfLevelMap.at<int>(i,j) = 0;
             } else
             {
-                levelFile[i][j] = 0;
+                levelFile[i][j] = 1;
+                os << 1;
+                //imageOfLevelMap.at<int>(i,j) = 1;
             }
         }
+        os << std::endl;
+        //cv::imwrite("levelMap.png", imageOfLevelMap);
     }
+    
+    os.close();
+    
+    Play::getInstance()->setPhysicsMap(levelFile);
     
     Play::getInstance()->getFinder()->setImage(level);
     

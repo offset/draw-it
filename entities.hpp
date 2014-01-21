@@ -22,6 +22,8 @@ public:
     
 private:
     sf::Vector2f position;
+    sf::Vector2f velocity;
+    sf::Vector2f acceleration;
 };
 
 /*!
@@ -47,6 +49,12 @@ private:
     float jumpTime;
     // maybe used in further implementations with other obstacles than falling down (enemies, etc.)
     sf::Rect<float> hitBox = sf::Rect<float>(0.f,0.f,0.f,0.f);//(float rectLeft, float rectTop, float rectWidth, float rectHeight);
+    /*
+     * position --------------- rightCorner
+     * |                                  |
+     * |                                  |
+     * leftCorner --------- rightDownCorner
+     */
     sf::Vector2f position;
 };
 

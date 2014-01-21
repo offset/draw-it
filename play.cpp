@@ -83,53 +83,9 @@ std::vector<std::vector<int> > & Play::getLevelMap()
 
 int Play::buildLevel()
 {
-    // PART 1: building the background image
-    // debugging purposes
-//    std::vector<cv::Mat> TexturesBg(2);
-//    cv::Mat texture = cv::imread("../drawit/assets/textures/tiles/dummy1.png");
-//    if(!texture.data)
-//    {
-//        std::cerr << "Texture could not be loaded..." <<
-//                     "Exiting." << std::endl;
-//        return -1;
-//    }
-//    TexturesBg[0] = texture;
-//    texture = cv::imread("../drawit/assets/textures/tiles/dummy2.png");
-//    if(!texture.data)
-//    {
-//        std::cerr << "Texture could not be loaded..." <<
-//                     "Exiting." << std::endl;
-//        return -1;
-//    }
-//    TexturesBg[1] = texture;
-//    int tileWidth = texture.size().width;
-//    int tileHeight = texture.size().height;
-//    cv::Mat bgImg(levelMap.size(), levelMap[0].size(), CV_8UC3, cv::Scalar(255,0,255));
-//    for (uint row = 0; row < levelMap.size(); ++ row)
-//    {
-//        for (uint col = 0; col < levelMap[0].size(); ++ col)
-//        {
-//            if(levelMap[row][col] == 0)
-//            {
-//                texture = TexturesBg[0];
-//                cv::Mat roi = bgImg(cv::Rect(col, row, tileWidth, tileHeight));
-//                texture.copyTo(roi);
-//            } else
-//            {
-//                texture = TexturesBg[1];
-//                cv::Mat roi = bgImg(cv::Rect(col, row, tileWidth, tileHeight));
-//                texture.copyTo(roi);
-//            }
-//        }
-//    }
-//    levelBg = bgImg;
-//    cv::imwrite("levelBg.png", bgImg);
-    
-    // IMPORTANT: This needs to be done via vertexes
-    // PART 2: building the level environment
-    if(!m_TileMap.load("../drawit/assets/textures/tiles/dummyTextureTilemap.png", sf::Vector2u(70, 70), Play::getInstance()->getLevelMap(), levelMap[0].size(), levelMap.size()))
+    if(!m_TileMap.load(sf::Vector2u(5, 5), Play::getInstance()->getLevelMap(), levelMap[0].size(), levelMap.size()))
     {
-        return -1; 
+        return -1;
     }
 
     return 0;
@@ -137,6 +93,7 @@ int Play::buildLevel()
             
 int Play::play()
 {
+    //physicsMap(levelMap);
     buildLevel();
     Game game;
     int success = game.run();
@@ -146,4 +103,25 @@ int Play::play()
 tileMap & Play::getTileMap()
 {
     return m_TileMap;
+}
+
+sf::Vector2u Play::getMapSize()
+{
+    return mapSize;
+}
+
+void Play::setMapSize(int width, int height)
+{
+    mapSize.x = width;
+    mapSize.y = height;
+}
+
+std::vector<std::vector<int> > & Play::getPhysicsMap()
+{
+    return physicsMap;
+}
+
+void Play::setPhysicsMap(std::vector<std::vector<int> > newPhMap)
+{
+    physicsMap = newPhMap;
 }

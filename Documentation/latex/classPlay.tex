@@ -15,10 +15,16 @@ The \hyperlink{classPlay}{Play} class.
 \item 
 \hyperlink{classPlay_a6f7dd4d097454caef2e81fa94fe739d5}{$\sim$\-Play} ()
 \item 
-std\-::vector$<$ std\-::vector$<$ int $>$ $>$ \hyperlink{classPlay_a6c5115ce3ff13935a5792bbfd52fecd9}{detect} (std\-::string file\-Name\-Image=\char`\"{}../level.\-png\char`\"{}, float min\-Length=100.f, float min\-Gap=40.f, int min\-Vote=80, int skel\-Threshold=50, int canny\-Threshold1=40, int canny\-Threshold2=300, int canny\-Aperture\-Size=3, bool l2\-Gradient=true)
-\begin{DoxyCompactList}\small\item\em Calls all neccessary functions to detect the lines in an image and writes them to a text file. \end{DoxyCompactList}\item 
-int \hyperlink{classPlay_a3110107a17daf5459841feac52303768}{play} (std\-::vector$<$ std\-::vector$<$ int $>$ $>$ level\-File)
-\begin{DoxyCompactList}\small\item\em Builds a level based on a text file and instantiates a game object and calls it's run method. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\hyperlink{classLineFinder}{Line\-Finder} $\ast$ \hyperlink{classPlay_ad610a2ec29110814e389192ca2277070}{get\-Finder} ()
+\begin{DoxyCompactList}\small\item\em Access the \hyperlink{classLineFinder}{Line\-Finder} object. \end{DoxyCompactList}\item 
+void \hyperlink{classPlay_af16a67caeafd129cbe43a87478ac3089}{detect} (float min\-Length=100.f, float min\-Gap=40.f, int min\-Vote=80, int skel\-Threshold=50, int canny\-Threshold1=40, int canny\-Threshold2=300, int canny\-Aperture\-Size=3, bool l2\-Gradient=true)
+\begin{DoxyCompactList}\small\item\em Calls all neccessary functions to detect the lines in an image and saves them in form of a two-\/dimensional vector which can be accessed via \hyperlink{classPlay_a4c09a80f0f01539d9eb9f449c2362efa}{get\-Level\-Map()}. \end{DoxyCompactList}\item 
+int \hyperlink{classPlay_a4ac2c0b79134c402b9a6c8135b08a665}{play} ()
+\begin{DoxyCompactList}\small\item\em Builds a level based on a text file and instantiates a game object and calls it's run method. \end{DoxyCompactList}\item 
+void \hyperlink{classPlay_a44510c78cf006fededeea6673932afd0}{set\-Level\-Map} (std\-::vector$<$ std\-::vector$<$ int $>$ $>$ lm)
+\begin{DoxyCompactList}\small\item\em Change the private Level Map. \end{DoxyCompactList}\item 
+std\-::vector$<$ std\-::vector$<$ int $>$ $>$ \& \hyperlink{classPlay_a4c09a80f0f01539d9eb9f449c2362efa}{get\-Level\-Map} ()
+\begin{DoxyCompactList}\small\item\em Access the Level Map. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -51,11 +57,10 @@ This class acts as a wrapper for the detection and game functionalities of the p
 {}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [static]}}}\label{classPlay_a189f1935376f3dcd47d9d05b8ff29e65}
-\hypertarget{classPlay_a6c5115ce3ff13935a5792bbfd52fecd9}{\index{Play@{Play}!detect@{detect}}
+\hypertarget{classPlay_af16a67caeafd129cbe43a87478ac3089}{\index{Play@{Play}!detect@{detect}}
 \index{detect@{detect}!Play@{Play}}
-\subsubsection[{detect}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ std\-::vector$<$ int $>$ $>$ Play\-::detect (
+\subsubsection[{detect}]{\setlength{\rightskip}{0pt plus 5cm}void Play\-::detect (
 \begin{DoxyParamCaption}
-\item[{std\-::string}]{file\-Name\-Image = {\ttfamily \char`\"{}../level.png\char`\"{}}, }
 \item[{float}]{min\-Length = {\ttfamily 100.f}, }
 \item[{float}]{min\-Gap = {\ttfamily 40.f}, }
 \item[{int}]{min\-Vote = {\ttfamily 80}, }
@@ -65,15 +70,13 @@ This class acts as a wrapper for the detection and game functionalities of the p
 \item[{int}]{canny\-Aperture\-Size = {\ttfamily 3}, }
 \item[{bool}]{l2\-Gradient = {\ttfamily true}}
 \end{DoxyParamCaption}
-)}}\label{classPlay_a6c5115ce3ff13935a5792bbfd52fecd9}
+)}}\label{classPlay_af16a67caeafd129cbe43a87478ac3089}
 
 
-Calls all neccessary functions to detect the lines in an image and writes them to a text file. 
+Calls all neccessary functions to detect the lines in an image and saves them in form of a two-\/dimensional vector which can be accessed via \hyperlink{classPlay_a4c09a80f0f01539d9eb9f449c2362efa}{get\-Level\-Map()}. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em file\-Name\-Image\mbox{[}in\mbox{]},\-:} & which image shall be used \\
-\hline
 {\em file\-Name\-Level\mbox{[}in\mbox{]},\-:} & how should the generated level file be named \\
 \hline
 {\em min\-Length\mbox{[}in\mbox{]},\-:} & minimal length for \hyperlink{classLineFinder}{Line\-Finder} class \\
@@ -93,8 +96,19 @@ Calls all neccessary functions to detect the lines in an image and writes them t
 {\em l2\-Gradient\mbox{[}in\mbox{]},\-:} & If set to true, the calculation is more demanding, but also yields better results. \\
 \hline
 \end{DoxyParams}
+\hypertarget{classPlay_ad610a2ec29110814e389192ca2277070}{\index{Play@{Play}!get\-Finder@{get\-Finder}}
+\index{get\-Finder@{get\-Finder}!Play@{Play}}
+\subsubsection[{get\-Finder}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Line\-Finder} $\ast$ Play\-::get\-Finder (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classPlay_ad610a2ec29110814e389192ca2277070}
+
+
+Access the \hyperlink{classLineFinder}{Line\-Finder} object. 
+
 \begin{DoxyReturn}{Returns}
-Path to the created level text file. 
+A pointer to the \hyperlink{classLineFinder}{Line\-Finder} object. 
 \end{DoxyReturn}
 \hypertarget{classPlay_acb42061faea4c74846f0e1ab668a6c61}{\index{Play@{Play}!get\-Instance@{get\-Instance}}
 \index{get\-Instance@{get\-Instance}!Play@{Play}}
@@ -110,25 +124,42 @@ Used to access \hyperlink{classPlay}{Play} class which has a static constructor.
 \begin{DoxyReturn}{Returns}
 pointer to a \hyperlink{classPlay}{Play} instance 
 \end{DoxyReturn}
-\hypertarget{classPlay_a3110107a17daf5459841feac52303768}{\index{Play@{Play}!play@{play}}
+\hypertarget{classPlay_a4c09a80f0f01539d9eb9f449c2362efa}{\index{Play@{Play}!get\-Level\-Map@{get\-Level\-Map}}
+\index{get\-Level\-Map@{get\-Level\-Map}!Play@{Play}}
+\subsubsection[{get\-Level\-Map}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$ std\-::vector$<$ int $>$ $>$ \& Play\-::get\-Level\-Map (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classPlay_a4c09a80f0f01539d9eb9f449c2362efa}
+
+
+Access the Level Map. 
+
+\hypertarget{classPlay_a4ac2c0b79134c402b9a6c8135b08a665}{\index{Play@{Play}!play@{play}}
 \index{play@{play}!Play@{Play}}
 \subsubsection[{play}]{\setlength{\rightskip}{0pt plus 5cm}int Play\-::play (
 \begin{DoxyParamCaption}
-\item[{std\-::vector$<$ std\-::vector$<$ int $>$ $>$}]{level\-File}
+{}
 \end{DoxyParamCaption}
-)}}\label{classPlay_a3110107a17daf5459841feac52303768}
+)}}\label{classPlay_a4ac2c0b79134c402b9a6c8135b08a665}
 
 
 Builds a level based on a text file and instantiates a game object and calls it's run method. 
 
-
-\begin{DoxyParams}{Parameters}
-{\em vector} & which contains the lines \\
-\hline
-\end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 Error/\-Success Code 
 \end{DoxyReturn}
+\hypertarget{classPlay_a44510c78cf006fededeea6673932afd0}{\index{Play@{Play}!set\-Level\-Map@{set\-Level\-Map}}
+\index{set\-Level\-Map@{set\-Level\-Map}!Play@{Play}}
+\subsubsection[{set\-Level\-Map}]{\setlength{\rightskip}{0pt plus 5cm}void Play\-::set\-Level\-Map (
+\begin{DoxyParamCaption}
+\item[{std\-::vector$<$ std\-::vector$<$ int $>$ $>$}]{lm}
+\end{DoxyParamCaption}
+)}}\label{classPlay_a44510c78cf006fededeea6673932afd0}
+
+
+Change the private Level Map. 
+
 
 
 The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
