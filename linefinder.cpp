@@ -113,7 +113,6 @@ void LineFinder::createSkeleton(int threshold)
     {
         cv::cvtColor(Play::getInstance()->getFinder()->getImage(), Play::getInstance()->getFinder()->getImage(), cv::COLOR_BGR2GRAY);
     }
-    //Play::getInstance()->getFinder()->getImage().setTo(cv::Scalar(0,0,0));
     
     // we need to enhance the lighting before we can threshold the image
     cv::equalizeHist(Play::getInstance()->getFinder()->getImage(), Play::getInstance()->getFinder()->getImage());

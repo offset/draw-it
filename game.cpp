@@ -5,29 +5,25 @@
 
 Game::Game() : window(sf::VideoMode(640,480), "Draw it!"), timePerFrame(sf::seconds(1.f/30.f)), 
     view(sf::Vector2f(player.getPosition().x, player.getPosition().y), static_cast<sf::Vector2f>(window.getSize())),
-    //miniMap(sf::Vector2f(window.getSize().x/2, window.getSize().y/2), static_cast<sf::Vector2f>(window.getSize())),
-    isMovingLeft(false), isMovingRight(false), isJumping(false), hasBeenJumping(false)
+    isMovingLeft(false), isMovingRight(false), isJumping(false), hasBeenJumping(false),
+    playerTexture(), playerSprite()
 {
+    if(!playerTexture.loadFromFile("playertexture.png"))
+    {
+        std::cerr << "Could not load texture file." << std::endl
+                  << "Now exiting." << std::endl;
+        exit(-1);
+    }
+    playerSprite.setTexture(playerTexture);
+    
     if(getStartingPosition() != 1)
     {
         std::cerr << "Could not calculate starting position: " << std::endl
                   << std::cerr << player.getPosition().x << " " << player.getPosition().y << std::endl;
     }
-    playerVertex.setPrimitiveType(sf::Quads);
-    sf::Vertex* quad = &playerVertex[0];
-    quad[0] = sf::Vertex(sf::Vector2f(player.getPosition().x, player.getPosition().y), sf::Color::Blue);
-    quad[1] = sf::Vertex(sf::Vector2f(player.getPosition().x+5, player.getPosition().y), sf::Color::Blue);
-    quad[2] = sf::Vertex(sf::Vector2f(player.getPosition().x, player.getPosition().y+5), sf::Color::Blue);
-    quad[3] = sf::Vertex(sf::Vector2f(player.getPosition().x+5, player.getPosition().y+5), sf::Color::Blue);
+    playerSize = playerTexture.getSize();
     view.zoom(1.5f);
-    //view.setViewport(sf::FloatRect(0, 0, 1, 1));
-    //miniMap.setViewport(sf::FloatRect(0.75f, 0.f, 0.25f, 0.25f));
     window.setView(view);
-    //window.setView(miniMap);
-//    playerBottom = sf::Vector2u(player.getPosition().x, player.getPosition().y+playerSprite.getTextureRect().height/2);
-//    playerUp = sf::Vector2u(player.getPosition().x, player.getPosition().y-playerSprite.getTextureRect().height/2);
-//    playerLeft = sf::Vector2u(player.getPosition().x-playerSprite.getTextureRect().width/2, player.getPosition().y);
-//    playerRight = sf::Vector2u(player.getPosition().x+playerSprite.getTextureRect().width/2, player.getPosition().y);
 }
 
 void Game::processEvents()
@@ -59,50 +55,67 @@ void Game::update(sf::Time deltaTime)
     
     if(isMovingLeft)
     {
-        velocity.x -= 1.f * 5.f;
+        velocity.x -= 100.f;
     }
     if(isMovingRight)
     {
-        velocity.x += 1.f * 5.f;
-    }
-    if(isJumping && !hasBeenJumping)
-    {
-        velocity.y -= 3.f * 5.f;
+        velocity.x += 100.f;
     }
     
-    if((player.getPosition().x + velocity.x) >= Play::getInstance()->getMapSize().x
-            /*|| Play::getInstance()->getPhysicsMap()[player.getPosition().y/5][player.getPosition().x/5]*/)
+    sf::Vector2f movement(velocity.x * deltaTime.asSeconds(), velocity.y * deltaTime.asSeconds());
+    
+    if(isValidLocation(player.getPosition().x + movement.x, player.getPosition().y + movement.y))
     {
-        velocity.x = Play::getInstance()->getMapSize().x-1;
-    }
-    if((player.getPosition().x + velocity.x) <= 0)
-    {
-        velocity.x = 1;
-    }
-    if((player.getPosition().y + velocity.y) >= Play::getInstance()->getMapSize().y)
-    {
-        velocity.y = Play::getInstance()->getMapSize().y-1;
-    }
-    if((player.getPosition().y + velocity.y) <= 0)
-    {
-        velocity.y = 1;
+        player.move(movement);
     }
     
-    // gravity
-    velocity.y += 9.81;
-    
-    player.move(velocity * deltaTime.asSeconds());
-    
-    sf::Vertex* quad = &playerVertex[0];
-    quad[0] = sf::Vertex(sf::Vector2f(player.getPosition().x, player.getPosition().y));
-    quad[1] = sf::Vertex(sf::Vector2f(player.getPosition().x+5, player.getPosition().y));
-    quad[2] = sf::Vertex(sf::Vector2f(player.getPosition().x, player.getPosition().y+5));
-    quad[3] = sf::Vertex(sf::Vector2f(player.getPosition().x+5, player.getPosition().y+5));
+    playerSprite.setPosition(player.getPosition().x, player.getPosition().y);
     
     view.setCenter(player.getPosition().x, player.getPosition().y);
     
     // debugging
-    //std::cerr << velocity.x << " " << velocity.y << std::endl;
+    std::cerr << "Velocity" << velocity.x << " " << velocity.y << std::endl;
+    std::cerr << "Movement" << movement.x << " " << movement.y << std::endl;
+//    if(isMovingLeft)
+//    {
+//        velocity.x -= 1.f * 5.f;
+//    }
+//    if(isMovingRight)
+//    {
+//        velocity.x += 1.f * 5.f;
+//    }
+//    if(isJumping && !hasBeenJumping)
+//    {
+//        velocity.y -= 3.f * 5.f;
+//    }
+    
+//    if((player.getPosition().x + velocity.x) >= Play::getInstance()->getMapSize().x
+//            /*|| Play::getInstance()->getPhysicsMap()[player.getPosition().y/5][player.getPosition().x/5]*/)
+//    {
+//        velocity.x = Play::getInstance()->getMapSize().x-1;
+//    }
+//    if((player.getPosition().x + velocity.x) <= 0)
+//    {
+//        velocity.x = 1;
+//    }
+//    if((player.getPosition().y + velocity.y) >= Play::getInstance()->getMapSize().y)
+//    {
+//        velocity.y = Play::getInstance()->getMapSize().y-1;
+//    }
+//    if((player.getPosition().y + velocity.y) <= 0)
+//    {
+//        velocity.y = 1;
+//    }
+    
+//    // gravity
+//    velocity.y += 9.81;
+    
+//    player.move(velocity * deltaTime.asSeconds());
+    
+//    view.setCenter(player.getPosition().x, player.getPosition().y);
+    
+//    // debugging
+//    //std::cerr << velocity.x << " " << velocity.y << std::endl;
 }
 
 void Game::render()
@@ -113,7 +126,7 @@ void Game::render()
     
     window.draw(Play::getInstance()->getTileMap());
     
-    window.draw(playerVertex);
+    window.draw(playerSprite);
     
     window.display();
 }
@@ -162,11 +175,11 @@ sf::RenderWindow& Game::getRenderWindow()
 
 int Game::getStartingPosition()
 {
-    for(int i = 0; i < Play::getInstance()->getPhysicsMap().size(); ++i)
+    for(uint i = 0; i < Play::getInstance()->getPhysicsMap().size(); ++i)
     {
-        for(int j = 0; j < Play::getInstance()->getPhysicsMap().size(); ++j)
+        for(uint j = 0; j < Play::getInstance()->getPhysicsMap().size(); ++j)
         {
-            if(Play::getInstance()->getPhysicsMap()[j][i] == 0)
+            if(Play::getInstance()->getPhysicsMap()[j][i] == 1)
             {
                 player.setPosition(i+1*5, j-1*5);
                 return 1;
@@ -174,4 +187,35 @@ int Game::getStartingPosition()
         }
     }
     return -1;
+}
+
+bool Game::isValidLocation(float x, float y)
+{
+    int nx = player.getPosition().x + x;
+    int ny = player.getPosition().y + y;
+    if(isBlocked(nx-playerSize.x, ny-playerSize.y))
+    {
+        return false;
+    }
+    if(isBlocked(nx+playerSize.x, ny-playerSize.y))
+    {
+        return false;
+    }
+    if(isBlocked(nx-playerSize.x, ny+playerSize.y))
+    {
+        return false;
+    }
+    if(isBlocked(nx+playerSize.x, ny+playerSize.y))
+    {
+        return false;
+    }
+    
+    return true;
+}
+
+bool Game::isBlocked(float x, float y)
+{
+    return !(x < 0 || x > Play::getInstance()->getMapSize().x
+            || y < 0 || Play::getInstance()->getMapSize().y
+            || Play::getInstance()->getPhysicsMap()[y][x] == 1);
 }

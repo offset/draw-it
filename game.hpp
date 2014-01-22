@@ -45,14 +45,16 @@ private:
      */
     int getStartingPosition();
     
+    bool isValidLocation(float x, float y);
+    
+    bool isBlocked(float x, float y);
+    
 private:
     sf::RenderWindow window;
     Player player;
-    sf::VertexArray playerVertex;
-    sf::Vector2u playerBottom;
-    sf::Vector2u playerUp;
-    sf::Vector2u playerLeft;
-    sf::Vector2u playerRight;
+    sf::Texture playerTexture;
+    sf::Sprite playerSprite;
+    sf::Vector2u playerSize;
     // needed for movement (in processEvents)
     bool isMovingLeft;
     bool isMovingRight;
@@ -61,7 +63,6 @@ private:
     // variable for fixed framerate
     const sf::Time timePerFrame;
     sf::View view;
-    sf::View miniMap;
 };
 
 #endif // GAME_H
