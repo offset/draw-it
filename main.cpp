@@ -7,6 +7,7 @@
 #include <QApplication>
 #include "play.hpp"
 #include "mainwindow.hpp"
+#include "settingsdialog.hpp"
 
 using namespace std;
 

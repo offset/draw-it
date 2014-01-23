@@ -37,7 +37,7 @@ void Play::destroy()
 }
 
 int Play::detect(float minLength , 
-                   float minGap, 
+                   float maxGap, 
                    int minVote,
                    int skelThreshold,
                    int cannyThreshold1,
@@ -63,6 +63,13 @@ int Play::detect(float minLength ,
         std::cerr << "There were no lines detected." << std::endl;
         return -1;
     }
+    
+    // This closing operation fills holes between lines
+    // It has a very significant effect
+    cv::Mat tempDilated;
+    cv::Mat element = cv::getStructuringElement(cv::MORPH_CROSS, cv::Size(3,3));
+    cv::dilate(Play::getInstance()->getFinder()->getImage(), tempDilated, element);
+    cv::erode(tempDilated, Play::getInstance()->getFinder()->getImage(), element);
     
     std::vector<std::vector<int> > levelFile = finder.saveToVec();
     setLevelMap(levelFile);
@@ -124,4 +131,84 @@ std::vector<std::vector<int> > & Play::getPhysicsMap()
 void Play::setPhysicsMap(std::vector<std::vector<int> > newPhMap)
 {
     physicsMap = newPhMap;
+}
+
+float Play::getMinLength()
+{
+    return minLength;
+}
+
+void Play::setMinLength(float mLength)
+{
+    minLength = mLength;
+}
+
+float Play::getMinGap()
+{
+    return minGap;
+}
+
+void Play::setMinGap(float mGap)
+{
+    minGap = mGap;
+}
+
+int Play::getMinVote()
+{
+    return minVote;
+}
+
+void Play::setMinVote(int mVote)
+{
+    minVote = mVote;
+}
+
+int Play::getSkelThreshold()
+{
+    return skelThreshold;
+}
+
+void Play::setSkelThreshold(int skThreshold)
+{
+    skelThreshold = skThreshold;
+}
+
+int Play::getCannyThreshold1()
+{
+    return cannyThreshold1;
+}
+
+void Play::setCannyThreshold1(int cThreshold1)
+{
+    cannyThreshold1 = cThreshold1;
+}
+
+int Play::getCannyThreshold2()
+{
+    return cannyThreshold2;
+}
+
+void Play::setCannyThreshold2(int cThreshold2)
+{
+    cannyThreshold2 = cThreshold2;
+}
+
+int Play::getCannyApertureSize()
+{
+    return cannyApertureSize;
+}
+
+void Play::setCannyApertureSize(int cASize)
+{
+    cannyApertureSize = cASize;
+}
+
+bool Play::getL2Gradient()
+{
+    return l2Gradient;
+}
+
+void Play::setL2Gradient(bool l2Grad)
+{
+    l2Gradient = l2Grad;
 }

@@ -14,7 +14,8 @@ SOURCES += main.cpp \
     mainwindow.cpp \
     #qsfmlcanvas.cpp \
     #mycanvas.cpp
-    tilemap.cpp
+    tilemap.cpp \
+    settingsdialog.cpp
 
 QMAKE_CXXFLAGS += -std=c++11
 
@@ -53,9 +54,11 @@ HEADERS += \
     game.hpp \
     errcodes.hpp \
     mainwindow.hpp \
-    tilemap.hpp
+    tilemap.hpp \
+    settingsdialog.hpp
     #qsfmlcanvas.h \
     #mycanvas.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    settingsdialog.ui

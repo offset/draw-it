@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>settingsDialog</class>
+ <widget class="QWidget" name="settingsDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>369</width>
+    <height>388</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QWidget" name="formLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>90</y>
+     <width>321</width>
+     <height>241</height>
+    </rect>
+   </property>
+   <layout class="QFormLayout" name="formLayout">
+    <property name="fieldGrowthPolicy">
+     <enum>QFormLayout::ExpandingFieldsGrow</enum>
+    </property>
+    <property name="labelAlignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+    <item row="0" column="0">
+     <widget class="QLabel" name="minLengthLabel">
+      <property name="text">
+       <string>Minimum length of a line</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="minLengthLineEdit"/>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="maxGapLineEdit"/>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="maxGapLabel">
+      <property name="text">
+       <string>Maximum gap along a line</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="minVoteLabel">
+      <property name="text">
+       <string>Minimum number of votes</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLineEdit" name="minVoteLineEdit"/>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="skelThresholdLabel">
+      <property name="text">
+       <string>Skeleton threshold</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QLineEdit" name="skelThresholdLineEdit"/>
+    </item>
+    <item row="4" column="0">
+     <widget class="QLabel" name="cannyTreshold1Label">
+      <property name="text">
+       <string>Canny threshold 1</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QLineEdit" name="cannyTreshold1LineEdit"/>
+    </item>
+    <item row="5" column="0">
+     <widget class="QLabel" name="cannyThreshold2Label">
+      <property name="text">
+       <string>Canny threshold 2</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="1">
+     <widget class="QLineEdit" name="cannyThreshold2LineEdit"/>
+    </item>
+    <item row="6" column="0">
+     <widget class="QLabel" name="cannyApertureSizeLabel">
+      <property name="text">
+       <string>canny Aperture Size</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="1">
+     <widget class="QLineEdit" name="cannyApertureSizeLineEdit"/>
+    </item>
+    <item row="7" column="0">
+     <widget class="QLabel" name="l2GradientLabel">
+      <property name="text">
+       <string>L2Gradient</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="1">
+     <widget class="QLineEdit" name="l2GradientLineEdit"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>40</y>
+     <width>291</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>16</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Image Analysis Settings</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

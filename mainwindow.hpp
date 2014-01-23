@@ -7,6 +7,7 @@
 #include "linefinder.hpp"
 #include "play.hpp"
 #include <QMessageBox>
+#include "settingsdialog.hpp"
 
 /*! This namespaces contains the GUI (Ui = user interface). */
 
@@ -57,11 +58,18 @@ private slots:
      */
     void on_exit_clicked();
     
+    void on_action_about_triggered();
+    
+    void on_action_Configure_image_analysis_settings_triggered();
+    
 private:
     Ui::MainWindow *ui;
+    QWidget about;
+    QWidget configImage;
     bool selected;
     bool converted;
     QMessageBox message;
+    settingsDialog sD;
 };
 
 #endif // MAINWINDOW_H

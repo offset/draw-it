@@ -97,7 +97,7 @@ std::vector<cv::Vec4i> LineFinder::findLines()
 
 void LineFinder::drawDetectedLines( cv::Scalar color)
 {
-    for (int i = 0; i < Play::getInstance()->getFinder()->getLines().size(); ++i)
+    for (uint i = 0; i < Play::getInstance()->getFinder()->getLines().size(); ++i)
     {
         cv::Point pt1(Play::getInstance()->getFinder()->getLines()[i][0], Play::getInstance()->getFinder()->getLines()[i][1]);
         cv::Point pt2(Play::getInstance()->getFinder()->getLines()[i][2], Play::getInstance()->getFinder()->getLines()[i][3]);

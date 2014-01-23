@@ -7,6 +7,7 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
+    sD(),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
@@ -105,4 +106,14 @@ void MainWindow::on_game_clicked()
 void MainWindow::on_exit_clicked()
 {
     // see constructor
+}
+
+void MainWindow::on_action_about_triggered()
+{
+    about.show();
+}
+
+void MainWindow::on_action_Configure_image_analysis_settings_triggered()
+{
+    sD.show();
 }

@@ -124,6 +124,40 @@
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>793</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_about">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="action_about"/>
+   </widget>
+   <widget class="QMenu" name="menu_Settings">
+    <property name="title">
+     <string>Settings</string>
+    </property>
+    <addaction name="action_Configure_image_analysis_settings"/>
+   </widget>
+   <addaction name="menu_Settings"/>
+   <addaction name="menu_about"/>
+  </widget>
+  <action name="action_about">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
+  <action name="action_Configure_image_analysis_settings">
+   <property name="text">
+    <string>Configure image analysis settings</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

@@ -51,11 +51,6 @@ bool tileMap::load(sf::Vector2u tileSize, const std::vector<std::vector<int> > t
                 quad[2].color = sf::Color::White;
                 quad[3].color = sf::Color::White;
             }
-            // define its 4 texture coordinates
-//            quad[0].texCoords = sf::Vector2f(tu * tileSize.x, tv * tileSize.y);
-//            quad[1].texCoords = sf::Vector2f((tu + 1) * tileSize.x, tv * tileSize.y);
-//            quad[2].texCoords = sf::Vector2f((tu + 1) * tileSize.x, (tv + 1) * tileSize.y);
-//            quad[3].texCoords = sf::Vector2f(tu * tileSize.x, (tv + 1) * tileSize.y);
         }
     }
     Play::getInstance()->setMapSize(width * tileSize.x, height * tileSize.y);

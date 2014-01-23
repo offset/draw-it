@@ -22,7 +22,9 @@ public:
 private:
     static Play* singleton;
     LineFinder* finder = nullptr;
-    Play()
+    Play() : minLength(100.f), maxGap(40.f), minVote(80), skelThreshold(50), 
+        cannyThreshold1(40), cannyThreshold2(300), cannyApertureSize(3),
+        l2Gradient(true)
     {
         finder = new LineFinder;
     }
@@ -58,7 +60,7 @@ public:
      * \return error/success code
      */
     int detect(float minLength = 100.f, 
-                       float minGap = 40.f, 
+                       float maxGap = 40.f, 
                        int minVote = 80,
                        int skelThreshold = 50,
                        int cannyThreshold1 = 40,
@@ -105,6 +107,30 @@ public:
      */
     void setPhysicsMap(std::vector<std::vector<int> > newPhMap);
     
+    float getMinLength();
+    void setMinLength(float mLength);
+    
+    float getMinGap();
+    void setMinGap(float mGap);
+    
+    int getMinVote();
+    void setMinVote(int mVote);
+    
+    int getSkelThreshold();
+    void setSkelThreshold(int skThreshold);
+    
+    int getCannyThreshold1();
+    void setCannyThreshold1(int cThreshold1);
+    
+    int getCannyThreshold2();
+    void setCannyThreshold2(int cThreshold2);
+    
+    int getCannyApertureSize();
+    void setCannyApertureSize(int cASize);
+    
+    bool getL2Gradient();
+    void setL2Gradient(bool l2Grad);
+    
 private:
     
     /*!
@@ -120,6 +146,15 @@ private:
     // Tells the game where there are solid objects.
     std::vector<std::vector<int> > physicsMap;
     sf::Vector2u mapSize;
+    
+    float minLength;
+    float minGap; 
+    int minVote;
+    int skelThreshold;
+    int cannyThreshold1;
+    int cannyThreshold2;
+    int cannyApertureSize;
+    bool l2Gradient;
 };
 
 #endif // PLAY_H
