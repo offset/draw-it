@@ -219,27 +219,23 @@ std::vector<std::vector<int> > LineFinder::saveToVec()
     
     std::vector<std::vector<int> > levelFile;
     
-    Play::getInstance()->getFinder()->drawDetectedLines(cv::Scalar(0,0,0));
-    
     for (int i = 0; i < Play::getInstance()->getFinder()->getImage().rows; ++i)
     {
         std::vector<int> row(Play::getInstance()->getFinder()->getImage().cols);
         for (int j = 0; j < Play::getInstance()->getFinder()->getImage().cols; ++j)
         {
-            row.push_back(Play::getInstance()->getFinder()->getImage().at<int>(i, j));
+            row[j] = Play::getInstance()->getFinder()->getImage().at<int>(i, j);
         }
         levelFile.push_back(row);
     }
-    
-    int iWidth = level.cols;
-    int iHeight = level.rows;
-    Play::getInstance()->getFinder()->drawDetectedLines();
-    iWidth = level.cols;
-    iHeight = level.rows;
+
+    int imgWidth = Play::getInstance()->getFinder()->getImage().cols;
+    int imgHeight = Play::getInstance()->getFinder()->getImage().rows;
+    int vecWidth = levelFile[0].size();
+    int vecHeight = levelFile.size();
     
     std::ofstream os("levelFile.txt");
-    //cv::Mat imageOfLevelMap(levelFile.size(), levelFile[0].size(), CV_8UC1, cv::Scalar(0,0,0));
-    
+
     for(uint i = 0; i < levelFile.size(); ++i)
     { 
         for (uint j = 0; j < levelFile[0].size(); ++j)
@@ -248,20 +244,24 @@ std::vector<std::vector<int> > LineFinder::saveToVec()
             {
                 levelFile[i][j] = 0;
                 os << 0;
-                //imageOfLevelMap.at<int>(i,j) = 0;
             } else
             {
                 levelFile[i][j] = 1;
                 os << 1;
-                //imageOfLevelMap.at<int>(i,j) = 1;
             }
         }
         os << std::endl;
-        //cv::imwrite("levelMap.png", imageOfLevelMap);
     }
     
     os.close();
-    
+
+    // debug
+    cv::Mat matLevelFile(levelFile.size(), levelFile.at(0).size(), CV_8UC1);
+    for(int i=0; i<matLevelFile.rows; ++i)
+         for(int j=0; j<matLevelFile.cols; ++j)
+              matLevelFile.at<uchar>(i, j) = levelFile.at(i).at(j);
+    cv::imwrite("levelMap.png", matLevelFile);
+
     Play::getInstance()->setPhysicsMap(levelFile);
     
     Play::getInstance()->getFinder()->setImage(level);

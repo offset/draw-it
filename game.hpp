@@ -58,11 +58,15 @@ private:
     // needed for movement (in processEvents)
     bool isMovingLeft;
     bool isMovingRight;
-    bool isJumping;
-    bool hasBeenJumping;
+    bool isMovingUp;
+    bool isMovingDown;
+//    bool isJumping;
+//    bool hasBeenJumping;
+//    int timeJumping;
     // variable for fixed framerate
     const sf::Time timePerFrame;
     sf::View view;
+    float gravity;
 };
 
 #endif // GAME_H

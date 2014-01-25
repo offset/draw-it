@@ -5,8 +5,8 @@
 
 Game::Game() : window(sf::VideoMode(640,480), "Draw it!"), timePerFrame(sf::seconds(1.f/30.f)), 
     view(sf::Vector2f(player.getPosition().x, player.getPosition().y), static_cast<sf::Vector2f>(window.getSize())),
-    isMovingLeft(false), isMovingRight(false), isJumping(false), hasBeenJumping(false),
-    playerTexture(), playerSprite()
+    isMovingLeft(false), isMovingRight(false), isMovingUp(false), isMovingDown(false),/*isJumping(false), hasBeenJumping(false),*/
+    playerTexture(), playerSprite(), gravity(9.81) /*timeJumping(0)*/
 {
     if(!playerTexture.loadFromFile("playertexture.png"))
     {
@@ -22,7 +22,7 @@ Game::Game() : window(sf::VideoMode(640,480), "Draw it!"), timePerFrame(sf::seco
                   << std::cerr << player.getPosition().x << " " << player.getPosition().y << std::endl;
     }
     playerSize = playerTexture.getSize();
-    view.zoom(1.5f);
+    view.zoom(20.f);
     window.setView(view);
 }
 
@@ -61,9 +61,22 @@ void Game::update(sf::Time deltaTime)
     {
         velocity.x += 100.f;
     }
+    if(isMovingUp)
+    {
+        velocity.y -= 100.f;
+    }
+    if(isMovingDown)
+    {
+        velocity.y += 100.f;
+    }
+//    if(isJumping)
+//    {
+//        velocity.y -= 50.f;
+
+//    }
     
     sf::Vector2f movement(velocity.x * deltaTime.asSeconds(), velocity.y * deltaTime.asSeconds());
-    
+
     if(isValidLocation(player.getPosition().x + movement.x, player.getPosition().y + movement.y))
     {
         player.move(movement);
@@ -161,8 +174,17 @@ void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed)
         case sf::Keyboard::D:
             isMovingRight = isPressed;
             break;
-        case sf::Keyboard::Space:
-            isJumping = isPressed;
+        case sf::Keyboard::W:
+            isMovingUp = isPressed;
+            break;
+        case sf::Keyboard::S:
+            isMovingDown = isPressed;
+//        case sf::Keyboard::Space:
+//            if (!hasBeenJumping)
+//            {
+//                isJumping = isPressed;
+//            }
+            //break;
         default:
             break;
     }
