@@ -37,7 +37,7 @@ void Play::destroy()
 }
 
 int Play::detect(float minLength , 
-                   float maxGap, 
+                   float mGap, 
                    int minVote,
                    int skelThreshold,
                    int cannyThreshold1,
@@ -47,7 +47,7 @@ int Play::detect(float minLength ,
                    )
 {
     LineFinder finder;
-    finder.setLineLengthAndGap(minLength, minGap);
+    finder.setLineLengthAndGap(minLength, maxGap);
     finder.setMinVote(minVote);
     
     // creating a skeleton
@@ -143,14 +143,14 @@ void Play::setMinLength(float mLength)
     minLength = mLength;
 }
 
-float Play::getMinGap()
+float Play::getMaxGap()
 {
-    return minGap;
+    return maxGap;
 }
 
-void Play::setMinGap(float mGap)
+void Play::setMaxGap(float mGap)
 {
-    minGap = mGap;
+    maxGap = mGap;
 }
 
 int Play::getMinVote()

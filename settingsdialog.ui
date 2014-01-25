@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>369</width>
-    <height>388</height>
+    <width>399</width>
+    <height>541</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,9 +17,9 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>90</y>
-     <width>321</width>
-     <height>241</height>
+     <y>72</y>
+     <width>351</width>
+     <height>411</height>
     </rect>
    </property>
    <layout class="QFormLayout" name="formLayout">
@@ -29,85 +29,173 @@
     <property name="labelAlignment">
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
-    <item row="0" column="0">
+    <item row="1" column="0">
      <widget class="QLabel" name="minLengthLabel">
       <property name="text">
        <string>Minimum length of a line</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="1">
-     <widget class="QLineEdit" name="minLengthLineEdit"/>
-    </item>
     <item row="1" column="1">
-     <widget class="QLineEdit" name="maxGapLineEdit"/>
+     <widget class="QDoubleSpinBox" name="minLengthDoubleSpinBox">
+      <property name="maximum">
+       <double>500.000000000000000</double>
+      </property>
+     </widget>
     </item>
-    <item row="1" column="0">
+    <item row="3" column="0">
      <widget class="QLabel" name="maxGapLabel">
       <property name="text">
        <string>Maximum gap along a line</string>
       </property>
      </widget>
     </item>
-    <item row="2" column="0">
+    <item row="3" column="1">
+     <widget class="QDoubleSpinBox" name="maxGapDoubleSpinBox"/>
+    </item>
+    <item row="5" column="0">
      <widget class="QLabel" name="minVoteLabel">
       <property name="text">
        <string>Minimum number of votes</string>
       </property>
      </widget>
     </item>
-    <item row="2" column="1">
-     <widget class="QLineEdit" name="minVoteLineEdit"/>
+    <item row="5" column="1">
+     <widget class="QSpinBox" name="minVoteSpinBox">
+      <property name="maximum">
+       <number>200</number>
+      </property>
+     </widget>
     </item>
-    <item row="3" column="0">
-     <widget class="QLabel" name="skelThresholdLabel">
+    <item row="7" column="0">
+     <widget class="QLabel" name="skelThreshLabel">
       <property name="text">
        <string>Skeleton threshold</string>
       </property>
      </widget>
     </item>
-    <item row="3" column="1">
-     <widget class="QLineEdit" name="skelThresholdLineEdit"/>
+    <item row="7" column="1">
+     <widget class="QSpinBox" name="skelThreshSpinBox"/>
     </item>
-    <item row="4" column="0">
-     <widget class="QLabel" name="cannyTreshold1Label">
+    <item row="9" column="0">
+     <widget class="QLabel" name="cannyThresh1Label">
       <property name="text">
        <string>Canny threshold 1</string>
       </property>
      </widget>
     </item>
-    <item row="4" column="1">
-     <widget class="QLineEdit" name="cannyTreshold1LineEdit"/>
+    <item row="9" column="1">
+     <widget class="QSpinBox" name="cannyThresh1SpinBox">
+      <property name="maximum">
+       <number>1000</number>
+      </property>
+     </widget>
     </item>
-    <item row="5" column="0">
-     <widget class="QLabel" name="cannyThreshold2Label">
+    <item row="12" column="0">
+     <widget class="QLabel" name="cannyTresh2Label">
       <property name="text">
        <string>Canny threshold 2</string>
       </property>
      </widget>
     </item>
-    <item row="5" column="1">
-     <widget class="QLineEdit" name="cannyThreshold2LineEdit"/>
+    <item row="12" column="1">
+     <widget class="QSpinBox" name="cannyTresh2SpinBox">
+      <property name="maximum">
+       <number>1000</number>
+      </property>
+     </widget>
     </item>
-    <item row="6" column="0">
+    <item row="14" column="0">
      <widget class="QLabel" name="cannyApertureSizeLabel">
       <property name="text">
        <string>canny Aperture Size</string>
       </property>
      </widget>
     </item>
-    <item row="6" column="1">
-     <widget class="QLineEdit" name="cannyApertureSizeLineEdit"/>
+    <item row="14" column="1">
+     <widget class="QSpinBox" name="cannyApertureSizeSpinBox">
+      <property name="maximum">
+       <number>5</number>
+      </property>
+     </widget>
     </item>
-    <item row="7" column="0">
+    <item row="16" column="1">
+     <widget class="QCheckBox" name="l2GradientCheckBox">
+      <property name="text">
+       <string>PushButton</string>
+      </property>
+     </widget>
+    </item>
+    <item row="16" column="0">
      <widget class="QLabel" name="l2GradientLabel">
       <property name="text">
        <string>L2Gradient</string>
       </property>
      </widget>
     </item>
-    <item row="7" column="1">
-     <widget class="QLineEdit" name="l2GradientLineEdit"/>
+    <item row="2" column="0" colspan="2">
+     <widget class="QSlider" name="minLengthSlider">
+      <property name="maximum">
+       <number>500</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0" colspan="2">
+     <widget class="QSlider" name="maxGapSlider">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="0" colspan="2">
+     <widget class="QSlider" name="minVoteSlider">
+      <property name="maximum">
+       <number>200</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="11" column="0" colspan="2">
+     <widget class="QSlider" name="canThresh1Slider">
+      <property name="maximum">
+       <number>1000</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="13" column="0" colspan="2">
+     <widget class="QSlider" name="canThresh2Slider">
+      <property name="maximum">
+       <number>1000</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="15" column="0" colspan="2">
+     <widget class="QSlider" name="canApSlider">
+      <property name="maximum">
+       <number>5</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="0" colspan="2">
+     <widget class="QSlider" name="skelThreshSlider">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -130,6 +218,35 @@
    <property name="text">
     <string>Image Analysis Settings</string>
    </property>
+  </widget>
+  <widget class="QWidget" name="formLayoutWidget_2">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>500</y>
+     <width>141</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <layout class="QFormLayout" name="formLayout_2">
+    <property name="fieldGrowthPolicy">
+     <enum>QFormLayout::ExpandingFieldsGrow</enum>
+    </property>
+    <item row="0" column="0">
+     <widget class="QPushButton" name="cancelPushButton">
+      <property name="text">
+       <string>Cancel</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QPushButton" name="applyPushButton">
+      <property name="text">
+       <string>Apply</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>

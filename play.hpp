@@ -50,7 +50,7 @@ public:
      * \brief Calls all neccessary functions to detect the lines in an image and saves them in form of a two-dimensional vector which can be accessed via getLevelMap().
      * \param fileNameLevel[in]: how should the generated level file be named
      * \param minLength[in]: minimal length for LineFinder class
-     * \param minGap[in]: minimal gap for LineFinder class
+     * \param maxGap[in]: minimal gap for LineFinder class
      * \param minVote[in]: minimal amount of votes for LineFinder class
      * \param skelThreshold: minimal threshold for the generation of the skeleton of the image
      * \param cannyThreshold1[in]: minimal threshold for contour detection with the canny-edge filter.
@@ -110,8 +110,8 @@ public:
     float getMinLength();
     void setMinLength(float mLength);
     
-    float getMinGap();
-    void setMinGap(float mGap);
+    float getMaxGap();
+    void setMaxGap(float maxGap);
     
     int getMinVote();
     void setMinVote(int mVote);
@@ -148,7 +148,7 @@ private:
     sf::Vector2u mapSize;
     
     float minLength;
-    float minGap; 
+    float maxGap; 
     int minVote;
     int skelThreshold;
     int cannyThreshold1;

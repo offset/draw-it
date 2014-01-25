@@ -11,10 +11,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    
+
     // makes the exit button work
     connect(ui->exit,SIGNAL(clicked()),this, SLOT(close()));
-    
+
     selected = false;
     converted = false;
 }
@@ -110,7 +110,9 @@ void MainWindow::on_exit_clicked()
 
 void MainWindow::on_action_about_triggered()
 {
-    about.show();
+    //about.show();
+    message.setText("Drawit version 0.1, author: Manuel Zemann");
+    message.show();
 }
 
 void MainWindow::on_action_Configure_image_analysis_settings_triggered()

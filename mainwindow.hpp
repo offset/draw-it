@@ -64,12 +64,12 @@ private slots:
     
 private:
     Ui::MainWindow *ui;
+    settingsDialog sD;
     QWidget about;
     QWidget configImage;
     bool selected;
     bool converted;
     QMessageBox message;
-    settingsDialog sD;
 };
 
 #endif // MAINWINDOW_H
