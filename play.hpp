@@ -59,14 +59,14 @@ public:
      * \param l2Gradient[in]: If set to true, the calculation is more demanding, but also yields better results.
      * \return error/success code
      */
-    int detect(float minLength = 100.f, 
-                       float maxGap = 40.f, 
-                       int minVote = 80,
-                       int skelThreshold = 50,
-                       int cannyThreshold1 = 40,
-                       int cannyThreshold2 = 300,
-                       int cannyApertureSize = 3,
-                       bool l2Gradient = true
+    int detect(float minLength = Play::getInstance()->minLength,
+                       float maxGap = Play::getInstance()->maxGap,
+                       int minVote = Play::getInstance()->minVote,
+                       int skelThreshold = Play::getInstance()->skelThreshold,
+                       int cannyThreshold1 = Play::getInstance()->cannyThreshold1,
+                       int cannyThreshold2 = Play::getInstance()->cannyThreshold2,
+                       int cannyApertureSize = Play::getInstance()->cannyApertureSize,
+                       bool l2Gradient = Play::getInstance()->l2Gradient
                        );
     
     /*!

@@ -16,8 +16,6 @@ public:
     ~settingsDialog();
     
 private slots:
-    void on_pushButton_clicked();
-
     void on_applyPushButton_clicked();
 
     void on_cancelPushButton_clicked();

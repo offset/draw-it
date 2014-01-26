@@ -141,7 +141,7 @@ void LineFinder::createSkeleton(int threshold)
         //done = (cv::countNonZero(image) == 0);
         ++i;
     }
-    
+
     Play::getInstance()->getFinder()->setImage(skeleton);
 }
 
@@ -229,11 +229,7 @@ std::vector<std::vector<int> > LineFinder::saveToVec()
         levelFile.push_back(row);
     }
 
-    int imgWidth = Play::getInstance()->getFinder()->getImage().cols;
-    int imgHeight = Play::getInstance()->getFinder()->getImage().rows;
-    int vecWidth = levelFile[0].size();
-    int vecHeight = levelFile.size();
-    
+    // debug
     std::ofstream os("levelFile.txt");
 
     for(uint i = 0; i < levelFile.size(); ++i)
@@ -255,15 +251,19 @@ std::vector<std::vector<int> > LineFinder::saveToVec()
     
     os.close();
 
-    // debug
-    cv::Mat matLevelFile(levelFile.size(), levelFile.at(0).size(), CV_8UC1);
-    for(int i=0; i<matLevelFile.rows; ++i)
-         for(int j=0; j<matLevelFile.cols; ++j)
-              matLevelFile.at<uchar>(i, j) = levelFile.at(i).at(j);
-    cv::imwrite("levelMap.png", matLevelFile);
-
     Play::getInstance()->setPhysicsMap(levelFile);
-    
+
+    // debug
+//    cv::Mat vecToMat(levelFile.size(), levelFile[0].size(), CV_8UC1);
+//    for(int i = 0; i < levelFile.size(); ++i)
+//    {
+//        for(int j = 0; j < levelFile[0].size(); ++j)
+//        {
+//            vecToMat.at<int>(i, j);
+//        }
+//    }
+//    cv::imwrite("vecToImage.png", vecToMat);
+
     Play::getInstance()->getFinder()->setImage(level);
     
     return levelFile;

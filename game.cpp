@@ -21,8 +21,10 @@ Game::Game() : window(sf::VideoMode(640,480), "Draw it!"), timePerFrame(sf::seco
         std::cerr << "Could not calculate starting position: " << std::endl
                   << std::cerr << player.getPosition().x << " " << player.getPosition().y << std::endl;
     }
+    player.setPosition(0,0);
+    playerSprite.setPosition(0,0);
     playerSize = playerTexture.getSize();
-    view.zoom(20.f);
+    view.zoom(1.5f);
     window.setView(view);
 }
 
@@ -55,11 +57,11 @@ void Game::update(sf::Time deltaTime)
     
     if(isMovingLeft)
     {
-        velocity.x -= 100.f;
+        velocity.x -= 1915.f;
     }
     if(isMovingRight)
     {
-        velocity.x += 100.f;
+        velocity.x += 1915.f;
     }
     if(isMovingUp)
     {

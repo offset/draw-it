@@ -36,7 +36,7 @@ void Play::destroy()
     }
 }
 
-int Play::detect(float minLength , 
+int Play::detect(float minLength,
                    float mGap, 
                    int minVote,
                    int skelThreshold,
@@ -90,6 +90,8 @@ std::vector<std::vector<int> > & Play::getLevelMap()
 
 int Play::buildLevel()
 {
+    int levelHeight = levelMap.size();
+    int levelWidth = levelMap[0].size();
     if(!m_TileMap.load(sf::Vector2u(5, 5), Play::getInstance()->getLevelMap(), levelMap[0].size(), levelMap.size()))
     {
         return -1;

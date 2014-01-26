@@ -37,6 +37,8 @@ settingsDialog::settingsDialog(QWidget *parent) :
     QObject::connect(ui->canApSlider, SIGNAL(valueChanged(int)), ui->cannyApertureSizeSpinBox, SLOT(setValue(int)));
     ui->cannyApertureSizeSpinBox->setValue(Play::getInstance()->getCannyApertureSize());
 
+    ui->l2GradientCheckBox->setChecked(Play::getInstance()->getL2Gradient());
+
     // makes the exit button work
     connect(ui->cancelPushButton,SIGNAL(clicked()),this, SLOT(close()));
 }
@@ -50,6 +52,7 @@ settingsDialog::~settingsDialog()
 void settingsDialog::on_applyPushButton_clicked()
 {
     Play::getInstance()->setMinLength(ui->minLengthDoubleSpinBox->value());
+    double asdf = ui->minLengthDoubleSpinBox->value();
     Play::getInstance()->setMinVote(ui->minVoteSpinBox->value());
     Play::getInstance()->setMaxGap(ui->maxGapDoubleSpinBox->value());
     Play::getInstance()->setSkelThreshold(ui->skelThreshSpinBox->value());
