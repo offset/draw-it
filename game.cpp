@@ -2,6 +2,7 @@
 #include "game.hpp"
 #include "errcodes.hpp"
 #include "play.hpp"
+#define COLLISIONDETECTION1
 
 Game::Game() : window(sf::VideoMode(640,480), "Draw it!"), timePerFrame(sf::seconds(1.f/30.f)), 
     view(sf::Vector2f(player.getPosition().x, player.getPosition().y), static_cast<sf::Vector2f>(window.getSize())),
@@ -57,11 +58,11 @@ void Game::update(sf::Time deltaTime)
     
     if(isMovingLeft)
     {
-        velocity.x -= 1915.f;
+        velocity.x -= 100.f;
     }
     if(isMovingRight)
     {
-        velocity.x += 1915.f;
+        velocity.x += 100.f;
     }
     if(isMovingUp)
     {
@@ -71,18 +72,131 @@ void Game::update(sf::Time deltaTime)
     {
         velocity.y += 100.f;
     }
-//    if(isJumping)
-//    {
-//        velocity.y -= 50.f;
-
-//    }
     
     sf::Vector2f movement(velocity.x * deltaTime.asSeconds(), velocity.y * deltaTime.asSeconds());
+    
+    
 
+#ifdef COLLISIONDETECTION1
+    // collision detection
+    // we first check the x-Axis
+    // determining the side which faces the moving direction
+    int coordFwdFEdgeX;
+    if (movement.x < 0)
+    {
+        coordFwdFEdgeX = player.getPosition().x;
+    } else
+    {
+        coordFwdFEdgeX = player.getPosition().x + playerSize.x;
+    }
+    // with which line(s) of tiles does the player collide?
+    std::vector<int> collidingLinesX;
+    collidingLinesX.push_back(player.getPosition().y/5);
+    collidingLinesX.push_back((player.getPosition().y-playerSize.y)/5);
+    // we scan along these lines for obstacles
+    int closestObstacleX = 30111995;
+    if(movement.x < 0)
+    {
+        for(uint i = 0; i < collidingLinesX.size(); ++i)
+        {
+            for(int x =(coordFwdFEdgeX+movement.x)/5; x < (coordFwdFEdgeX/5); ++x)
+            {
+                if(Play::getInstance()->getPhysicsMap()[collidingLinesX[i]][x] != 0)
+                {
+                    closestObstacleX = x*5;
+                }
+            }
+        }
+        if(closestObstacleX != 30111995)
+        {
+            movement.x = -(coordFwdFEdgeX - closestObstacleX);
+        }
+    } else
+    {
+        for(uint i = 0; i < collidingLinesX.size(); ++i)
+        {
+            for(int x = (coordFwdFEdgeX+movement.x)/5; x > (coordFwdFEdgeX/5); --x)
+            {
+                if(Play::getInstance()->getPhysicsMap()[collidingLinesX[i]][x] != 0)
+                {
+                    closestObstacleX = x*5;
+                }
+            }
+        }
+        if(closestObstacleX != 30111995)
+        {
+            movement.x = closestObstacleX - coordFwdFEdgeX;
+        }
+    }
+    // now the y-axis
+    // determining the side which faces the moving direction
+    int coordFwdFEdgeY;
+    if(movement.y < 0)
+    {
+        coordFwdFEdgeY = player.getPosition().y;
+    } else
+    {
+        coordFwdFEdgeY = player.getPosition().y + playerSize.y;
+    }
+    // with which line(s) of tiles does the player collide?
+    std::vector<int> collidingLinesY;
+    collidingLinesY.push_back(player.getPosition().x/5);
+    collidingLinesY.push_back((player.getPosition().x-playerSize.x)/5);
+    int debugPlayerX = player.getPosition().x/5;
+    int debugPlayerY = (player.getPosition().x-playerSize.x)/5;
+    // we scan along these lines for obstacles
+    int closestObstacleY = 30111995;
+    if(movement.y < 0)
+    {
+        for(int i = 0; i < collidingLinesY.size(); ++i)
+        {
+            for(int y = (coordFwdFEdgeY+movement.y)/5; y < (coordFwdFEdgeY/5); ++y)
+            {
+                if(Play::getInstance()->getPhysicsMap()[y][collidingLinesY[i]] != 0)
+                {
+                    closestObstacleY = y*5;
+                }
+            }
+        }
+        if(closestObstacleY != 30111995)
+        {
+            movement.y = closestObstacleY - coordFwdFEdgeY;
+        }
+    } else
+    {
+        for(int i = 0; i < collidingLinesY.size(); ++i)
+        {
+            for(int y = (coordFwdFEdgeY+movement.y)/5; y > (coordFwdFEdgeX/5); --y)
+            {
+                if(Play::getInstance()->getPhysicsMap()[y][collidingLinesY[i]] != 0)
+                {
+                    closestObstacleY = y*5;
+                }
+            }
+        }
+        if(closestObstacleY != 30111995)
+        {
+            movement.y = -(coordFwdFEdgeY - closestObstacleY);
+        }
+    }
+#endif
+    
+    player.move(movement);
+    
+#ifdef COLLISIONDETECTION2
+    for(int x = 0; x < abs(movement.x); ++x)
+    {
+        for(int y = 0; y < abs(movement.y); ++y)
+        {
+            int xTile = x/5;
+            int yTile = y/5;
+        }
+    }
     if(isValidLocation(player.getPosition().x + movement.x, player.getPosition().y + movement.y))
     {
         player.move(movement);
     }
+#endif
     
     playerSprite.setPosition(player.getPosition().x, player.getPosition().y);
     

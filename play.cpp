@@ -5,6 +5,7 @@
 #include <string>
 #include <SFML/Graphics/Sprite.hpp>
 #include "errcodes.hpp"
+#define DEBUG_GAME
 
 Play* Play::singleton = 0;
 
@@ -92,6 +93,37 @@ int Play::buildLevel()
 {
     int levelHeight = levelMap.size();
     int levelWidth = levelMap[0].size();
+#ifdef DEBUG_GAME
+    levelWidth = 100;
+    levelHeight = 50;
+    std::vector<int> obstacleRow = {
+        1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+    };
+    assert(obstacleRow.size() == 100);
+    std::vector<int> freeRow = {
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    };
+    assert(freeRow.size() == 100);
+    std::vector<int> randomRow = {
+        1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0
+    };
+    assert(randomRow.size() == 100);
+    std::vector<std::vector<int> > debugLV = {
+        freeRow, freeRow, freeRow, freeRow, freeRow,
+        freeRow, freeRow, freeRow, freeRow, freeRow,
+        randomRow, randomRow, randomRow, randomRow, randomRow,
+        randomRow, randomRow, randomRow, randomRow, randomRow,
+        randomRow, randomRow, randomRow, randomRow, randomRow,
+        randomRow, randomRow, randomRow, randomRow, randomRow,
+        randomRow, randomRow, randomRow, randomRow, randomRow,
+        obstacleRow, obstacleRow, obstacleRow, obstacleRow, obstacleRow,
+        obstacleRow, obstacleRow, obstacleRow, obstacleRow, obstacleRow,
+        obstacleRow, obstacleRow, obstacleRow, obstacleRow, obstacleRow
+    };
+    assert(debugLV.size() == 50);
+    Play::getInstance()->setLevelMap(debugLV);
+    Play::getInstance()->setPhysicsMap(debugLV);
+#endif
     if(!m_TileMap.load(sf::Vector2u(5, 5), Play::getInstance()->getLevelMap(), levelMap[0].size(), levelMap.size()))
     {
         return -1;
