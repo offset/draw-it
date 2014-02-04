@@ -5,6 +5,7 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/imgproc.hpp>
 #include <play.hpp>
+#define SCALE
 
 LineFinder::LineFinder() : img(),
     deltaRho(1), 
@@ -150,6 +151,7 @@ std::vector<std::vector<int> > LineFinder::saveToVec()
 {   
     cv::Mat level;
     Play::getInstance()->getFinder()->getImage().copyTo(level);
+#ifdef SCALE
     // scaling level size
     if(level.cols <= 1024 && level.cols >= 512)
     {
@@ -209,6 +211,7 @@ std::vector<std::vector<int> > LineFinder::saveToVec()
         // scale 1
         // nothing to do
     }
+#endif
     
     if (level.channels() != 1)
     {
@@ -219,12 +222,15 @@ std::vector<std::vector<int> > LineFinder::saveToVec()
     
     std::vector<std::vector<int> > levelFile;
     
+//    cv::imshow("image", Play::getInstance()->getFinder()->getImage());
+//    cv::waitKey();
+    
     for (int i = 0; i < Play::getInstance()->getFinder()->getImage().rows; ++i)
     {
         std::vector<int> row(Play::getInstance()->getFinder()->getImage().cols);
         for (int j = 0; j < Play::getInstance()->getFinder()->getImage().cols; ++j)
         {
-            row[j] = Play::getInstance()->getFinder()->getImage().at<int>(i, j);
+            row[j] = Play::getInstance()->getFinder()->getImage().at<uchar>(i, j);
         }
         levelFile.push_back(row);
     }
