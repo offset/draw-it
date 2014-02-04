@@ -8,13 +8,15 @@ settingsDialog::settingsDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // Slider and QSpinbox have the same value and each one changes when the other one does
-    QObject::connect(ui->minLengthDoubleSpinBox, SIGNAL(valueChanged(int)), ui->minLengthSlider, SLOT(setValue(int)));
-    QObject::connect(ui->minLengthSlider, SIGNAL(valueChanged(int)), ui->minLengthDoubleSpinBox, SLOT(setValue(int)));
+//    QObject::connect(ui->minLengthDoubleSpinBox, SIGNAL(valueChanged(double)), ui->minLengthSlider, SLOT(setDoubleValue(double)));
+//    QObject::connect(ui->minLengthSlider, SIGNAL (valueChanged(double)), ui->minLengthDoubleSpinBox, SLOT(setValue(double)));
+//    // Slider and QSpinbox have the same value and each one changes when the other one does
+//    QObject::connect(ui->minLengthDoubleSpinBox, SIGNAL(valueChanged(float)), ui->minLengthSlider, SLOT(setDoubleValue(float)));
+//    QObject::connect(ui->minLengthSlider, SIGNAL(valueChanged(float)), ui->minLengthDoubleSpinBox, SLOT(setValue(float)));
     ui->minLengthDoubleSpinBox->setValue(Play::getInstance()->getMinLength());
 
-    QObject::connect(ui->minVoteSpinBox, SIGNAL(valueChanged(int)), ui->minVoteSlider, SLOT(setValue(int)));
-    QObject::connect(ui->minVoteSlider, SIGNAL(valueChanged(int)), ui->minVoteSpinBox, SLOT(setValue(int)));
+    QObject::connect(ui->minVoteSpinBox, SIGNAL(valueChanged(float)), ui->minVoteSlider, SLOT(setDoubleValue(float)));
+    QObject::connect(ui->minVoteSlider, SIGNAL(valueChanged(float)), ui->minVoteSpinBox, SLOT(setValue(float)));
     ui->minVoteSpinBox->setValue(Play::getInstance()->getMinVote());
 
     QObject::connect(ui->maxGapDoubleSpinBox, SIGNAL(valueChanged(int)), ui->maxGapSlider, SLOT(setValue(int)));

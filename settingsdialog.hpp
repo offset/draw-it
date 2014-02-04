@@ -2,6 +2,7 @@
 #define SETTINGSDIALOG_H
 
 #include <QWidget>
+//#include "qdoubleslider.h"
 
 namespace Ui {
 class settingsDialog;

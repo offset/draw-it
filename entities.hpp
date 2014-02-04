@@ -19,11 +19,17 @@ public:
     virtual void setPosition(float px, float py);
     virtual sf::Vector2f getPosition() const;
     virtual void move(sf::Vector2f movement);
+    virtual void setBoundingBox(sf::Rect<int> newBoundingBox);
+    virtual sf::Rect<int> getBoundingBox();
+    virtual void setOnGround(bool newOnGround);
+    virtual bool getOnGround();
     
 private:
     sf::Vector2f position;
     sf::Vector2f velocity;
     sf::Vector2f acceleration;
+    sf::Rect<int> boundingBox;
+    bool onGround;
 };
 
 /*!

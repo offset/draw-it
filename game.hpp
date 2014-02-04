@@ -49,24 +49,33 @@ private:
     
     bool isBlocked(float x, float y);
     
+    // calculates the corresponding y value of a linear funcion at a specific position
+    float calculateLinearFunction(float x, float y, float wantedX, float d = 0);
+    // gives us the surrounding tiles' positions as well as their values
+    std::vector<std::map<std::string, int> > getSurroundingTiles(sf::Vector2f position);
+    
 private:
     sf::RenderWindow window;
     Player player;
     sf::Texture playerTexture;
     sf::Sprite playerSprite;
     sf::Vector2u playerSize;
+    sf::Vector2u levelSize;
     // needed for movement (in processEvents)
     bool isMovingLeft;
     bool isMovingRight;
     bool isMovingUp;
     bool isMovingDown;
-//    bool isJumping;
-//    bool hasBeenJumping;
-//    int timeJumping;
+    bool jumps;
+    bool isJumping;
     // variable for fixed framerate
     const sf::Time timePerFrame;
     sf::View view;
-    float gravity;
+    //float gravity;
+    sf::Vector2f velocity;
+    sf::Vector2u tileSize;
+    int playerTextureSizeX;
+    int playerTextureSizeY;
 };
 
 #endif // GAME_H

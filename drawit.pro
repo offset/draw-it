@@ -15,7 +15,8 @@ SOURCES += main.cpp \
     #qsfmlcanvas.cpp \
     #mycanvas.cpp
     tilemap.cpp \
-    settingsdialog.cpp
+    settingsdialog.cpp \
+    qdoubleslider.cpp
 
 QMAKE_CXXFLAGS += -std=c++11
 
@@ -55,7 +56,8 @@ HEADERS += \
     errcodes.hpp \
     mainwindow.hpp \
     tilemap.hpp \
-    settingsdialog.hpp
+    settingsdialog.hpp \
+    qdoubleslider.h
     #qsfmlcanvas.h \
     #mycanvas.h
 
