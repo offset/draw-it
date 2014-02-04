@@ -74,8 +74,6 @@ private:
     //float gravity;
     sf::Vector2f velocity;
     sf::Vector2u tileSize;
-    int playerTextureSizeX;
-    int playerTextureSizeY;
 };
 
 #endif // GAME_H

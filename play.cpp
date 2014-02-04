@@ -5,7 +5,7 @@
 #include <string>
 #include <SFML/Graphics/Sprite.hpp>
 #include "errcodes.hpp"
-#define DEBUG_GAME
+//#define DEBUG_GAME
 
 Play* Play::singleton = 0;
 
@@ -91,8 +91,6 @@ std::vector<std::vector<int> > & Play::getLevelMap()
 
 int Play::buildLevel()
 {
-    int levelHeight = levelMap.size();
-    int levelWidth = levelMap[0].size();
 #ifdef DEBUG_GAME
     levelWidth = 100;
     levelHeight = 50;
@@ -128,7 +126,7 @@ int Play::buildLevel()
     {
         return -1;
     }
-
+    
     return 0;
 }
             

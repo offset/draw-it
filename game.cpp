@@ -90,10 +90,28 @@ void Game::update(sf::Time deltaTime)
     sf::Vector2f movement(velocity.x * deltaTime.asSeconds(), velocity.y * deltaTime.asSeconds());
     sf::Vector2f desiredPosition(player.getPosition().x + movement.x, player.getPosition().y + movement.y);
     
+    if(desiredPosition.x <= 0)
+    {
+        desiredPosition.x = 5;
+    } else if(desiredPosition.x > Play::getInstance()->getMapSize().x)
+    {
+        desiredPosition.x = Play::getInstance()->getMapSize().x-1;
+    }
+    if(desiredPosition.y <= 0)
+    {
+        desiredPosition.y = 5;
+    } else if(desiredPosition.y > Play::getInstance()->getMapSize().y)
+    {
+        desiredPosition.y = Play::getInstance()->getMapSize().y-1;
+    }
+    
+    int asdf = Play::getInstance()->getPhysicsMap().size();
+    int dasdf = Play::getInstance()->getPhysicsMap()[0].size();
+    
 #ifdef COLLISIONDETECTION4
     std::vector<std::map<std::string, int> > surroundingTiles = getSurroundingTiles(desiredPosition);
     // update the bounding box with the desired movement
-    player.setBoundingBox(sf::Rect<int>(desiredPosition.x, desiredPosition.y, playerTextureSizeX, playerTextureSizeY));
+    player.setBoundingBox(sf::Rect<int>(desiredPosition.x, desiredPosition.y, player.getBoundingBox().width, player.getBoundingBox().height));
     
     player.setOnGround(false);
     
@@ -344,6 +362,8 @@ void Game::update(sf::Time deltaTime)
 //    }
     
 //    player.move(movement);
+    // we make sure the player does not move out of the level
+    
     player.setPosition(desiredPosition);
     
 #ifdef COLLISIONDETECTION2
