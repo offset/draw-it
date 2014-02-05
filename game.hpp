@@ -44,13 +44,6 @@ private:
      * \return Success/error.
      */
     int getStartingPosition();
-    
-    bool isValidLocation(float x, float y);
-    
-    bool isBlocked(float x, float y);
-    
-    // calculates the corresponding y value of a linear funcion at a specific position
-    float calculateLinearFunction(float x, float y, float wantedX, float d = 0);
     // gives us the surrounding tiles' positions as well as their values
     std::vector<std::map<std::string, int> > getSurroundingTiles(sf::Vector2f position);
     
@@ -74,6 +67,9 @@ private:
     //float gravity;
     sf::Vector2f velocity;
     sf::Vector2u tileSize;
+    static const float maxVelX;
+    static const float maxVelY;
+    static const float maxVelYFall;
 };
 
 #endif // GAME_H

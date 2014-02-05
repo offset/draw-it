@@ -2,30 +2,26 @@
 #include "game.hpp"
 #include "errcodes.hpp"
 #include "play.hpp"
-#define COLLISIONDETECTION4
+
+const float Game::maxVelX = 50.f;
+const float Game::maxVelY = 100.f;
+const float Game::maxVelYFall = -200.f;
 
 Game::Game() : window(sf::VideoMode(640,480), "Draw it!"), timePerFrame(sf::seconds(1.f/30.f)), 
     view(sf::Vector2f(player.getPosition().x, player.getPosition().y), static_cast<sf::Vector2f>(window.getSize())),
-    isMovingLeft(false), isMovingRight(false), isMovingUp(false), isMovingDown(false), jumps(false), isJumping(false),
-    playerTexture(), playerSprite(), tileSize(5,5), velocity(0,0)
+    isMovingLeft(false), isMovingRight(false), jumps(false), isJumping(false),
+    playerTexture(), playerSprite(), tileSize(66,92), velocity(0,0)
 {
     if(!playerTexture.loadFromFile("playertexture.png"))
+    //if(!playerTexture.loadFromFile("p1_stand.png"))
     {
         std::cerr << "Could not load texture file." << std::endl
                   << "Now exiting." << std::endl;
         exit(-1);
     }
     playerSprite.setTexture(playerTexture);
-    int playerTextureSizeX = playerTexture.getSize().x;
-    int playerTextureSizeY = playerTexture.getSize().y;
     player.setBoundingBox(sf::Rect<int>(player.getPosition().x, player.getPosition().y, playerTexture.getSize().x, playerTexture.getSize().y));
-    
-    if(getStartingPosition() != 1)
-    {
-        std::cerr << "Could not calculate starting position: " << std::endl
-                  << std::cerr << player.getPosition().x << " " << player.getPosition().y << std::endl;
-    }
-    player.setPosition(100,100);
+    player.setPosition(100,700);
     playerSprite.setPosition(player.getPosition().x,player.getPosition().y);
     playerSize = playerTexture.getSize();
     view.zoom(1.5f);
@@ -58,7 +54,7 @@ void Game::processEvents()
 void Game::update(sf::Time deltaTime)
 {
     //sf::Vector2f velocity(0.f, 0.f);
-    sf::Vector2f gravity(0, 0);
+    sf::Vector2f gravity(0, 9.81);
     // debug
     //velocity = sf::Vector2f(0,0);
     
@@ -70,14 +66,6 @@ void Game::update(sf::Time deltaTime)
     {
         velocity.x += 10.f;
     }
-    if(isMovingUp)
-    {
-        velocity.y -= 10.f;
-    }
-    if(isMovingDown)
-    {
-        velocity.y += 10.f;
-    }
     if(jumps && player.getOnGround())
     {
         velocity.y -= 200.f;
@@ -86,6 +74,24 @@ void Game::update(sf::Time deltaTime)
     
     // some friction
     velocity = sf::Vector2f(velocity.x*0.95, velocity.y);
+    
+    // make sure the player does not speed up indefinitely
+    if(velocity.x > maxVelX)
+    {
+        velocity.x = maxVelX;
+    }
+    if(velocity.y > maxVelY)
+    {
+        velocity.y = maxVelY;
+    }
+    if(velocity.x < -maxVelX)
+    {
+        velocity.x = -maxVelX;
+    }
+    if(velocity.y < maxVelYFall)
+    {
+        velocity.y = maxVelYFall;
+    }
     
     sf::Vector2f movement(velocity.x * deltaTime.asSeconds(), velocity.y * deltaTime.asSeconds());
     sf::Vector2f desiredPosition(player.getPosition().x + movement.x, player.getPosition().y + movement.y);
@@ -105,10 +111,6 @@ void Game::update(sf::Time deltaTime)
         desiredPosition.y = Play::getInstance()->getMapSize().y-1;
     }
     
-    int asdf = Play::getInstance()->getPhysicsMap().size();
-    int dasdf = Play::getInstance()->getPhysicsMap()[0].size();
-    
-#ifdef COLLISIONDETECTION4
     std::vector<std::map<std::string, int> > surroundingTiles = getSurroundingTiles(desiredPosition);
     // update the bounding box with the desired movement
     player.setBoundingBox(sf::Rect<int>(desiredPosition.x, desiredPosition.y, player.getBoundingBox().width, player.getBoundingBox().height));
@@ -125,7 +127,6 @@ void Game::update(sf::Time deltaTime)
         {
             sf::Rect<int> tileRect(surroundingTiles[i].find("x")->second, surroundingTiles[i].find("y")->second,
                                    tileSize.x, tileSize.y);
-            ;
             if(boundingBox.intersects(tileRect))
             {
                 sf::Rect<int> intersection;
@@ -134,13 +135,13 @@ void Game::update(sf::Time deltaTime)
                 if(i == 0)
                 {
                     // tile is under the player
-                    desiredPosition = sf::Vector2f(desiredPosition.x, desiredPosition.y + intersection.height);
+                    desiredPosition = sf::Vector2f(desiredPosition.x, desiredPosition.y - intersection.height);
                     velocity = sf::Vector2f(velocity.x, 0.f);
                     player.setOnGround(true);
                 } else if(i == 1)
                 {
                     // tile is over the player
-                    desiredPosition = sf::Vector2f(desiredPosition.x, desiredPosition.y - intersection.height);
+                    desiredPosition = sf::Vector2f(desiredPosition.x, desiredPosition.y + intersection.height);
                     velocity = sf::Vector2f(velocity.x, 0.f);
                 } else if(i == 2)
                 {
@@ -150,6 +151,8 @@ void Game::update(sf::Time deltaTime)
                 {
                     // tile is right of the player
                     desiredPosition = sf::Vector2f(desiredPosition.x - intersection.width, desiredPosition.y);
+                    // enables wall-jump
+                    player.setOnGround(true);
                 } else
                 {
                     if(intersection.width > intersection.height)
@@ -183,24 +186,6 @@ void Game::update(sf::Time deltaTime)
             }
         }
     }
-#endif
-    
-    
-#ifdef COLLISIONDETECTION3
-    std::vector<std::vector<int> > & levelMap = Play::getInstance()->getLevelMap();
-    int playerPosX = player.getPosition().x + movement.x;
-    for(int x = 0; x < movement.x; ++x)
-    {
-        if(levelMap[static_cast<int>((calculateLinearFunction(movement.y, movement.x, x)/5)+player.getPosition().y)]
-                [static_cast<int>((playerPosX+x)/5)]== 1)
-        {
-            movement.x = player.getPosition().x + x;
-            movement.y = player.getPosition().y + calculateLinearFunction(movement.y, movement.x, x);
-        }
-    }
-#endif
-
-    std::vector<std::vector<int> > levelMapCopy = Play::getInstance()->getLevelMap();
     
 #ifdef COLLISIONDETECTION1
     // collision detection
@@ -433,12 +418,6 @@ void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed)
         case sf::Keyboard::D:
             isMovingRight = isPressed;
             break;
-        case sf::Keyboard::W:
-            isMovingUp = isPressed;
-            break;
-        case sf::Keyboard::S:
-            isMovingDown = isPressed;
-            break;
         case sf::Keyboard::Space:
             jumps = isPressed;
         default:
@@ -465,43 +444,6 @@ int Game::getStartingPosition()
         }
     }
     return -1;
-}
-
-bool Game::isValidLocation(float x, float y)
-{
-    int nx = player.getPosition().x + x;
-    int ny = player.getPosition().y + y;
-    if(isBlocked(nx-playerSize.x, ny-playerSize.y))
-    {
-        return false;
-    }
-    if(isBlocked(nx+playerSize.x, ny-playerSize.y))
-    {
-        return false;
-    }
-    if(isBlocked(nx-playerSize.x, ny+playerSize.y))
-    {
-        return false;
-    }
-    if(isBlocked(nx+playerSize.x, ny+playerSize.y))
-    {
-        return false;
-    }
-    
-    return true;
-}
-
-bool Game::isBlocked(float x, float y)
-{
-    return !(x < 0 || x > Play::getInstance()->getMapSize().x
-            || y < 0 || Play::getInstance()->getMapSize().y
-            || Play::getInstance()->getPhysicsMap()[y][x] == 1);
-}
-
-float Game::calculateLinearFunction(float x, float y, float wantedX, float d)
-{
-    float k = x/y;
-    return ((k*wantedX)/y)+d;
 }
 
 std::vector<std::map<std::string, int> > Game::getSurroundingTiles(sf::Vector2f position)

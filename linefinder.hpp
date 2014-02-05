@@ -49,8 +49,6 @@ public:
     
     void drawDetectedLines(cv::Scalar color = cv::Scalar(255, 255, 255));
     
-    std::vector<cv::Vec4i> refineDetectedLines(float minDifference = 0.05f);
-    
     /*! \author zemann
      *
      * \brief Creates a refined image by removing outer pixels of the structures in the image.
@@ -91,5 +89,7 @@ public:
      * \brief Draws the beginning and the ending of a detected line on the original image. For debugging purposes.
      */
     void drawLinePoints();
+    
+    void refineLines();
 };
 #endif // LINEFINDER_H

@@ -68,7 +68,7 @@ int Play::detect(float minLength,
     // This closing operation fills holes between lines
     // It has a very significant effect
     cv::Mat tempDilated;
-    cv::Mat element = cv::getStructuringElement(cv::MORPH_CROSS, cv::Size(3,3));
+    cv::Mat element = cv::getStructuringElement(cv::MORPH_CROSS, cv::Size(9,9));
     cv::dilate(Play::getInstance()->getFinder()->getImage(), tempDilated, element);
     cv::erode(tempDilated, Play::getInstance()->getFinder()->getImage(), element);
     
@@ -122,6 +122,10 @@ int Play::buildLevel()
     Play::getInstance()->setLevelMap(debugLV);
     Play::getInstance()->setPhysicsMap(debugLV);
 #endif
+//    if(!m_TileMap.loadTileset("textureTilemap.png",sf::Vector2u(70, 70), Play::getInstance()->getLevelMap(), levelMap[0].size(), levelMap.size()))
+//    {
+//        return -1;
+//    }    
     if(!m_TileMap.load(sf::Vector2u(5, 5), Play::getInstance()->getLevelMap(), levelMap[0].size(), levelMap.size()))
     {
         return -1;

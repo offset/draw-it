@@ -53,8 +53,6 @@ private:
     int jumpHeight;
     // how long may the player jump
     float jumpTime;
-    // maybe used in further implementations with other obstacles than falling down (enemies, etc.)
-    sf::Rect<float> hitBox = sf::Rect<float>(0.f,0.f,0.f,0.f);//(float rectLeft, float rectTop, float rectWidth, float rectHeight);
     /*
      * position --------------- rightCorner
      * |                                  |

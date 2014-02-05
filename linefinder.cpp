@@ -127,7 +127,7 @@ void LineFinder::createSkeleton(int threshold)
     // eroded image is saved here
     cv::Mat eroded;
     // needed for morphological transforms (erodation, dilation)
-    cv::Mat element = cv::getStructuringElement(cv::MORPH_CROSS, cv::Size(3,3));
+    cv::Mat element = cv::getStructuringElement(cv::MORPH_CROSS, cv::Size(9,9));
     
     int i = 0;
     while(i != 20)
@@ -295,4 +295,31 @@ void LineFinder::drawLinePoints()
     }
     
     cv::imwrite("pointsDrawn.jpg", img);
+}
+
+void LineFinder::refineLines()
+{
+    for(int x = 0; x < Play::getInstance()->getFinder()->getImage().cols; ++x)
+    {
+        for(int y = 0; y < Play::getInstance()->getFinder()->getImage().rows; ++y)
+        {
+            std::vector<std::map<std::string, int> > surroundingBlocks;
+            for(int j = 0; j < 9; ++j)
+            {
+                int c = j % 3;
+                int r = static_cast<int>(j/3);
+                int blockPosX;
+                int blockPosY;
+                if(x < 2)
+                {
+                    blockPosX = x;
+                    blockPosY = y;
+                } else
+                {
+                    blockPosX = x;
+                    blockPosY = y;
+                }
+            }
+        }
+    }
 }
