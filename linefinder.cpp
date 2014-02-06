@@ -126,7 +126,7 @@ void LineFinder::createSkeleton(int threshold)
     cv::Mat temp(Play::getInstance()->getFinder()->getImage().size(), CV_8UC1);
     // eroded image is saved here
     cv::Mat eroded;
-    // needed for morphological transforms (erodation, dilation)
+    // needed for morphological transforms (erosion, dilation)
     cv::Mat element = cv::getStructuringElement(cv::MORPH_CROSS, cv::Size(9,9));
     
     int i = 0;

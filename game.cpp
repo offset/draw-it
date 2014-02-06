@@ -4,16 +4,16 @@
 #include "play.hpp"
 
 const float Game::maxVelX = 50.f;
-const float Game::maxVelY = 100.f;
-const float Game::maxVelYFall = -200.f;
+const float Game::maxVelY = -200.f;
+const float Game::maxVelYFall = 60.f;
 
 Game::Game() : window(sf::VideoMode(640,480), "Draw it!"), timePerFrame(sf::seconds(1.f/30.f)), 
     view(sf::Vector2f(player.getPosition().x, player.getPosition().y), static_cast<sf::Vector2f>(window.getSize())),
     isMovingLeft(false), isMovingRight(false), jumps(false), isJumping(false),
-    playerTexture(), playerSprite(), tileSize(66,92), velocity(0,0)
+    playerTexture(), playerSprite(), tileSize(5,5), velocity(0,0), fps()
 {
-    if(!playerTexture.loadFromFile("playertexture.png"))
     //if(!playerTexture.loadFromFile("p1_stand.png"))
+    if(!playerTexture.loadFromFile("playertexture.png"))
     {
         std::cerr << "Could not load texture file." << std::endl
                   << "Now exiting." << std::endl;
@@ -21,11 +21,19 @@ Game::Game() : window(sf::VideoMode(640,480), "Draw it!"), timePerFrame(sf::seco
     }
     playerSprite.setTexture(playerTexture);
     player.setBoundingBox(sf::Rect<int>(player.getPosition().x, player.getPosition().y, playerTexture.getSize().x, playerTexture.getSize().y));
-    player.setPosition(100,700);
+    player.setPosition(100,800);
     playerSprite.setPosition(player.getPosition().x,player.getPosition().y);
     playerSize = playerTexture.getSize();
     view.zoom(1.5f);
     window.setView(view);
+    
+//    if(!font.loadFromFile("FreeSans.ttf"))
+//    {
+//        std::cerr << "Could not load font."
+//                  << "Now exiting." << std::endl;
+//        exit(-1);
+//    }
+//    fps.setFont(font);
 }
 
 void Game::processEvents()
@@ -52,11 +60,9 @@ void Game::processEvents()
 }
 
 void Game::update(sf::Time deltaTime)
-{
-    //sf::Vector2f velocity(0.f, 0.f);
+{   
+//    fps.setPosition(view.getCenter().x+view.getSize().x/2, view.getCenter().y+view.getSize().y/2);
     sf::Vector2f gravity(0, 9.81);
-    // debug
-    //velocity = sf::Vector2f(0,0);
     
     if(isMovingLeft)
     {
@@ -80,17 +86,17 @@ void Game::update(sf::Time deltaTime)
     {
         velocity.x = maxVelX;
     }
-    if(velocity.y > maxVelY)
+    if(velocity.y > maxVelYFall)
     {
-        velocity.y = maxVelY;
+        velocity.y = maxVelYFall;
     }
     if(velocity.x < -maxVelX)
     {
         velocity.x = -maxVelX;
     }
-    if(velocity.y < maxVelYFall)
+    if(velocity.y < maxVelY)
     {
-        velocity.y = maxVelYFall;
+        velocity.y = maxVelY;
     }
     
     sf::Vector2f movement(velocity.x * deltaTime.asSeconds(), velocity.y * deltaTime.asSeconds());
@@ -141,16 +147,16 @@ void Game::update(sf::Time deltaTime)
                 } else if(i == 1)
                 {
                     // tile is over the player
-                    desiredPosition = sf::Vector2f(desiredPosition.x, desiredPosition.y + intersection.height);
+                    desiredPosition = sf::Vector2f(desiredPosition.x, desiredPosition.y + intersection.height*5);
                     velocity = sf::Vector2f(velocity.x, 0.f);
                 } else if(i == 2)
                 {
                     // tile is left of the player
-                    desiredPosition = sf::Vector2f(desiredPosition.x + intersection.width, desiredPosition.y);
+                    desiredPosition = sf::Vector2f(desiredPosition.x + intersection.width*5, desiredPosition.y);
                 } else if(i == 3)
                 {
                     // tile is right of the player
-                    desiredPosition = sf::Vector2f(desiredPosition.x - intersection.width, desiredPosition.y);
+                    desiredPosition = sf::Vector2f(desiredPosition.x - intersection.width*2, desiredPosition.y);
                     // enables wall-jump
                     player.setOnGround(true);
                 } else
@@ -351,32 +357,23 @@ void Game::update(sf::Time deltaTime)
     
     player.setPosition(desiredPosition);
     
-#ifdef COLLISIONDETECTION2
-    for(int x = 0; x < abs(movement.x); ++x)
-    {
-        for(int y = 0; y < abs(movement.y); ++y)
-        {
-            int xTile = x/5;
-            int yTile = y/5;
-        }
-    }
-    if(isValidLocation(player.getPosition().x + movement.x, player.getPosition().y + movement.y))
-    {
-        player.move(movement);
-    }
-#endif
     playerSprite.setPosition(player.getPosition().x, player.getPosition().y);
     
     view.setCenter(player.getPosition().x, player.getPosition().y);
     
     // debugging
-    std::cerr << "Velocity" << velocity.x << " " << velocity.y << std::endl;
-    std::cerr << "Movement" << movement.x << " " << movement.y << std::endl;
+    // bottleneck, slows down program significantly
+//    std::cerr << "Velocity" << velocity.x << " " << velocity.y << std::endl;
+//    std::cerr << "Movement" << movement.x << " " << movement.y << std::endl;
 
 }
 
 void Game::render()
 {
+    // calculating fps
+//    float fpsVal = 1000/(timeSinceLastFrame.asSeconds());
+//    fps.setString(std::to_string(fpsVal));
+    
     window.clear();
     
     window.setView(view);
@@ -385,16 +382,21 @@ void Game::render()
     
     window.draw(playerSprite);
     
+//    window.draw(fps);
+    
     window.display();
 }
 
 int Game::run()
 {   
     sf::Clock clock;
+    sf::Clock clock2;
     sf::Time timeSinceLastUpdate = sf::Time::Zero;
+    timeSinceLastFrame = sf::Time::Zero;
     // closing the window terminates the application
     while(window.isOpen())
     {
+        timeSinceLastFrame += clock2.restart();
         timeSinceLastUpdate += clock.restart();
         while(timeSinceLastUpdate > timePerFrame)
         {
@@ -438,7 +440,7 @@ int Game::getStartingPosition()
         {
             if(Play::getInstance()->getPhysicsMap()[j][i] == 1)
             {
-                player.setPosition(i+1*5, j-1*5);
+                player.setPosition(i+10*tileSize.x, j-10*tileSize.y);
                 return 1;
             }
         }

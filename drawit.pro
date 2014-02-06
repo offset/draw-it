@@ -3,6 +3,8 @@ CONFIG -= console
 CONFIG -= app_bundle
 CONFIG += qt
 
+QMAKE_CXXFLAGS_RELEASE = -Ofast
+
 # The name of the executable
 TARGET = drawit
 

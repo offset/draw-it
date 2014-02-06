@@ -74,9 +74,7 @@ int Play::detect(float minLength,
     
     std::vector<std::vector<int> > levelFile = finder.saveToVec();
     setLevelMap(levelFile);
-    //int howLong = Play::getInstance()->getFinder()->getLines().size();
-    assert(!levelFile.empty());
-    assert(!Play::getInstance()->getLevelMap().empty());
+    return 0;
 }
 
 void Play::setLevelMap(std::vector<std::vector<int> > lm)
