@@ -14,11 +14,10 @@ SOURCES += main.cpp \
     play.cpp \
     game.cpp \
     mainwindow.cpp \
-    #qsfmlcanvas.cpp \
-    #mycanvas.cpp
     tilemap.cpp \
     settingsdialog.cpp \
-    qdoubleslider.cpp
+    qdoubleslider.cpp \
+    selectplayersprite.cpp
 
 QMAKE_CXXFLAGS += -std=c++11
 
@@ -59,10 +58,14 @@ HEADERS += \
     mainwindow.hpp \
     tilemap.hpp \
     settingsdialog.hpp \
-    qdoubleslider.h
-    #qsfmlcanvas.h \
-    #mycanvas.h
+    qdoubleslider.h \
+    selectplayersprite.h
+
+# Header needed for the random number generation in tilemap.cpp
+
+INCLUDEPATH += /home/manuel/Development/boost_1_54_0/boost
 
 FORMS += \
     mainwindow.ui \
-    settingsdialog.ui
+    settingsdialog.ui \
+    selectplayersprite.ui

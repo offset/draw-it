@@ -24,7 +24,7 @@ private:
     LineFinder* finder = nullptr;
     Play() : minLength(100.f), maxGap(40.f), minVote(80), skelThreshold(50), 
         cannyThreshold1(40), cannyThreshold2(300), cannyApertureSize(3),
-        l2Gradient(true)
+        l2Gradient(true), playerTextureToLoad("playertexture.png")
     {
         finder = new LineFinder;
     }
@@ -107,6 +107,9 @@ public:
      */
     void setPhysicsMap(std::vector<std::vector<int> > newPhMap);
     
+    void setPlayerTexture(std::string newTex);
+    std::string getPlayerTexture();
+    
     float getMinLength();
     void setMinLength(float mLength);
     
@@ -146,6 +149,8 @@ private:
     // Tells the game where there are solid objects.
     std::vector<std::vector<int> > physicsMap;
     sf::Vector2u mapSize;
+    
+    std::string playerTextureToLoad;
     
     float minLength;
     float maxGap; 

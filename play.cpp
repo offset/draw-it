@@ -47,17 +47,16 @@ int Play::detect(float minLength,
                    bool l2Gradient
                    )
 {
-    LineFinder finder;
-    finder.setLineLengthAndGap(minLength, maxGap);
-    finder.setMinVote(minVote);
+    finder->setLineLengthAndGap(minLength, maxGap);
+    finder->setMinVote(minVote);
     
     // creating a skeleton
-    finder.createSkeleton(skelThreshold);
+    finder->createSkeleton(skelThreshold);
     
     // detecting the contours
     cv::Canny(Play::getInstance()->getFinder()->getImage(), Play::getInstance()->getFinder()->getImage(), cannyThreshold1, cannyThreshold2, cannyApertureSize, l2Gradient);
     
-    std::vector<cv::Vec4i> lines = finder.findLines();
+    std::vector<cv::Vec4i> lines = finder->findLines();
     
     if (Play::getInstance()->getFinder()->getLines().size() == 0)
     {
@@ -72,7 +71,7 @@ int Play::detect(float minLength,
     cv::dilate(Play::getInstance()->getFinder()->getImage(), tempDilated, element);
     cv::erode(tempDilated, Play::getInstance()->getFinder()->getImage(), element);
     
-    std::vector<std::vector<int> > levelFile = finder.saveToVec();
+    std::vector<std::vector<int> > levelFile = finder->saveToVec();
     setLevelMap(levelFile);
     return 0;
 }
@@ -89,41 +88,6 @@ std::vector<std::vector<int> > & Play::getLevelMap()
 
 int Play::buildLevel()
 {
-#ifdef DEBUG_GAME
-    levelWidth = 100;
-    levelHeight = 50;
-    std::vector<int> obstacleRow = {
-        1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-    };
-    assert(obstacleRow.size() == 100);
-    std::vector<int> freeRow = {
-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-    };
-    assert(freeRow.size() == 100);
-    std::vector<int> randomRow = {
-        1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0
-    };
-    assert(randomRow.size() == 100);
-    std::vector<std::vector<int> > debugLV = {
-        freeRow, freeRow, freeRow, freeRow, freeRow,
-        freeRow, freeRow, freeRow, freeRow, freeRow,
-        randomRow, randomRow, randomRow, randomRow, randomRow,
-        randomRow, randomRow, randomRow, randomRow, randomRow,
-        randomRow, randomRow, randomRow, randomRow, randomRow,
-        randomRow, randomRow, randomRow, randomRow, randomRow,
-        randomRow, randomRow, randomRow, randomRow, randomRow,
-        obstacleRow, obstacleRow, obstacleRow, obstacleRow, obstacleRow,
-        obstacleRow, obstacleRow, obstacleRow, obstacleRow, obstacleRow,
-        obstacleRow, obstacleRow, obstacleRow, obstacleRow, obstacleRow
-    };
-    assert(debugLV.size() == 50);
-    Play::getInstance()->setLevelMap(debugLV);
-    Play::getInstance()->setPhysicsMap(debugLV);
-#endif
-//    if(!m_TileMap.loadTileset("textureTilemap.png",sf::Vector2u(70, 70), Play::getInstance()->getLevelMap(), levelMap[0].size(), levelMap.size()))
-//    {
-//        return -1;
-//    }    
     if(!m_TileMap.load(sf::Vector2u(5, 5), Play::getInstance()->getLevelMap(), levelMap[0].size(), levelMap.size()))
     {
         return -1;
@@ -165,6 +129,16 @@ std::vector<std::vector<int> > & Play::getPhysicsMap()
 void Play::setPhysicsMap(std::vector<std::vector<int> > newPhMap)
 {
     physicsMap = newPhMap;
+}
+
+void Play::setPlayerTexture(std::string newTex)
+{
+    playerTextureToLoad = newTex;
+}
+
+std::string Play::getPlayerTexture()
+{
+    return playerTextureToLoad;
 }
 
 float Play::getMinLength()

@@ -4,36 +4,27 @@
 #include "play.hpp"
 
 const float Game::maxVelX = 50.f;
-const float Game::maxVelY = -200.f;
-const float Game::maxVelYFall = 60.f;
+const float Game::maxVelY = -500.f;
+const float Game::maxVelYFall = 50.f;
 
-Game::Game() : window(sf::VideoMode(640,480), "Draw it!"), timePerFrame(sf::seconds(1.f/30.f)), 
+Game::Game() : window(sf::VideoMode(800, 600), "Draw it!"), timePerFrame(sf::seconds(1.f/30.f)), 
     view(sf::Vector2f(player.getPosition().x, player.getPosition().y), static_cast<sf::Vector2f>(window.getSize())),
     isMovingLeft(false), isMovingRight(false), jumps(false), isJumping(false),
-    playerTexture(), playerSprite(), tileSize(5,5), velocity(0,0), fps()
+    playerTexture(), playerSprite(), tileSize(5,5), velocity(0,0)
 {
-    //if(!playerTexture.loadFromFile("p1_stand.png"))
-    if(!playerTexture.loadFromFile("playertexture.png"))
+    if(!playerTexture.loadFromFile(Play::getInstance()->getPlayerTexture()))
     {
         std::cerr << "Could not load texture file." << std::endl
                   << "Now exiting." << std::endl;
         exit(-1);
     }
     playerSprite.setTexture(playerTexture);
+    player.setPosition((Play::getInstance()->getLevelMap()[0].size()*tileSize.x)/8, (Play::getInstance()->getLevelMap().size()*tileSize.x)/8);
     player.setBoundingBox(sf::Rect<int>(player.getPosition().x, player.getPosition().y, playerTexture.getSize().x, playerTexture.getSize().y));
-    player.setPosition(100,800);
     playerSprite.setPosition(player.getPosition().x,player.getPosition().y);
     playerSize = playerTexture.getSize();
     view.zoom(1.5f);
     window.setView(view);
-    
-//    if(!font.loadFromFile("FreeSans.ttf"))
-//    {
-//        std::cerr << "Could not load font."
-//                  << "Now exiting." << std::endl;
-//        exit(-1);
-//    }
-//    fps.setFont(font);
 }
 
 void Game::processEvents()
@@ -61,7 +52,6 @@ void Game::processEvents()
 
 void Game::update(sf::Time deltaTime)
 {   
-//    fps.setPosition(view.getCenter().x+view.getSize().x/2, view.getCenter().y+view.getSize().y/2);
     sf::Vector2f gravity(0, 9.81);
     
     if(isMovingLeft)
@@ -102,16 +92,17 @@ void Game::update(sf::Time deltaTime)
     sf::Vector2f movement(velocity.x * deltaTime.asSeconds(), velocity.y * deltaTime.asSeconds());
     sf::Vector2f desiredPosition(player.getPosition().x + movement.x, player.getPosition().y + movement.y);
     
+    // we make sure the player doesn't move out of the level
     if(desiredPosition.x <= 0)
     {
-        desiredPosition.x = 5;
+        desiredPosition.x = tileSize.x;
     } else if(desiredPosition.x > Play::getInstance()->getMapSize().x)
     {
         desiredPosition.x = Play::getInstance()->getMapSize().x-1;
     }
     if(desiredPosition.y <= 0)
     {
-        desiredPosition.y = 5;
+        desiredPosition.y = tileSize.x;
     } else if(desiredPosition.y > Play::getInstance()->getMapSize().y)
     {
         desiredPosition.y = Play::getInstance()->getMapSize().y-1;
@@ -193,168 +184,6 @@ void Game::update(sf::Time deltaTime)
         }
     }
     
-#ifdef COLLISIONDETECTION1
-    // collision detection
-    // we first check the x-Axis
-    // determining the side which faces the moving direction
-    if(movement.x > 0)
-    {
-        int coordFwdFEdgeX;
-        if (movement.x < 0)
-        {
-            coordFwdFEdgeX = player.getPosition().x;
-        } else
-        {
-            coordFwdFEdgeX = player.getPosition().x + playerSize.x;
-        }
-        if(coordFwdFEdgeX >= 0)
-        {
-            // with which line(s) of tiles does the player collide?
-            std::vector<int> collidingLinesX;
-            if(movement.y < 0)
-            {
-                for(int i = player.getPosition().y; i >= static_cast<int>(player.getPosition().y+movement.y); --i)
-                {
-                    collidingLinesX.push_back(i/tileSize.x);
-                }
-            } else if (movement.y == 0)
-            {
-                collidingLinesX.push_back(player.getPosition().y);
-            } else
-            {
-                for(int i = player.getPosition().y; i <= static_cast<int>(player.getPosition().y+movement.y); ++i)
-                {
-                    collidingLinesX.push_back(i/tileSize.x);
-                }
-            }
-            // we scan along these lines for obstacles
-            int closestObstacleX = 30111995;
-            if(movement.x < 0)
-            {
-                for(uint i = 0; i < collidingLinesX.size(); ++i)
-                {
-                    for(int x =(coordFwdFEdgeX+movement.x)/tileSize.x; x < (coordFwdFEdgeX/tileSize.x); ++x)
-                    {
-                        if(Play::getInstance()->getPhysicsMap()[collidingLinesX[i]][x] != 0)
-                        {
-                            closestObstacleX = x*tileSize.x;
-                        }
-                    }
-                }
-                if(closestObstacleX != 30111995)
-                {
-                    movement.x = -(coordFwdFEdgeX - closestObstacleX)*deltaTime.asSeconds();
-                }
-            } else
-            {
-                for(uint i = 0; i < collidingLinesX.size(); ++i)
-                {
-                    for(int x = (coordFwdFEdgeX+movement.x)/tileSize.x; x > (coordFwdFEdgeX/tileSize.x); --x)
-                    {
-                        if(Play::getInstance()->getPhysicsMap()[collidingLinesX[i]][x] != 0)
-                        {
-                            closestObstacleX = x*tileSize.x;
-                        }
-                    }
-                }
-                if(closestObstacleX != 30111995)
-                {
-                    movement.x = (closestObstacleX - coordFwdFEdgeX)*deltaTime.asSeconds();
-                }
-            }
-        }
-    }
-    // now the y-axis
-    // determining the side which faces the moving direction
-    if(movement.y > 0)
-    {
-        int coordFwdFEdgeY;
-        if(movement.y < 0)
-        {
-            coordFwdFEdgeY = player.getPosition().y;
-        } else
-        {
-            coordFwdFEdgeY = player.getPosition().y + playerSize.y;
-        }
-        // we don't want to try to access a negative value by index
-        if(coordFwdFEdgeY >= 0)
-        {
-            // with which line(s) of tiles does the player collide?
-            std::vector<int> collidingLinesY;
-            if(movement.x < 0)
-            {
-                for(int i = player.getPosition().x; i >= static_cast<int>(player.getPosition().x+movement.x); --i)
-                {
-                    collidingLinesY.push_back(i/tileSize.y);
-                }
-            } else if(movement.x == 0)
-            {
-                collidingLinesY.push_back(player.getPosition().x);
-            } else
-            {
-                for(int i = player.getPosition().x; i <= static_cast<int>(player.getPosition().x+movement.x); ++i)
-                {
-                    collidingLinesY.push_back(i/tileSize.y);
-                }
-            }
-            // we scan along these lines for obstacles
-            int closestObstacleY = 30111995;
-            if(movement.y < 0)
-            {
-                for(int i = 0; i < collidingLinesY.size(); ++i)
-                {
-                    for(int y = static_cast<float>(coordFwdFEdgeY+movement.y)/tileSize.y; y < static_cast<float>(coordFwdFEdgeY)/tileSize.y; ++y)
-                    {
-                        if(Play::getInstance()->getPhysicsMap()[y][collidingLinesY[i]] != 0)
-                        {
-                            closestObstacleY = y*tileSize.y;
-                        }
-                    }
-                }
-                if(closestObstacleY != 30111995)
-                {
-                    movement.y = (closestObstacleY - coordFwdFEdgeY)*deltaTime.asSeconds();
-                }
-            } else
-            {
-                for(int i = 0; i < collidingLinesY.size(); ++i)
-                {
-                    for(int y = static_cast<float>(coordFwdFEdgeY+movement.y)/tileSize.y; y > static_cast<float>(coordFwdFEdgeY)/tileSize.y; --y)
-                    {
-                        if(Play::getInstance()->getPhysicsMap()[y][collidingLinesY[i]] != 0)
-                        {
-                            closestObstacleY = y*tileSize.y;
-                        }
-                    }
-                }
-                if(closestObstacleY != 30111995)
-                {
-                    movement.y = -(coordFwdFEdgeY - closestObstacleY)*deltaTime.asSeconds();
-                }
-            }
-        }
-    }
-#endif
-    
-    // we make sure the player doesn't move out of the level
-//    if((player.getPosition().x + movement.x) < 0)
-//    {
-//        movement.x = 0;
-//    } else if (player.getPosition().x + movement.x > Play::getInstance()->getMapSize().x)
-//    {
-//        movement.x = levelSize.x;
-//    }
-//    if((player.getPosition().y + movement.y) < 0)
-//    {
-//        movement.y = 0;
-//    } else if (player.getPosition().y + movement.y > Play::getInstance()->getMapSize().y)
-//    {
-//        movement.y = levelSize.y;
-//    }
-    
-//    player.move(movement);
-    // we make sure the player does not move out of the level
-    
     player.setPosition(desiredPosition);
     
     playerSprite.setPosition(player.getPosition().x, player.getPosition().y);
@@ -390,13 +219,10 @@ void Game::render()
 int Game::run()
 {   
     sf::Clock clock;
-    sf::Clock clock2;
     sf::Time timeSinceLastUpdate = sf::Time::Zero;
-    timeSinceLastFrame = sf::Time::Zero;
     // closing the window terminates the application
     while(window.isOpen())
     {
-        timeSinceLastFrame += clock2.restart();
         timeSinceLastUpdate += clock.restart();
         while(timeSinceLastUpdate > timePerFrame)
         {
@@ -422,6 +248,14 @@ void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed)
             break;
         case sf::Keyboard::Space:
             jumps = isPressed;
+            break;
+        // resets the player to the initial position
+        case sf::Keyboard::R:
+            player.setPosition((Play::getInstance()->getLevelMap()[0].size()*tileSize.x)/8, (Play::getInstance()->getLevelMap().size()*tileSize.x)/8);
+            playerSprite.setPosition(player.getPosition().x, player.getPosition().y);
+            break;
+        case sf::Keyboard::Escape:
+            window.close();
         default:
             break;
     }
@@ -466,7 +300,7 @@ std::vector<std::map<std::string, int> > Game::getSurroundingTiles(sf::Vector2f 
         int tGid = Play::getInstance()->getPhysicsMap()[tilePos.y][tilePos.x];
         
         // converts the coords from tile to world coords
-        sf::Vector2u tileRect(tilePos.x*5, tilePos.y*5);
+        sf::Vector2u tileRect(tilePos.x*tileSize.x, tilePos.y*tileSize.y);
         
         // storing all the information
         std::map<std::string, int> tileDict;
@@ -506,4 +340,10 @@ std::vector<std::map<std::string, int> > Game::getSurroundingTiles(sf::Vector2f 
      *
      */
     return surroundingTiles;
+}
+
+template<typename T>
+sf::Vector2<T> operator-(sf::Vector2<T> &vec1, sf::Vector2<T> &vec2)
+{
+    return sf::Vector2<T>(vec1.x-vec2.x, vec1.y-vec2.y);
 }

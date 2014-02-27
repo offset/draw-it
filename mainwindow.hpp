@@ -8,6 +8,7 @@
 #include "play.hpp"
 #include <QMessageBox>
 #include "settingsdialog.hpp"
+#include "selectplayersprite.h"
 
 /*! This namespaces contains the GUI (Ui = user interface). */
 
@@ -62,9 +63,12 @@ private slots:
     
     void on_action_Configure_image_analysis_settings_triggered();
     
+    void on_actionSelect_player_sprite_triggered();
+    
 private:
     Ui::MainWindow *ui;
     settingsDialog sD;
+    selectPlayerSprite sPS;
     QWidget about;
     QWidget configImage;
     bool selected;

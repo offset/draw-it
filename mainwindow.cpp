@@ -110,11 +110,16 @@ void MainWindow::on_exit_clicked()
 void MainWindow::on_action_about_triggered()
 {
     //about.show();
-    message.setText("Drawit version 0.1, author: Manuel Zemann");
+    message.setText("Drawit version 1.0, author: Manuel Zemann");
     message.show();
 }
 
 void MainWindow::on_action_Configure_image_analysis_settings_triggered()
 {
     sD.show();
+}
+
+void MainWindow::on_actionSelect_player_sprite_triggered()
+{
+    sPS.show();
 }

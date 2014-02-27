@@ -53,9 +53,6 @@ private:
     sf::Texture playerTexture;
     sf::Sprite playerSprite;
     sf::Vector2u playerSize;
-    sf::Text fps;
-    sf::Font font;
-    sf::Time timeSinceLastFrame;
     // needed for movement (in processEvents)
     bool isMovingLeft;
     bool isMovingRight;

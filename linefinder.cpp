@@ -5,7 +5,6 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/imgproc.hpp>
 #include <play.hpp>
-#define SCALE
 
 LineFinder::LineFinder() : img(),
     deltaRho(1), 
@@ -84,15 +83,6 @@ std::vector<cv::Vec4i> LineFinder::findLines()
                     minLength,
                     maxGap);
     
-    // debugging
-    for (auto it = Play::getInstance()->getFinder()->lines.begin(); it != Play::getInstance()->getFinder()->lines.end(); ++it)
-    {
-        std::cout << *it << std::endl;
-    }
-    
-    // debugging
-    drawLinePoints();
-    
     return lines;
 }
 
@@ -151,7 +141,6 @@ std::vector<std::vector<int> > LineFinder::saveToVec()
 {   
     cv::Mat level;
     Play::getInstance()->getFinder()->getImage().copyTo(level);
-#ifdef SCALE
     // scaling level size
     if(level.cols <= 1024 && level.cols >= 512)
     {
@@ -211,7 +200,6 @@ std::vector<std::vector<int> > LineFinder::saveToVec()
         // scale 1
         // nothing to do
     }
-#endif
     
     if (level.channels() != 1)
     {
